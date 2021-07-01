@@ -785,19 +785,19 @@ keys.clientkeys = gears.table.join(
         {description = "(un)maximize", group = "client"}),
     awful.key({ superkey, ctrlkey }, "m",
         function()
-            awful.spawn.with_shell("xrandr --output eDP-1 --off --output HDMI-1 --auto && echo 'Xft.dpi: 100' | xrdb -merge")
+            awful.spawn.with_shell("xrandr --output eDP1 --off --output HDMI1 --auto && echo 'Xft.dpi: 100' | xrdb -merge")
 	    awesome.restart()
         end,
         {description = "(un)maximize vertically", group = "client"}),
     awful.key({ superkey, shiftkey   }, "m",
         function()
-            awful.spawn.with_shell("xrandr --output eDP-1 --auto --output HDMI-1 --off && echo 'Xft.dpi: 110' | xrdb -merge")
+            awful.spawn.with_shell("xrandr --output eDP1 --auto --output HDMI1 --off && echo 'Xft.dpi: 110' | xrdb -merge")
 	    awesome.restart()
         end,
         {description = "(un)maximize horizontally", group = "client"}),
     awful.key({ superkey, ctrlkey, shiftkey }, "m",
         function()
-            awful.spawn.with_shell("xrandr --output eDP-1 --off --output HDMI-1 --auto; xrandr --output eDP-1 --auto --output HDMI-1 --auto --left-of eDP-1 --primary && echo 'Xft.dpi: 100' | xrdb -merge")
+            awful.spawn.with_shell("xrandr --output eDP1 --off --output HDMI1 --auto; xrandr --output eDP1 --auto --output HDMI1 --auto --left-of eDP1 --primary && echo 'Xft.dpi: 100' | xrdb -merge")
 	    awesome.restart()
         end,
         {description = "(un)maximize horizontally", group = "client"})

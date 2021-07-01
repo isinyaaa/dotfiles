@@ -34,14 +34,14 @@ local button_size = dpi(120)
 
 -- Commands
 local poweroff_command = function()
-    awful.spawn.with_shell("sudo poweroff")
+    awful.spawn.with_shell("loginctl poweroff")
 end
 local reboot_command = function()
-    awful.spawn.with_shell("sudo reboot")
+    awful.spawn.with_shell("loginctl reboot")
 end
 local suspend_command = function()
     lock_screen_show()
-    awful.spawn.with_shell("systemctl suspend")
+    awful.spawn.with_shell("loginctl suspend")
 end
 local exit_command = function()
     awesome.quit()

@@ -86,7 +86,7 @@ user = {
     music_client_spot = "kitty -o font_size=12 --class music_spot -e ncspot",
 
     -- >> Web Search <<
-    web_search_cmd = "xdg-open https://www.qwant.com/?client=brz-brave&q=",
+    web_search_cmd = "xdg-open https://duckduckgo.com/?q=",
     -- web_search_cmd = "xdg-open https://www.google.com/search?q=",
 
     -- >> User profile <<
@@ -880,7 +880,7 @@ awful.rules.rules = {
     {
         rule_any = {
             class = {
-		    "Code"
+		    "VSCodium"
             },
         },
         properties = { screen = 1, tag = awful.screen.focused().tags[2] }
