@@ -1,0 +1,24 @@
+volnorm = true
+volnorm_pregain = -10
+use_nerdfont = true
+
+[saved_state]
+volume = 80
+
+[theme]
+#background = "#181818"
+primary = "#F1F1F1"
+secondary = "#DCDCDC"
+title = "#8757A1"
+playing = "#8757A1"
+playing_selected = "#8757A1"
+playing_bg = "#181818"
+highlight = "#8757A1"
+highlight_bg = "#000000"
+error = "#FFE4E4"
+error_bg = "#A50000"
+statusbar = "#8757A1"
+statusbar_progress = "#8757A1"
+statusbar_bg = "#1F1425"
+cmdline = "#CBFFDE"
+cmdline_bg = "#444444"

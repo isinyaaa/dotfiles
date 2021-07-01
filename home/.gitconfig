@@ -1,0 +1,12 @@
+[user]
+  name = isinyaaa
+  email = isabellabdoamaral@usp.br
+
+#[credential "https://github.com"]
+#  username = isinyaaa
+#  helper = "!f() { test $1 = get && echo password=$(pass github/oauth); }; f"
+
+#[credential]
+  #helper = cache --timeout=3600
+[credential]
+	helper = /usr/bin/pass-git-helper
