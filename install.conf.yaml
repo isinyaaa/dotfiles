@@ -45,3 +45,5 @@
         path: config/redshift.conf
     ~/.config/rofi:
         path: config/rofi/
+    ~/.local/share/omf/themes/eseal:
+        path: omf/eseal/
