@@ -1,12 +1,18 @@
 [user]
-    name = isinyaaa
-    email = isabellabdoamaral@usp.br
-    signingKey = 217AB88EFC8BC1FF
+	name = Isabella Basso
+	email = isabellabdoamaral@usp.br
+	signingKey = 217AB88EFC8BC1FF
+[sendemail]
+	confirm = auto
+	smtpEncryption = ssl
+	smtpServer = smtp.gmail.com
+	smtpServerPort = 465
+	smtpUser = isabellabdoamaral@usp.br
 [credential]
-        # username = isinyaaa
-        # helper = "!f() { test $1 = get && echo password=$(pass github/oauth); }; f"
+	# username = isinyaaa
+	# helper = "!f() { test $1 = get && echo password=$(pass github/oauth); }; f"
 	helper = /usr/bin/pass-git-helper
-        # helper = cache --timeout=3600
+	# helper = cache --timeout=3600
 [init]
 	defaultBranch = main
 [commit]
@@ -16,10 +22,10 @@
 [core]
 	autocrlf = input
 [diff]
-        tool = vscodium
+  tool = vscodium
 [difftool "vscode"]
-        cmd = vscodium --wait --diff $LOCAL $REMOTE
+  cmd = vscodium --wait --diff $LOCAL $REMOTE
 [merge]
-        tool = vscodium
+  tool = vscodium
 [mergetool "vscode"]
-        cmd = vscodium --wait $MERGED
+  cmd = vscodium --wait $MERGED
