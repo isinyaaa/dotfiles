@@ -11,6 +11,8 @@ else
 	nmap Q <Nop>
 
 	set mouse+=a
+	set expandtab
+	set shiftwidth=4
 endif
 
 set clipboard=unnamedplus
