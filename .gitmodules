@@ -2,3 +2,6 @@
 	path = dotbot
 	url = https://github.com/anishathalye/dotbot
 	ignore = dirty
+[submodule "omf/eseal"]
+	path = omf/eseal
+	url = https://github.com/isinyaaa/fish-eseal
