@@ -1,6 +1,9 @@
 # This file contains fish universal variable definitions.
 # VERSION: 3.0
 SETUVAR __fish_initialized:3100
+SETUVAR _fish_abbr_mcg:make\x20CC\x3d\x22ccache\x20gcc\x20\x2dfdiagnostics\x2dcolor\x22\x20\x2dj8\x20O\x3d\x24BUILD_FOLDER
+SETUVAR _fish_abbr_mcr:COMPILER_INSTALL_PATH\x3d/home/isinyaaa//0day\x20COMPILER\x3dgcc\x2d11\x2e2\x2e0\x20make\x2ecross\x20\x2dj4\x20W\x3d12\x20ARCH\x3d\x24ARCH\x20O\x3d\x24ARCH_BUILD
+SETUVAR _fish_abbr_mmd:make\x20modules\x20CC\x3d\x22ccache\x20gcc\x20\x2dfdiagnostics\x2dcolor\x22\x20\x2dj8\x20W\x3d12\x20O\x3d\x24BUILD_FOLDER
 SETUVAR fish_color_autosuggestion:969896
 SETUVAR fish_color_cancel:\x2dr
 SETUVAR fish_color_command:c397d8
