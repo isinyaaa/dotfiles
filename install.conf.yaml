@@ -1,0 +1,45 @@
+- defaults:
+    link:
+      create: true
+      relink: true
+
+- clean: ['~', '~/.config']
+
+- link:
+    ~/.gitconfig: gitconfig
+    ~/.xinitrc: xinitrc
+    ~/.xprofile: xprofile
+    ~/.Xresources: Xresources
+    ~/.vimrc: vimrc
+    ~/bin:
+        path: bin/
+    ~/.config/awesome:
+        path: config/awesome/
+    ~/.config/fish:
+        path: config/fish/
+    ~/.config/gtk-3.0/gtk.css:
+        path: config/gtk-3.0/gtk.css
+    ~/.config/herbstluftwm:
+        path: config/herbstluftwm/
+    ~/.config/kitty:
+        path: config/kitty/
+    ~/.config/paru:
+        path: config/paru/
+    ~/.config/polybar:
+        path: config/polybar/
+    ~/.config/ncspot/config.toml:
+        path: config/ncspot/config.toml
+    ~/.config/nvim:
+        path: config/nvim/
+    ~/.config/paru:
+        path: config/paru/
+    ~/.config/pass-git-helper:
+        path: config/pass-git-helper/
+    ~/.config/picom:
+        path: config/picom/
+    ~/.config/polybar:
+        path: config/polybar/
+    ~/.config/redshift.conf:
+        path: config/redshift.conf
+    ~/.config/rofi:
+        path: config/rofi/

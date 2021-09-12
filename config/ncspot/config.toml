@@ -1,12 +1,15 @@
 volnorm = true
 volnorm_pregain = -10
+gapless = true
 use_nerdfont = true
+audio_cache_size = 4096
+cover_max_scale = 2
 
 [saved_state]
 volume = 80
 
 [theme]
-#background = "#181818"
+# background = "#181818"
 primary = "#F1F1F1"
 secondary = "#DCDCDC"
 title = "#8757A1"
@@ -19,6 +22,8 @@ error = "#FFE4E4"
 error_bg = "#A50000"
 statusbar = "#8757A1"
 statusbar_progress = "#8757A1"
+statusbar_progress_bg = "#222222"
 statusbar_bg = "#1F1425"
 cmdline = "#CBFFDE"
 cmdline_bg = "#444444"
+# search_match = "#1F1425"
