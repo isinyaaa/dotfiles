@@ -1,0 +1,3 @@
+#!/bin/bash
+
+xsetwacom set "Wacom Intuos Pro M Pen stylus" MapToOutput HEAD-0

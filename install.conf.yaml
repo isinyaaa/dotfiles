@@ -11,6 +11,7 @@
     ~/.xprofile: xprofile
     ~/.Xresources: Xresources
     ~/.vimrc: vimrc
+    ~/.wacom: wacom
     ~/bin:
         path: bin/
     ~/.config/awesome:
