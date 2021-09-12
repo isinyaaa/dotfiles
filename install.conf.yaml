@@ -39,6 +39,8 @@
         path: config/picom/
     ~/.config/polybar:
         path: config/polybar/
+    ~/.config/ranger:
+        path: config/ranger/
     ~/.config/redshift.conf:
         path: config/redshift.conf
     ~/.config/rofi:
