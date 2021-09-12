@@ -156,14 +156,14 @@ hc set frame_bg_transparent 1
 hc set frame_transparent_width 0
 hc set frame_padding 0
 
-hc attr theme.active.color '#9fbc00'
+hc attr theme.active.color '#723125' #'#9fbc00'
 hc attr theme.normal.color '#454545'
 hc attr theme.urgent.color orange
 hc attr theme.inner_width 0
 hc attr theme.inner_color black
-hc attr theme.border_width 2
+hc attr theme.border_width 3
 hc attr theme.floating.border_width 4
-hc attr theme.floating.outer_width 1
+hc attr theme.floating.outer_width 0
 hc attr theme.floating.outer_color black
 hc attr theme.active.inner_color '#3E4A00'
 hc attr theme.active.outer_color '#3E4A00'
@@ -183,6 +183,8 @@ hc set focus_follows_mouse 0
 hc unrule -F
 hc rule class=Brave-browser tag=www
 hc rule class=VSCodium tag=dev
+hc rule class=UnityHub tag=dev
+hc rule class=Unity tag=dev
 hc rule class=discord tag=chat
 hc rule class=TelegramDesktop tag=chat
 hc rule class=Ferdi tag=chat
