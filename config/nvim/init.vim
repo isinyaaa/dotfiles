@@ -2,17 +2,17 @@ if exists('g:vscode')
     " VSCode extension
 else
     " ordinary neovim
-	set number
-	set relativenumber
+    set number
+    set relativenumber
 
-	set ignorecase
-	set smartcase
+    set ignorecase
+    set smartcase
 
-	nmap Q <Nop>
+    nmap Q <Nop>
 
-	set mouse+=a
-	set expandtab
-	set shiftwidth=4
+    set mouse+=a
+    set expandtab
+    set shiftwidth=4
 endif
 
 set clipboard=unnamedplus
