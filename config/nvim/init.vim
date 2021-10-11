@@ -3,7 +3,6 @@ if exists('g:vscode')
 else
     " ordinary neovim
     set number
-    set relativenumber
 
     set ignorecase
     set smartcase
