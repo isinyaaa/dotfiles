@@ -54,3 +54,5 @@ function get_arch
 end
 
 abbr -a mcr COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-11.2.0 make.cross -j4 W=12 (get_arch)
+
+alias ssh="kitty +kitten ssh"
