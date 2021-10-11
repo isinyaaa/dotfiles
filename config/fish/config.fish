@@ -31,5 +31,26 @@ function fish_greeting
 end
 
 alias wipe="clear; fish_greeting"
+
+# create some functions and macros for kernel dev
+function set_out
+    set -g BUILD_FOLDER $argv
 end
 
+function get_output_folder
+    echo 'O=$BUILD_FOLDER'
+end
+
+abbr -a mk make CC=\"ccache gcc -fdiagnostics-color\" -j8 (get_output_folder)
+abbr -a mmd make modules CC=\"ccache gcc -fdiagnostics-color\" -j8 (get_output_folder)
+
+function set_arch
+    set -g ARCH $argv
+    set -g ARCH_BUILD "$argv-build"
+end
+
+function get_arch
+    echo 'ARCH=$ARCH O=$ARCH_BUILD'
+end
+
+abbr -a mcr COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-11.2.0 make.cross -j4 W=12 (get_arch)
