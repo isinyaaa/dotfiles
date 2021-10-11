@@ -16,6 +16,8 @@
         path: bin/
     ~/.config/awesome:
         path: config/awesome/
+    ~/.config/bat:
+        path: config/bat/
     ~/.config/fish:
         path: config/fish/
     ~/.config/gtk-3.0/gtk.css:
