@@ -18,7 +18,7 @@ set -gx PATH $PATH $HOME/.cargo/bin
 
 # set user preferences
 export default_user=isinyaaa
-#export NVIM_TUI_ENABLE_CURSOR_SHAPE=1
+# export NVIM_TUI_ENABLE_CURSOR_SHAPE=1
 
 set -gx EDITOR nvim
 
@@ -43,8 +43,8 @@ function get_output_folder
     echo 'O=$BUILD_FOLDER'
 end
 
-abbr -a mcg make CC=\"ccache gcc -fdiagnostics-color\" -j8 (get_output_folder)
-abbr -a mmd make modules CC=\"ccache gcc -fdiagnostics-color\" -j8 W=12 (get_output_folder)
+abbr -a mk make CC=\"ccache gcc -fdiagnostics-color\" -j8 (get_output_folder)
+abbr -a mmd make modules CC=\"ccache gcc -fdiagnostics-color\" -j8 (get_output_folder)
 
 function set_arch
     set -g ARCH $argv
