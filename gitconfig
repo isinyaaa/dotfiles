@@ -1,31 +1,31 @@
 [user]
-	name = Isabella Basso
-	email = isabellabdoamaral@usp.br
-	signingKey = 217AB88EFC8BC1FF
+    name = Isabella Basso
+    email = isabellabdoamaral@usp.br
+    signingKey = 217AB88EFC8BC1FF
 [sendemail]
-	confirm = auto
-	smtpEncryption = ssl
-	smtpServer = smtp.gmail.com
-	smtpServerPort = 465
-	smtpUser = isabellabdoamaral@usp.br
+    confirm = auto
+    smtpEncryption = ssl
+    smtpServer = smtp.gmail.com
+    smtpServerPort = 465
+    smtpUser = isabellabdoamaral@usp.br
 [credential]
-	# username = isinyaaa
-	# helper = "!f() { test $1 = get && echo password=$(pass github/oauth); }; f"
-	helper = /usr/bin/pass-git-helper
-	# helper = cache --timeout=3600
+    #username = isinyaaa
+    #helper = "!f() { test $1 = get && echo password=$(pass github/oauth); }; f"
+    helper = /usr/bin/pass-git-helper
+    #helper = cache --timeout=3600
 [init]
-	defaultBranch = main
+    defaultBranch = main
 [commit]
-	gpgSign = true
+    gpgSign = true
 [color]
-	ui = auto
+    ui = auto
 [core]
-	autocrlf = input
+    autocrlf = input
+    pager = diff-so-fancy | less -RFX
 [diff]
-  tool = vscodium
-[difftool "vscode"]
-  cmd = vscodium --wait --diff $LOCAL $REMOTE
+    tool = vscodium
+[difftool "vscodium"]
+    cmd = vscodium --wait --diff \"$LOCAL\" \"$REMOTE\"
 [merge]
-  tool = vscodium
-[mergetool "vscode"]
-  cmd = vscodium --wait $MERGED
+[mergetool "vscodium"]
+    cmd = vscodium --wait \"$MERGED\"
