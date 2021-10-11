@@ -18,7 +18,7 @@ set -gx PATH $PATH $HOME/.cargo/bin
 
 # set user preferences
 export default_user=isinyaaa
-export NVIM_TUI_ENABLE_CURSOR_SHAPE=1
+#export NVIM_TUI_ENABLE_CURSOR_SHAPE=1
 
 set -gx EDITOR nvim
 
