@@ -18,14 +18,29 @@
 [commit]
     gpgSign = true
 [color]
+    diff = auto
+    status = auto
+    branch = auto
+    interactive = auto
+    pager = true
     ui = auto
 [core]
     autocrlf = input
     pager = diff-so-fancy | less -RFX
 [diff]
-    tool = vscodium
+    tool = nvim
+    submodule = log
+[difftool]
+    prompt = true
+[difftool "nvim"]
+    cmd = nvim -d \"$LOCAL\" \"$REMOTE\"
 [difftool "vscodium"]
     cmd = vscodium --wait --diff \"$LOCAL\" \"$REMOTE\"
 [merge]
+    tool = nvim
+[mergetool]
+    prompt = false
+[mergetool "nvim"]
+    cmd = nvim -f -c \"Gdiffsplit!\" \"$MERGED\"
 [mergetool "vscodium"]
     cmd = vscodium --wait \"$MERGED\"
