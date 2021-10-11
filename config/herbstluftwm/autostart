@@ -179,7 +179,7 @@ hc attr theme.background_color '#141414'
 
 hc set default_frame_layout 2
 
-hc set window_gap 8
+hc set window_gap 3
 hc set smart_window_surroundings 0
 hc set smart_frame_surroundings 1
 hc set mouse_recenter_gap 1
