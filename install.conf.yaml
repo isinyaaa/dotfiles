@@ -46,5 +46,7 @@
         path: config/redshift.conf
     ~/.config/rofi:
         path: config/rofi/
+    ~/.config/kw:
+        path: config/kw/
     ~/.local/share/omf/themes/eseal:
         path: omf/eseal/
