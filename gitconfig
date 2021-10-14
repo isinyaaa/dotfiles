@@ -29,6 +29,7 @@
     pager = diff-so-fancy | less -RFX
 [diff]
     tool = nvim
+    submodule = log
 [difftool]
     prompt = true
 [difftool "nvim"]
