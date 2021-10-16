@@ -21,8 +21,8 @@ compositing-underline = over
 compositing-border = over
 
 ; Define fallback values used by all module formats
-format-foreground = #FF0000
-format-background = #00FF00
+background = ${colors.background}
+foreground = ${colors.foreground}
 format-underline =
 format-overline =
 format-spacing =
@@ -34,6 +34,12 @@ format-offset =
 ; Nord theme ============
 background = #282c34
 foreground = #abb2bf
+; blue
+accent1 = #668bd7
+; purple
+accent2 = #8d62ad
+; white
+accent-fg = #fefefe
 alert = #bd2c40
 volume-min = #a3be8c
 volume-med = #ebcb8b
@@ -746,16 +752,16 @@ format-background = ${colors.background}
 type = custom/text
 content = "%{T2} %{T-}"
 content-font = 2
-content-foreground = #8d62a9
-content-background = #292d3e
+content-foreground = ${colors.accent2}
+content-background = #{colors.background}
 
 [module/arrow2]
 ; grey to Blue
 type = custom/text
 content = "%{T2} %{T-}"
 content-font = 2
-content-foreground = #668bd7
-content-background = #8d62a9
+content-foreground = ${colors.accent1}
+content-background = ${colors.accent2}
 
 [module/arrow3]
 ; grey to Blue
@@ -763,7 +769,7 @@ type = custom/text
 content = "%{T2} %{T-}"
 content-font = 2
 content-foreground = #8b62a9
-content-background = #668bd7
+content-background = ${colors.accent1}
 
 ################################################################################
 ###############################################################################
@@ -776,10 +782,10 @@ type = custom/script
 exec = ~/.config/polybar/scripts/check-all-updates.sh
 interval = 1000
 label = Updates: %output%
-format-foreground = #fefefe
-format-background = #8d62ad
+format-foreground = ${colors.accent-fg}
+format-background = ${colors.accent2}
 format-prefix = "  "
-format-prefix-foreground = #fefefe
+format-prefix-foreground = ${colors.accent-fg}
 
 
 [module/aur-updates]
@@ -957,10 +963,10 @@ type = internal/cpu
 ; Seconds to sleep between updates
 ; Default: 1
 interval = 1
-format-foreground = #fefefe
-format-background = #8d62ad
+format-foreground = ${colors.accent-fg}
+format-background = ${colors.accent2}
 format-prefix = " "
-format-prefix-foreground = #fefefe
+format-prefix-foreground = ${colors.accent-fg}
 
 label-font = 1
 
@@ -989,12 +995,12 @@ interval = 5
 ; NOTE: if you want to use syntax tags here you need to use %%{...}
 date = " %a %b %d, %Y"
 date-alt = " %a %b %d, %Y"
-time = %l:%M%p
-time-alt = %l:%M%p
+time = %l:%M%P
+time-alt = %l:%M%P
 format-prefix = " "
-format-prefix-foreground = #fefefe
-format-foreground = #fefefe
-format-background = #8d62ad
+format-prefix-foreground = ${colors.accent-fg}
+format-foreground = ${colors.accent-fg}
+format-background = ${colors.accent2}
 label = "%date% %time% "
 
 #################################################################
@@ -1192,9 +1198,9 @@ label = %percentage_used%%
 
 format = Mem <label>
 format-prefix = " "
-format-prefix-foreground = #fefefe
-format-foreground = #fefefe
-format-background = #668bd7
+format-prefix-foreground = ${colors.accent-fg}
+format-foreground = ${colors.accent-fg}
+format-background = ${colors.accent1}
 
 ################################################################################
 
@@ -1257,9 +1263,9 @@ interface = wlan0
 label-connected = "%upspeed:7%"
 format-connected = <label-connected>
 format-connected-prefix = " "
-format-connected-prefix-foreground = #fefefe
-format-connected-foreground = #fefefe
-format-connected-background = #8d62a9
+format-connected-prefix-foreground = ${colors.accent-fg}
+format-connected-foreground = ${colors.accent-fg}
+format-connected-background = ${colors.accent2}
 
 ################################################################################
 
@@ -1273,9 +1279,9 @@ interface = wlan0
 label-connected = "%downspeed:7%"
 format-connected = <label-connected>
 format-connected-prefix = "  "
-format-connected-prefix-foreground = #fefefe
-format-connected-foreground = #fefefe
-format-connected-background = #8d62ad
+format-connected-prefix-foreground = ${colors.accent-fg}
+format-connected-foreground = ${colors.accent-fg}
+format-connected-background = ${colors.accent2}
 
 ################################################################################
 
@@ -1302,8 +1308,8 @@ click-right = exec pavucontrol
 click-left = ~/.config/polybar/scripts/pavolume.sh --togmute
 scroll-up = ~/.config/polybar/scripts/pavolume.sh --up
 scroll-down = ~/.config/polybar/scripts/pavolume.sh --down
-format-foreground = #fefefe
-format-background = #668bd7
+format-foreground = ${colors.accent-fg}
+format-background = ${colors.accent1}
 
 
 
@@ -1526,11 +1532,11 @@ label-connected = %essid%
 
 format-connected = <label-connected>
 ;format-connected = <ramp-signal> <label-connected>
-format-connected-foreground = #fefefe
-format-connected-background = #8d62ad
+format-connected-foreground = ${colors.accent-fg}
+format-connected-background = ${colors.accent2}
 format-connected-prefix = "  "
-format-connected-prefix-foreground = #fefefe
-format-connected-prefix-background = #8d62ad
+format-connected-prefix-foreground = ${colors.accent-fg}
+format-connected-prefix-background = ${colors.accent2}
 format-connected-underline = #7e52c6
 
 label-disconnected = %ifname% disconnected
