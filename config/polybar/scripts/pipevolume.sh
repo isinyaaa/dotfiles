@@ -1,23 +1,25 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 # finds the active sink for pulse audio and increments the volume. useful when you have multiple audio outputs and have a key bound to vol-up and down
 
 osd='no'
-inc='2'
+inc='5'
 capvol='no'
 maxvol='200'
-autosync='yes'
+autosync='no'
 
-# Muted status
-# yes: muted
-# no : not muted
-curStatus="no"
 active_sink=""
 limit=$((100 - inc))
 maxlimit=$((maxvol - inc))
 
 reloadSink() {
-    active_sink=$(pacmd list-sinks | awk '/* index:/{print $3}')
+    active_sink=$(grep 'RUNNING' <(pactl list sinks short) | cut -d'	' -f1)
+    [ -n $active_sink ] || active_sink='@DEFAULT_SINK@'
+}
+
+function getCurVol {
+    curVol=$(sed -n '/Sink \#'$active_sink'/,/\s*Volume:/p' <(pactl list sinks) | tail -n1 \
+        | sed -e 's/.* \([0-9]*\)%.*/\1/')
 }
 
 function volUp {
@@ -28,10 +30,10 @@ function volUp {
     then
         if [ "$curVol" -le 100 ] && [ "$curVol" -ge "$limit" ]
         then
-            pactl set-sink-volume "$active_sink" -- 100%
+            pactl set-sink-volume "$active_sink" 100%
         elif [ "$curVol" -lt "$limit" ]
         then
-            pactl set-sink-volume "$active_sink" -- "+$inc%"
+            pactl set-sink-volume "$active_sink" "+$inc%"
         fi
     elif [ "$curVol" -le "$maxvol" ] && [ "$curVol" -ge "$maxlimit" ]
     then
@@ -41,12 +43,12 @@ function volUp {
         pactl set-sink-volume "$active_sink" "+$inc%"
     fi
 
-    getCurVol
+    #getCurVol
 
-    if [ ${osd} = 'yes' ]
-    then
-        qdbus org.kde.kded /modules/kosd showVolume "$curVol" 0
-    fi
+    #if [ ${osd} = 'yes' ]
+    #then
+    #    qdbus org.kde.kded /modules/kosd showVolume "$curVol" 0
+    #fi
 
     if [ ${autosync} = 'yes' ]
     then
@@ -59,20 +61,20 @@ function volDown {
     pactl set-sink-volume "$active_sink" "-$inc%"
     getCurVol
 
-    if [ ${osd} = 'yes' ]
-    then
-        qdbus org.kde.kded /modules/kosd showVolume "$curVol" 0
-    fi
+    #if [ ${osd} = 'yes' ]
+    #then
+    #    qdbus org.kde.kded /modules/kosd showVolume "$curVol" 0
+    #fi
 
-    if [ ${autosync} = 'yes' ]
-    then
-        volSync
-    fi
+    #if [ ${autosync} = 'yes' ]
+    #then
+    #    volSync
+    #fi
 
 }
 
 function getSinkInputs {
-    input_array=$(pacmd list-sink-inputs | grep -B 4 "sink: $1 " | awk '/index:/{print $2}')
+    input_array=$(pactl list sink-inputs | grep -B 4 "sink: $1 " | awk '/index:/{print $2}')
 }
 
 function volSync {
@@ -85,34 +87,34 @@ function volSync {
     done
 }
 
-function getCurVol {
-    curVol=$(pactl list sinks | grep '^[[:space:]]Volume:' | \
-    head -n $(( $SINK + 1 )) | tail -n 1 | sed -e 's,.* \([0-9][0-9]*\)%.*,\1,')
-}
-
 function volMute {
     case "$1" in
         mute)
             pactl set-sink-mute "$active_sink" 1
             curVol=0
-            status=1
+            #status=1
             ;;
         unmute)
             pactl set-sink-mute "$active_sink" 0
             getCurVol
-            status=0
+            #status=0
+            ;;
+        toggle)
+            pactl set-sink-mute "$active_sink" toggle
+            getCurVol
+            #status=0
             ;;
     esac
 
-    if [ ${osd} = 'yes' ]
-    then
-        qdbus org.kde.kded /modules/kosd showVolume ${curVol} ${status}
-    fi
+    #if [ ${osd} = 'yes' ]
+    #then
+    #    qdbus org.kde.kded /modules/kosd showVolume ${curVol} ${status}
+    #fi
 
 }
 
 function volMuteStatus {
-    curStatus=$(pacmd list-sinks | grep -A 15 "index: $active_sink$" | awk '/muted/{ print $2}')
+    curStatus=$(pactl list sinks | grep -A 15 "index: $active_sink$" | awk '/muted/{ print $2}')
 }
 
 # Prints output for bar
@@ -172,13 +174,7 @@ case "$1" in
         volDown
         ;;
     --togmute)
-        volMuteStatus
-        if [ "$curStatus" = 'yes' ]
-        then
-            volMute unmute
-        else
-            volMute mute
-        fi
+        volMute toggle
         ;;
     --mute)
         volMute mute

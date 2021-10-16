@@ -113,13 +113,13 @@ module-margin-right = 0
 ;https://github.com/jaagr/polybar/wiki/Fonts
 font-0 = "Iosevka Medium Extended:size=10;2"
 font-1 = "Iosevka Medium Extended:size=16;3"
-font-2 = "Font Awesome 5 Free:style=Regular:pixelsize=8;1"
-font-3 = "Font Awesome 5 Free:style=Solid:pixelsize=8;1"
-font-4 = "Font Awesome 5 Brands:pixelsize=8;1"
+font-2 = "Font Awesome 5 Free:style=Regular:pixelsize=9;1"
+font-3 = "Font Awesome 5 Free:style=Solid:pixelsize=9;1"
+font-4 = "Font Awesome 5 Brands:pixelsize=9;1"
 
 modules-left = battery ewmh xwindow
-modules-center = 
-modules-right = arrow1 wireless-network arrow2 memory2 arrow3 cpu2 arrow2 arrow3 date
+modules-center =
+modules-right = arrow1 wireless-network arrow2 memory2 arrow3 cpu2 arrow2 player-mpris-tail pipevolume arrow3 date
 
 tray-detached = false
 tray-offset-x = 0
@@ -680,19 +680,27 @@ format-underline = #FFBB00
 
 ################################################################################
 
-[module/pavolume]
+[module/pipevolume]
 type = custom/script
 tail = true
 label = %output%
-exec = ~/.config/polybar/scripts/pavolume.sh --listen
+format-prefix = "  "
+exec = ~/.config/polybar/scripts/pipevolume.sh --listen
 click-right = exec pavucontrol
-click-left = ~/.config/polybar/scripts/pavolume.sh --togmute
-scroll-up = ~/.config/polybar/scripts/pavolume.sh --up
-scroll-down = ~/.config/polybar/scripts/pavolume.sh --down
+click-left = ~/.config/polybar/scripts/pipevolume.sh --togmute
+scroll-up = ~/.config/polybar/scripts/pipevolume.sh --up
+scroll-down = ~/.config/polybar/scripts/pipevolume.sh --down
 format-foreground = ${colors.accent-fg}
 format-background = ${colors.accent1}
 
+################################################################################
 
+[module/player-mpris-tail]
+format-foreground = ${colors.accent-fg}
+format-background = ${colors.accent1}
+type = custom/script
+exec = ~/.config/polybar/scripts/player-mpris-tail.py -f '{icon} {:artist:t15:{artist}:}{:artist: - :}{:t30:{title}:}'
+tail = true
 
 ################################################################################
 
