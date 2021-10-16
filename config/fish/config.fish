@@ -36,3 +36,7 @@ alias ssh="kitty +kitten ssh"
 
 set -g LINUX_SRC_PATH "$HOME/shared/linux"
 set -g VM_PATH "$HOME/vms"
+
+# pyenv setup
+status is-login; and pyenv init --path | source
+status is-interactive; and pyenv init - | source

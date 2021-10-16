@@ -5,3 +5,6 @@
 [submodule "omf/eseal"]
 	path = omf/eseal
 	url = https://github.com/isinyaaa/fish-eseal
+[submodule "config/polybar/polybar-scripts"]
+	path = config/polybar/polybar-scripts
+	url = https://github.com/polybar/polybar-scripts
