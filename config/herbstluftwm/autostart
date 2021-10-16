@@ -30,21 +30,18 @@ hc keybind $Mod-Shift-q close
 hc keybind $Mod-Return spawn $myTerm
 hc keybind $Mod-e spawn $myTerm --class editor -e $myEditor
 hc keybind $Mod-Shift-Return spawn $myTerm --class floating-term
-
 hc keybind $Mod-d spawn rofi -matching fuzzy -show combi
 
+# Bluetooth setup
 hc keybind $Mod-Control-b spawn bluetoothctl connect 94:DB:56:EA:A2:5A
 hc keybind $Mod-Control-Shift-b spawn bluetoothctl disconnect 94:DB:56:EA:A2:5A
 
 # Screenshots
-
 screenshots_script="$HOME/.config/herbstluftwm/scripts/screenshots.sh"
-
 hc keybind Print spawn $screenshots_script
 hc keybind $Mod-Shift-Print spawn $screenshots_script select
 
 # Quick monitor setup
-
 xrandr_script="$HOME/.config/herbstluftwm/scripts/xrandr.sh"
 hc keybind $Mod-Control-m spawn $xrandr_script 1
 hc keybind $Mod-Shift-m spawn $xrandr_script 2
@@ -100,11 +97,18 @@ hc keybind $Mod-Control-Right  resize right +$resizestep
 
 # media stuff
 hc keybind XF86AudioPlay 	spawn playerctl play
-hc keybind XF86AudioPause 	spawn playerctl play-pause
-hc keybind XF86AudioLowerVolume spawn playerctl volume 0.1-
-hc keybind XF86AudioRaiseVolume spawn playerctl volume 0.1+
+hc keybind XF86AudioPause 	spawn playerctl play-pause # buggy!
 hc keybind XF86AudioNext 	spawn playerctl next
 hc keybind XF86AudioPrev 	spawn playerctl previous
+
+hc keybind XF86AudioMute        spawn pactl set-sink-mute @DEFAULT_SINK@ toggle
+hc keybind XF86AudioLowerVolume spawn pactl set-sink-volume @DEFAULT_SINK@ -10%
+hc keybind XF86AudioRaiseVolume spawn pactl set-sink-volume @DEFAULT_SINK@ +10%
+
+# misc fn keys
+hc keybind XF86BrightnessDown 	spawn backlight_control -10
+hc keybind XF86BrightnessUp 	spawn backlight_control +10
+#hc keybind XF86iTouch
 
 # tags
 # tag_names=("一" "二" "三" "四" "五" "六" "七" "八")
