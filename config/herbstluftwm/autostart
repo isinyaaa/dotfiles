@@ -223,9 +223,9 @@ hc pad 0 20 0 0 0
 hc pad 1 20 0 0 0
 
 # find the panel
-panel=~/.config/herbstluftwm/panel.sh
-[ -x "$panel" ] || panel=/etc/xdg/herbstluftwm/panel.sh
+panel_script="$HOME/.config/herbstluftwm/scripts/panel.sh"
+[ -x "$panel_script" ] || panel_script="$HOME/.config/herbstluftwm/scripts/panel.sh"
 for monitor in $(herbstclient list_monitors | cut -d: -f1) ; do
     # start it on each monitor
-    "$panel" $monitor &
+    "$panel_script" $monitor &
 done
