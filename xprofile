@@ -12,7 +12,7 @@ picom --experimental-backends -b
 
 # set keyboard stuff
 xset r rate 200 30
-xset s off -dpms
+#xset s off -dpms
 
 # start some stuff
 redshift &
