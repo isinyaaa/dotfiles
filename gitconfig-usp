@@ -1,0 +1,6 @@
+[user]
+    email = isabellabdoamaral@usp.br
+    signingKey = 217AB88EFC8BC1FF
+[sendemail]
+    smtpServer = smtp.gmail.com
+    smtpUser = isabellabdoamaral@usp.br
