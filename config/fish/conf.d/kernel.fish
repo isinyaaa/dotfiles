@@ -52,7 +52,8 @@ abbr -a qx86a 'qemu-system-x86_64 \
     -append "root=/dev/vda rw console=ttyS0 nokaslr loglevel=7 raid=noautodetect audit=0 cpuidle_haltpoll.force=1" \
     -enable-kvm -m 4G -smp 4 -cpu host \
     -nic user,hostfwd=tcp::2222-:22,smb=$HOME/shared -s \
-    -nographic'
+    -nographic \
+    && stty sane'
 
 #-fsdev local,id=fs1,path=/home/tonyk/codes,security_model=none \
 #-device virtio-9p-pci,fsdev=fs1,mount_tag=$HOME/shared \
