@@ -37,7 +37,8 @@ else
     Plug 'vim-airline/vim-airline-themes'
     "Plug 'drewtempelmeyer/palenight.vim'
     "Plug 'rakr/vim-one'
-    Plug 'liuchengxu/space-vim-dark'
+    Plug 'liuchengxu/space-vim-theme'
+    "Plug 'liuchengxu/space-vim-dark'
 
     Plug 'tpope/vim-rhubarb'                    " vim-fugitive plugin for opening file on Github, using :Gbrowse
     Plug 'mileszs/ack.vim'                      " enabling ack (better than grep.vim)
@@ -71,7 +72,7 @@ else
     " open ctag in new tab
     map <C-\> :tab split<CR>:exec("tag ".expand("<cword>"))<CR>
     " list all mapping using `:map`
-    " if you do `Ctrol-k` and then press a key, the vim
+    " if you do `Ctrl-k` and then press a key, the vim
     " will tell you how this key is know to vim
 
     " ack.vim Settings
@@ -83,8 +84,10 @@ else
 
     " == THEME SETUP ==
 
-    colorscheme space-vim-dark
-    let g:airline_theme='space-vim-dark'
+    "colorscheme space-vim-dark
+    colorscheme space_vim_theme
+    hi Comment cterm=italic
+    "let g:airline_theme='space-vim-theme'
 
     " ==== vim-one ====
     "Use 24-bit (true-color) mode in Vim/Neovim when outside tmux.
@@ -116,7 +119,7 @@ else
     "endif
 
     " ==== space-vim-dark ====
-    hi Comment guifg=#5C6370 ctermfg=59
+    "hi Comment guifg=#5C6370 ctermfg=59
 
     " to set transparent BG
     function! AdaptColorscheme()
