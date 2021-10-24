@@ -38,14 +38,14 @@ hc keybind $Mod-Control-Shift-b spawn bluetoothctl disconnect 94:DB:56:EA:A2:5A
 
 # Screenshots
 screenshots_script="$HOME/.config/herbstluftwm/scripts/screenshots.sh"
-hc keybind Print spawn $screenshots_script
-hc keybind $Mod-Shift-Print spawn $screenshots_script select
+hc keybind Print spawn $screenshots_script --fullscreen
+hc keybind $Mod-Shift-Print spawn $screenshots_script --selection
 
 # Quick monitor setup
 xrandr_script="$HOME/.config/herbstluftwm/scripts/xrandr.sh"
-hc keybind $Mod-Control-m spawn $xrandr_script 1
-hc keybind $Mod-Shift-m spawn $xrandr_script 2
-hc keybind $Mod-Control-Shift-m spawn $xrandr_script 3
+hc keybind $Mod-Control-m spawn $xrandr_script --laptop-only
+hc keybind $Mod-Shift-m spawn $xrandr_script --hdmi-only
+hc keybind $Mod-Control-Shift-m spawn $xrandr_script --dual-monitors
 
 # My dmenu scripts (Alt+Ctrl+Key)
 #hc keybind Mod1-Control-e spawn ./.dmenu/dmenu-edit-configs.sh
