@@ -219,13 +219,9 @@ herbstclient set tree_style '╾│ ├└╼─┐'
 # hc set_monitors 1920x1060+0+20 1920x1060+1920+20
 # or simply:
 hc detect_monitors
-hc pad 0 20 0 0 0
-hc pad 1 20 0 0 0
+hc pad 0 28 0 0 0
+hc pad 1 0 0 0 0
 
 # find the panel
-panel_script="$HOME/.config/herbstluftwm/scripts/panel.sh"
-[ -x "$panel_script" ] || panel_script="$HOME/.config/herbstluftwm/scripts/panel.sh"
-for monitor in $(herbstclient list_monitors | cut -d: -f1) ; do
-    # start it on each monitor
-    "$panel_script" $monitor &
-done
+PANEL_SCRIPT="$HOME/.config/herbstluftwm/scripts/panel.sh"
+"$PANEL_SCRIPT" &
