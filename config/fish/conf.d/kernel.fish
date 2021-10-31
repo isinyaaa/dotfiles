@@ -10,6 +10,14 @@ end
 abbr -a mk 'make CC="ccache gcc -fdiagnostics-color" -j8 O=$BUILD_FOLDER'
 abbr -a mmd 'make modules CC="ccache gcc -fdiagnostics-color" -j8 O=$BUILD_FOLDER'
 
+function clean-output
+    default_set INPUT_FILE $argv[1] 'modules1'
+    default_set SEARCH $argv[2] 'gpu.*amd'
+    default_set IO_PATH $argv[3] "$BUILD_FOLDER"
+    grep -Ev 'CC|LD|MODPOST|GEN' $IO_PATH/$INPUT_FILE".log" |\
+        grep -A5 $SEARCH > $IO_PATH/$INPUT_FILE".clean.log"
+end
+
 function set-arch
     set -g ARCH "$argv"
     set -g ARCH_BUILD "$argv-build"

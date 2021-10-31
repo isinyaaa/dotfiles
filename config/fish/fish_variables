@@ -1,6 +1,11 @@
 # This file contains fish universal variable definitions.
 # VERSION: 3.0
 SETUVAR --export PYENV_ROOT:/home/isinyaaa//\x2epyenv
+SETUVAR ZO_CMD:zo
+SETUVAR Z_CMD:z
+SETUVAR Z_DATA:/home/isinyaaa//\x2elocal/share/z/data
+SETUVAR Z_DATA_DIR:/home/isinyaaa//\x2elocal/share/z
+SETUVAR Z_EXCLUDE:\x5e/home/isinyaaa/\x24
 SETUVAR __fish_initialized:3100
 SETUVAR _fish_abbr_inshm:sudo\x20make\x20\x2dj8\x20O\x3d\x24BUILD_FOLDER\x20\x5c\x0a\x20\x20\x20\x20INSTALL_HDR_PATH\x3d\x24IMG_PATH/mnt/usr\x20INSTALL_MOD_PATH\x3d\x24VM_PATH/mnt\x20\x5c\x0a\x20\x20\x20\x20headers_install\x20modules_install
 SETUVAR _fish_abbr_mcg:make\x20CC\x3d\x22ccache\x20gcc\x20\x2dfdiagnostics\x2dcolor\x22\x20\x2dj8\x20O\x3d\x24BUILD_FOLDER
