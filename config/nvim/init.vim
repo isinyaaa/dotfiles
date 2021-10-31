@@ -27,14 +27,18 @@ else
     autocmd BufWinLeave * call clearmatches()
     autocmd BufWritePre * :%s/\s\+$//e
 
+    filetype plugin on
     filetype plugin indent on
     syntax on
 
     call plug#begin('~/.vim/plugged')
     Plug 'wakatime/vim-wakatime'
     Plug 'tpope/vim-fugitive'                   " git wrapper
+    Plug 'airblade/vim-gitgutter'
     Plug 'vim-airline/vim-airline'              " status/tabline
     Plug 'vim-airline/vim-airline-themes'
+    Plug 'tpope/vim-sleuth'
+
     "Plug 'drewtempelmeyer/palenight.vim'
     "Plug 'rakr/vim-one'
     Plug 'liuchengxu/space-vim-theme'
@@ -43,20 +47,20 @@ else
     Plug 'tpope/vim-rhubarb'                    " vim-fugitive plugin for opening file on Github, using :Gbrowse
     Plug 'mileszs/ack.vim'                      " enabling ack (better than grep.vim)
     Plug 'scrooloose/nerdtree'                  " nerdtree plugin
+    Plug 'tpope/vim-commentary'                 " comment/uncomment stuff
     Plug 'majutsushi/tagbar'                    " overview of current file structure
-    Plug 'joe-skb7/cscope-maps'             " cscope shortcuts
+    Plug 'joe-skb7/cscope-maps'                 " cscope shortcuts
+
+    Plug 'vivien/vim-linux-coding-style'
 
     "Plug 'ctrlpvim/ctrlp.vim'                   " fuzzy search
-    "Plug 'junegunn/fzf.vim'                                                 " fzf: more intuitive search than CtrlP
-    "Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }       " fzf: more intuitive search than CtrlP
+    Plug 'junegunn/fzf.vim', { 'do': { -> fzf#install() } } " fzf: more intuitive search than CtrlP
     "Plugin 'tpope/vim-surround'                  " manage surroundings (parenthesis, brackets, quotes, XML tags, etc.)
-    "Plugin 'tpope/vim-commentary'                " comment/uncomment stuff
-    "Plugin 'tpope/vim-repeat'                    " enable repeating supported plugin (not just native last command)
+    Plug 'tpope/vim-repeat'                    " enable repeating supported plugin (not just native last command)
     "Plugin 'scrooloose/syntastic'                " syntax checking
     "Plugin 'psf/black'                           " Python code formatter: Black
     "Plugin 'elzr/vim-json'                       " json filetype plugin
     "Plugin 'google/vim-jsonnet'                  " jsonnet filetype plugin
-    "Plugin 'fatih/vim-go'                        " golang development plugin
     "Plugin 'rust-lang/rust.vim'                  " rust development plugin
     "Plugin 'godlygeek/tabular'                   " dependency for vim-markdown
     "Plugin 'plasticboy/vim-markdown'             " vim-markdown
@@ -64,6 +68,8 @@ else
     call plug#end()
 
     let NERDTreeShowHidden=1
+
+    nmap <C-n> <ESC>:NERDTreeToggle<CR>
 
     " CTags Settings
     " Refer: http://ctags.sourceforge.net/ or `man ctags`
@@ -87,6 +93,12 @@ else
     "colorscheme space-vim-dark
     colorscheme space_vim_theme
     hi Comment cterm=italic
+
+    nmap ghp <Plug>(GitGutterPreviewHunk)
+    nmap ghs <Plug>(GitGutterStageHunk)
+    nmap ghu <Plug>(GitGutterUndoHunk)
+    nmap ]h <Plug>(GitGutterNextHunk)
+    nmap [h <Plug>(GitGutterPrevHunk)
     "let g:airline_theme='space-vim-theme'
 
     " ==== vim-one ====
