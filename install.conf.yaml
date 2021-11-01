@@ -8,6 +8,7 @@
 - link:
     ~/.gitconfig: gitconfig
     ~/.gitconfig-usp: gitconfig-usp
+    ~/.gitconfig-work: gitconfig-work
     ~/.xinitrc: xinitrc
     ~/.xprofile: xprofile
     ~/.Xresources: Xresources

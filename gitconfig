@@ -8,6 +8,8 @@
     smtpServer = mail.riseup.net
     smtpServerPort = 465
     smtpUser = isabbasso
+[includeIf "gitdir:~/repos/redhat"]
+    path = ~/.gitconfig-work
 [includeIf "gitdir:~/repos/usp"]
     path = ~/.gitconfig-usp
 [credential]
