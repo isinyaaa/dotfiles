@@ -7,6 +7,10 @@
 # for managing keys
 export GPG_TTY=(tty)
 
+if test -n "$DESKTOP_SESSION"
+    set -x (gnome-keyring-daemon --start | string split "=")
+end
+
 # for managing ruby
 #status --is-interactive; and source (rbenv init -|psub)
 #set -gx PATH $PATH $HOME/.local/share/gem/ruby/3.0.0/bin
