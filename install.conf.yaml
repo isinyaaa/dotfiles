@@ -22,6 +22,8 @@
         path: config/awesome/
     ~/.config/bat:
         path: config/bat/
+    ~/.config/dunst:
+        path: config/dunst/
     ~/.config/fish:
         path: config/fish/
     ~/.config/gtk-3.0/gtk.css:
