@@ -5,6 +5,9 @@ xrdb -load ~/.Xresources
 
 .config/herbstluftwm/scripts/xrandr.sh --dual-monitors
 
+# set mic vol
+pactl set-source-volume @DEFAULT_SOURCE@ 70%
+
 # Start compositor
 picom --experimental-backends -b
 #pipewire &
