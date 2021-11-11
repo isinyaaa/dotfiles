@@ -7,15 +7,28 @@ end
 
 #find $LINUX_SRC_PATH/*_build -maxdepth 0 | head -n1
 
-abbr -a mk 'make CC="ccache gcc -fdiagnostics-color" -j8 O=$BUILD_FOLDER'
-abbr -a mmd 'make modules CC="ccache gcc -fdiagnostics-color" -j8 O=$BUILD_FOLDER'
+abbr -a mk 'make CC="ccache gcc -fdiagnostics-color -O0" -j8 O=$BUILD_FOLDER'
+#abbr -a mmd 'make modules CC="ccache gcc -fdiagnostics-color" -j8 O=$BUILD_FOLDER'
+abbr -a gg 'git grep'
+abbr -a glg 'git log --grep='
+alias gitline='git log --oneline'
 
 function clean-output
     default_set INPUT_FILE $argv[1] 'modules1'
     default_set SEARCH $argv[2] 'gpu.*amd'
+
+    if not set -q BUILD_FOLDER; and not set -q argv[3]
+        return 2
+    end
+
     default_set IO_PATH $argv[3] "$BUILD_FOLDER"
-    grep -Ev 'CC|LD|MODPOST|GEN' $IO_PATH/$INPUT_FILE".log" |\
-        grep -A5 $SEARCH > $IO_PATH/$INPUT_FILE".clean.log"
+
+    set FILE $IO_PATH/$INPUT_FILE
+
+    # clear possible CLI menuconfig output
+    set LAST_LINE (grep -nm2 'GEN\s*Makefile' $FILE".log" | tail -n1 | cut -d: -f1)
+    sed -e "1,"$LAST_LINE"d" $FILE".log" | grep -v '^\s\s[A-Z]' |\
+        grep -B1 -A5 $SEARCH > $FILE".clean.log"
 end
 
 function set-arch
