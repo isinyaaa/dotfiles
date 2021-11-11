@@ -113,7 +113,7 @@ font-2 = "Font Awesome 5 Free:style=Regular:pixelsize=9;1"
 font-3 = "Font Awesome 5 Free:style=Solid:pixelsize=9;1"
 font-4 = "Font Awesome 5 Brands:pixelsize=9;1"
 
-modules-left = battery ewmh
+modules-left = battery time-brno time-sp ewmh
 ;xwindow
 modules-center =
 modules-right = arrow1 wireless-network arrow2 memory2 arrow3 cpu2 arrow2 player-mpris-tail pipevolume arrow3 xkeyboard date
@@ -316,7 +316,7 @@ format-charging-underline = #a3c725
 
 format-discharging = <ramp-capacity> <label-discharging>
 label-discharging =  %percentage%%
-format-discharging-underline = #c7ae25
+format-discharging-underline = #dc3412
 format-discharging-foreground = ${colors.foreground}
 format-discharging-background = ${colors.background}
 
@@ -331,7 +331,7 @@ ramp-capacity-1 = 
 ramp-capacity-2 = 
 ramp-capacity-3 = 
 ramp-capacity-4 = 
-ramp-capacity-foreground = #c7ae25
+ramp-capacity-foreground = #dc3412
 
 animation-charging-0 = 
 animation-charging-1 = 
@@ -427,17 +427,33 @@ label = Cpu %percentage:3%%
 
 ################################################################################
 
+[module/time-brno]
+type = custom/script
+exec = TZ=Europe/Prague date +"Brno %H:%M"
+interval = 5
+format-prefix = " "
+label-underline = #6600ff
+
+[module/time-sp]
+type = custom/script
+exec = date +"São Paulo %H:%M"
+interval = 5
+label-underline = #12beac
+format-prefix = "/"
+format-suffix = " "
+
 [module/date]
 ;https://github.com/jaagr/polybar/wiki/Module:-date
 type = internal/date
 ; Seconds to sleep between updates
-interval = 5
+interval = 60
 ; See "http://en.cppreference.com/w/cpp/io/manip/put_time" for details on how to format the date string
 ; NOTE: if you want to use syntax tags here you need to use %%{...}
 date = " %a %b %d, %Y"
 date-alt = " %a %b %d, %Y"
-time = %l:%M%P
-time-alt = %l:%M%P
+time =
+;time = "São Paulo: %l:%M%P"
+;time-alt = %l:%M%P
 format-prefix = " "
 format-prefix-foreground = ${colors.accent-fg}
 format-foreground = ${colors.accent-fg}
