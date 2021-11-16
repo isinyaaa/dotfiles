@@ -30,7 +30,7 @@ function dual-monitors()
     hdmi_flags="--auto --left-of eDP1 --primary"
 }
 
-if [ "$#" > 0 ]; then
+if [ "$#" -gt 0 ]; then
     case $1 in
         --laptop-only)
             laptop-only

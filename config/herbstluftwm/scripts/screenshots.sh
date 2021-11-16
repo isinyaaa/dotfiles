@@ -21,7 +21,7 @@ function fullscreen()
         -t image/png $filename &>/dev/null
 }
 
-if [ "$#" > 0 ]; then
+if [ "$#" -gt 0 ]; then
     case $1 in
         --selection)
             selection
