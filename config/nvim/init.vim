@@ -25,7 +25,6 @@ else
     autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
     autocmd InsertLeave * match ExtraWhitespace /\s\+$/
     autocmd BufWinLeave * call clearmatches()
-    autocmd BufWritePre * :%s/\s\+$//e
 
     filetype plugin on
     filetype plugin indent on
@@ -99,6 +98,9 @@ else
     nmap ghu <Plug>(GitGutterUndoHunk)
     nmap ]h <Plug>(GitGutterNextHunk)
     nmap [h <Plug>(GitGutterPrevHunk)
+
+    nmap ghw <ESC>:%s/\s\+$//e<CR>
+    "BufWritePre * 
     "let g:airline_theme='space-vim-theme'
 
     " ==== vim-one ====
