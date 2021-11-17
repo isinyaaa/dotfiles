@@ -5,7 +5,9 @@ dpi=100
 xrandr-set()
 {
     [ $# == 2 ] || return
-    eval xrandr --output eDP1 "$1" --output HDMI1 "$2"
+    output="DP1-3"
+    test $(hostname) = "aehse" && output="HDMI1"
+    eval xrandr --output eDP1 "$1" --output "$output" "$2"
 }
 
 function laptop-only()

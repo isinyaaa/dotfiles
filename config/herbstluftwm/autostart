@@ -199,6 +199,7 @@ hc rule class=UnityHub tag=dev
 hc rule class=Unity tag=dev
 hc rule class=discord tag=chat
 hc rule class=TelegramDesktop tag=chat
+hc rule class=telegram-desktop tag=chat
 hc rule class=Ferdi tag=chat
 hc rule class=Steam tag=game
 hc rule focus=on # normally focus new clients
