@@ -9,6 +9,7 @@
     ~/.gitconfig: gitconfig
     ~/.gitconfig-usp: gitconfig-usp
     ~/.gitconfig-work: gitconfig-work
+    ~/.gitconfig-common: gitconfig-common
     ~/.xinitrc: xinitrc
     ~/.xprofile: xprofile
     ~/.Xresources: Xresources

@@ -1,0 +1,6 @@
+[user]
+    email = isabbasso@riseup.net
+    signingKey = E0EA61F34ADB15C4
+[sendemail]
+    smtpServer = mail.riseup.net
+    smtpUser = isabbasso

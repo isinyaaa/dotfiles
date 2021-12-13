@@ -1,16 +1,14 @@
 [user]
     name = Isabella Basso
-    email = isabbasso@riseup.net
-    signingKey = E0EA61F34ADB15C4
 [sendemail]
     confirm = auto
     smtpEncryption = ssl
-    smtpServer = mail.riseup.net
     smtpServerPort = 465
-    smtpUser = isabbasso
-[includeIf "gitdir:~/repos/redhat"]
+[include]
+    path = ~/.gitconfig-common
+[includeIf "gitdir:~/repos/redhat/"]
     path = ~/.gitconfig-work
-[includeIf "gitdir:~/repos/usp"]
+[includeIf "gitdir:~/repos/usp/"]
     path = ~/.gitconfig-usp
 [credential]
     helper = /usr/bin/pass-git-helper
