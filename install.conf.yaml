@@ -13,6 +13,7 @@
     ~/.xprofile: xprofile
     ~/.Xresources: Xresources
     ~/.vimrc: vimrc
+    ~/.vncxstartup: vncxstartup
     ~/.wacom: wacom
     ~/bin:
         path: bin/
