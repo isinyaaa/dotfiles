@@ -38,6 +38,7 @@
 [difftool "vscodium"]
     cmd = vscodium --wait --diff \"$LOCAL\" \"$REMOTE\"
 [merge]
+    conflictstyle = diff3
     tool = nvim
 [mergetool]
     prompt = false
@@ -45,3 +46,6 @@
     cmd = nvim -f -c \"Gdiffsplit!\" \"$MERGED\"
 [mergetool "vscodium"]
     cmd = vscodium --wait \"$MERGED\"
+[alias]
+    save-staged = "!bash -c \"git stash --keep-index; git stash push -m \"staged\" --keep-index; git stash pop stash@{1}\""
+    stash-staged = "!bash -c \"git save-staged; git commit -m \"temp\"; git stash; git reset --hard HEAD^; git stash pop\""
