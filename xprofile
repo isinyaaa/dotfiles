@@ -14,8 +14,7 @@ picom --experimental-backends -b
 #pipewire &
 #pulseeffects &
 
-# set keyboard stuff
-xset r rate 200 30
+xset r rate 200 20
 #xset s off -dpms
 
 # start some stuff
