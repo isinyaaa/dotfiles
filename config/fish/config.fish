@@ -16,9 +16,9 @@ end
 #set -gx PATH $PATH $HOME/.local/share/gem/ruby/3.0.0/bin
 
 # update path
-set -gx PATH $PATH $HOME/bin
-set -gx PATH $PATH $HOME/.local/bin
-set -gx PATH $PATH $HOME/.cargo/bin
+set -gx PATH $HOME/bin $PATH
+set -gx PATH $HOME/.local/bin $PATH
+set -gx PATH $HOME/.cargo/bin $PATH
 
 # set user preferences
 export default_user=isinyaaa
