@@ -11,6 +11,9 @@ if test -n "$DESKTOP_SESSION"
     set -x (gnome-keyring-daemon --start | string split "=")
 end
 
+# setup docker
+export DOCKER_HOST=unix://$XDG_RUNTIME_DIR/docker.sock
+
 # for managing ruby
 #status --is-interactive; and source (rbenv init -|psub)
 #set -gx PATH $PATH $HOME/.local/share/gem/ruby/3.0.0/bin
