@@ -11,7 +11,7 @@
 [includeIf "gitdir:~/repos/usp/"]
     path = ~/.gitconfig-usp
 [credential]
-    helper = /usr/bin/pass-git-helper
+	helper = !pass-git-helper $@
 [init]
     defaultBranch = main
 [format]
