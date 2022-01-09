@@ -13,6 +13,12 @@ abbr -a gg 'git grep'
 abbr -a glg 'git log --grep='
 alias gitline='git log --oneline --graph'
 
+function ggb -d "git grep + git blame"
+    command git grep -En $argv[1] | while read --delimiter=: -l file line code
+        git blame -f -L $line,$line $file | grep -E --color "$argv[1]|\$"
+    end
+end
+
 function clean-output
     default_set INPUT_FILE $argv[1] 'modules1'
     default_set SEARCH $argv[2] 'gpu.*amd'
