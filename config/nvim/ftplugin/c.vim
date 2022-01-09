@@ -7,4 +7,3 @@ else
     set softtabstop=8
     set noexpandtab
 endif
-

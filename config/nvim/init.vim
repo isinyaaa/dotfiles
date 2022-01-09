@@ -38,6 +38,11 @@ else
     Plug 'vim-airline/vim-airline-themes'
     Plug 'tpope/vim-sleuth'
 
+    Plug 'Valloric/YouCompleteMe'
+    Plug 'vim-syntastic/syntastic'
+    Plug 'vim-scripts/indentpython.vim'
+    Plug 'nvie/vim-flake8'
+
     "Plug 'drewtempelmeyer/palenight.vim'
     "Plug 'rakr/vim-one'
     Plug 'liuchengxu/space-vim-theme'
@@ -65,6 +70,23 @@ else
     "Plugin 'plasticboy/vim-markdown'             " vim-markdown
     "Plugin 'jpo/vim-railscasts-theme'            " railscasts-theme
     call plug#end()
+
+    let g:ycm_autoclose_preview_window_after_completion=1
+    
+    "python with virtualenv support
+    let python_highlight_all=1
+    syntax on
+
+    set statusline+=%#warningmsg#
+    set statusline+=%{SyntasticStatuslineFlag()}
+    set statusline+=%*
+
+    let g:syntastic_always_populate_loc_list = 1
+    let g:syntastic_auto_loc_list = 1
+    let g:syntastic_check_on_open = 1
+    let g:syntastic_check_on_wq = 0
+
+    autocmd BufNewFile,BufRead ~/projects/kworkflow/* let syntastic_sh_shellcheck_args="--external-sources --shell=bash --exclude=SC2016,SC2181,SC2034,SC2154,SC2001,SC1090,SC1091,SC2120"
 
     let NERDTreeShowHidden=1
 
