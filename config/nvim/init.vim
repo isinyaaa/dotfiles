@@ -43,10 +43,14 @@ else
     Plug 'vim-scripts/indentpython.vim'
     Plug 'nvie/vim-flake8'
 
+    Plug 'rust-lang/rust.vim'
+
     "Plug 'drewtempelmeyer/palenight.vim'
     "Plug 'rakr/vim-one'
     Plug 'liuchengxu/space-vim-theme'
     "Plug 'liuchengxu/space-vim-dark'
+
+    Plug 'inkch/vim-fish'
 
     Plug 'tpope/vim-rhubarb'                    " vim-fugitive plugin for opening file on Github, using :Gbrowse
     Plug 'mileszs/ack.vim'                      " enabling ack (better than grep.vim)
@@ -71,6 +75,8 @@ else
     "Plugin 'jpo/vim-railscasts-theme'            " railscasts-theme
     call plug#end()
 
+    let g:rust_clip_command = 'xclip -selection clipboard'
+    
     let g:ycm_autoclose_preview_window_after_completion=1
     
     "python with virtualenv support
