@@ -19,7 +19,7 @@ else
     "execute "set colorcolumn=" . join(range(81,335), ',')
     "highlight ColorColumn ctermbg=Black ctermfg=DarkRed
 
-    highlight ExtraWhitespace ctermbg=red guibg=red
+    " highlight ExtraWhitespace ctermbg=red guibg=red
     match ExtraWhitespace /\s\+$/
     autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
     autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
@@ -76,9 +76,9 @@ else
     call plug#end()
 
     let g:rust_clip_command = 'xclip -selection clipboard'
-    
+
     let g:ycm_autoclose_preview_window_after_completion=1
-    
+
     "python with virtualenv support
     let python_highlight_all=1
     syntax on
@@ -128,7 +128,7 @@ else
     nmap [h <Plug>(GitGutterPrevHunk)
 
     nmap ghw <ESC>:%s/\s\+$//e<CR>
-    "BufWritePre * 
+    "BufWritePre *
     "let g:airline_theme='space-vim-theme'
 
     " ==== vim-one ====
