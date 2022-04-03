@@ -28,6 +28,11 @@ export default_user=isinyaaa
 #export NVIM_TUI_ENABLE_CURSOR_SHAPE=1
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 
+alias login "export BW_SESSION=(pass bitwarden/session00)"
+
+# refresh sudo timeout
+alias sudo 'command sudo -v; command sudo '
+
 set -gx EDITOR nvim
 
 # set the correct timezone and format for prompt
