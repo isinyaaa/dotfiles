@@ -25,7 +25,7 @@ mkdir /home/user/shared
 [ -d /etc/samba ] || mkdir /etc/samba
 cp smb.conf /etc/samba/smb.conf
 
-services="sshd dhcpcd smb"
+services="sshd dhcpcd smb home-user-shared.mount"
 systemctl enable $services --now
 
 

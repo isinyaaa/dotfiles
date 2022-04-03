@@ -61,7 +61,7 @@ function set-arch
 end
 
 abbr -a mcr 'COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-11.2.0 make.cross -j4 ARCH=$ARCH O=$ARCH_BUILD'
-abbr -a menu 'make menuconfig O=$BUILD_FOLDER'
+abbr -a menu 'make menuconfig -j O=$BUILD_FOLDER'
 
 # === vm management ===
 
@@ -112,8 +112,13 @@ function default_set --no-scope-shadowing
 end
 
 function echorun
-    echo "\$ $argv"
-    eval $argv
+    if test $argv[1] = '-e'
+        echo "\$ $argv[2..-1]" >&2
+        eval $argv[2..-1]
+    else
+        echo "\$ $argv"
+        eval $argv
+    end
 end
 
 function wait_for_mount
