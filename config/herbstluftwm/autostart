@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# shellcheck disable=2086
 # This was taken from DT (took it from https://forums.bunsenlabs.org/viewtopic.php?id=3621)
 # Modified by @isinyaaa
 
@@ -27,6 +28,7 @@ myEditor="nvim"		# Set my preferred editor
 hc keybind $Mod-Shift-x quit
 hc keybind $Mod-Shift-r reload
 hc keybind $Mod-Shift-q close
+hc keybind $Mod-Shift-w spawn i3lock-fancy-rapid 5 5 -n
 hc keybind $Mod-Return spawn $myTerm
 hc keybind $Mod-e spawn $myTerm --class editor -e $myEditor
 hc keybind $Mod-Shift-Return spawn $myTerm --class floating-term
@@ -113,13 +115,13 @@ hc keybind XF86BrightnessUp 	spawn backlight_control +10
 # tags
 # tag_names=("一" "二" "三" "四" "五" "六" "七" "八")
 tag_names=("www" "dev" "chat" "mus" "doc" "sys" "idk" "game")
-tag_keys=( {1..9} 0 )
+tag_keys=( {1..8} )
 
 hc rename default "${tag_names[0]}" || true
-for i in ${!tag_names[@]} ; do
+for i in "${!tag_names[@]}" ; do
     hc add "${tag_names[$i]}"
     key="${tag_keys[$i]}"
-    if ! [ -z "$key" ] ; then
+    if [ -n "$key" ] ; then
         hc keybind "$Mod-$key" use_index "$i"
         hc keybind "$Mod-Shift-$key" move_index "$i"
     fi

@@ -15,6 +15,9 @@ picom --experimental-backends -b
 #pulseeffects &
 
 xset r rate 200 20
+xinput set-prop 10 359 0, 1
+xset s 600 120 -dpms
+xss-lock -- i3lock-fancy-rapid 5 3 -n &
 #xset s off -dpms
 
 # start some stuff

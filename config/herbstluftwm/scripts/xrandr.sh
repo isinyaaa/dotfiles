@@ -1,12 +1,15 @@
 #!/bin/bash
 
-dpi=100
+declare edp_flags
+declare hdmi_flags
+
+declare dpi=110
 
 xrandr-set()
 {
     [ $# == 2 ] || return
     output="DP1-3"
-    test $(hostname) = "aehse" && output="HDMI1"
+    test "$(hostname)" = "aehse" && output="HDMI1"
     eval xrandr --output eDP1 "$1" --output "$output" "$2"
 }
 
@@ -14,7 +17,7 @@ function laptop-only()
 {
     edp_flags="--auto"
     hdmi_flags="--off"
-    dpi=110
+    dpi=100
 }
 
 function hdmi-only()
@@ -27,9 +30,9 @@ function dual-monitors()
 {
     # small hack to make it work properly
     hdmi-only
-    xrandr-set
-    edp_flags="--auto"
-    hdmi_flags="--auto --left-of eDP1 --primary"
+    xrandr-set "$edp_flags" "$hdmi_flags"
+    edp_flags="--auto --pos 2560x360"
+    hdmi_flags="--auto --primary --pos 0x0"
 }
 
 if [ "$#" -gt 0 ]; then
