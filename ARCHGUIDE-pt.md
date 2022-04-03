@@ -451,8 +451,12 @@ Dentro do arquivo
 /etc/sudoers
 ---------------
 ## Adicione essa linha caso queira um pouco de diversão
-# Insult me
-Defaults \t insults
+Defaults    \t  insults
+## env_reset controla o ambiente a cada mudança de usuário
+## ^G deve ser inserido escapando o caracter (CTRL+V no vim e ALT+G no nano)
+Defaults    \t  env_reset,passprompt="^G[sudo] password for %p: "
+## isso deve tornar o login persistente
+Defaults    \t  timestamp_timeout=10,timestamp_type=global
 
 ## descomente essa linha (localizada no final do arquivo)
 %wheel ALL=(ALL) ALL
