@@ -61,3 +61,7 @@
         path: config/kw/
     ~/.local/share/omf/themes/eseal:
         path: omf/eseal/
+    ~/.local/share/nvim/site/autoload:
+        path: autoload/
+    ~/.vim/autoload:
+        path: autoload/

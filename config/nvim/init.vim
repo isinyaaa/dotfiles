@@ -13,6 +13,9 @@ else
     set expandtab
     set shiftwidth=4
     set softtabstop=4
+    set lazyredraw
+    set ttyfast
+    set noshowmode
 
     " 80 characters line
     set colorcolumn=81
@@ -58,6 +61,7 @@ else
     Plug 'tpope/vim-commentary'                 " comment/uncomment stuff
     Plug 'majutsushi/tagbar'                    " overview of current file structure
     Plug 'joe-skb7/cscope-maps'                 " cscope shortcuts
+    Plug 'karb94/neoscroll.nvim'
 
     Plug 'vivien/vim-linux-coding-style'
 
@@ -74,6 +78,8 @@ else
     "Plugin 'plasticboy/vim-markdown'             " vim-markdown
     "Plugin 'jpo/vim-railscasts-theme'            " railscasts-theme
     call plug#end()
+
+    lua require('neoscroll').setup()
 
     let g:rust_clip_command = 'xclip -selection clipboard'
 
