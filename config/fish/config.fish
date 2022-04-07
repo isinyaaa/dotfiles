@@ -45,7 +45,9 @@ end
 
 alias wipe="clear; fish_greeting"
 
-alias ssh="kitty +kitten ssh"
+if test (echo "$TERM" | grep -q "kitty")
+    alias ssh="kitty +kitten ssh"
+end
 
 set -g LINUX_SRC_PATH "$HOME/shared/linux"
 set -g VM_PATH "$HOME/vms"
