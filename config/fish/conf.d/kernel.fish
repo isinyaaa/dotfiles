@@ -65,40 +65,59 @@ abbr -a menu 'make menuconfig -j O=$BUILD_FOLDER'
 
 # === vm management ===
 
-function set-img
-    if echo "$argv" | grep -q '^/'
-        set -g IMG_FILE "$argv"
-    else
-        set -g IMG_FILE (pwd)"/$argv"
-    end
-    set -g IMG_PATH (echo $IMG_FILE | sed -e 's/\(.*\)\/.*$/\1/')
-end
-
 function install-mods
-    set MNT_FOLDER $IMG_PATH/mnt
-    mountpoint $MNT_FOLDER || echorun sudo mount $IMG_FILE $MNT_FOLDER
+    set img_name $argv[1]
+    set MNT_FOLDER "$IMG_PATH/mnt"
+    mountpoint "$MNT_FOLDER" || echorun sudo mount "$img_name" "$MNT_FOLDER"
 
-    wait_for_mount $MNT_FOLDER
+    wait_for_mount "$MNT_FOLDER"
 
-    pwd | grep -q 'linux$' || echo "entering directory '$HOME/shared/linux'" && pushd $HOME/shared/linux
+    pwd | grep -q 'linux$' || echo "entering directory '$HOME/shared/linux'" && pushd "$HOME"/shared/linux
 
-    echorun sudo make -j8 O=$BUILD_FOLDER \
-    INSTALL_HDR_PATH=$MNT_FOLDER/usr INSTALL_MOD_PATH=$MNT_FOLDER \
-    headers_install modules_install
+    echorun sudo make -j8 O="$BUILD_FOLDER" \
+        INSTALL_HDR_PATH="$MNT_FOLDER"/usr INSTALL_MOD_PATH="$MNT_FOLDER" \
+        headers_install modules_install
 
     dirs > /dev/null && echo "leaving directory '"(pwd)"'" && popd
 
     echorun sudo umount $MNT_FOLDER
 end
 
-abbr -a qx86a 'qemu-system-x86_64 \
-    -boot order=a -drive file=$IMG_FILE,format=raw,if=virtio \
-    -kernel $LINUX_SRC_PATH/$BUILD_FOLDER/arch/x86_64/boot/bzImage \
-    -append "root=/dev/vda rw console=ttyS0 nokaslr loglevel=7 raid=noautodetect audit=0 cpuidle_haltpoll.force=1" \
-    -enable-kvm -m 4G -smp 4 -cpu host \
-    -nic user,hostfwd=tcp::2222-:22,smb=$HOME/shared -s \
-    -nographic \
-    && stty sane'
+abbr -a qx86a qemu_x86_64
+
+function qemu_x86_64
+    set img_name $argv[1]
+
+    qemu-system-x86_64 \
+        -boot order=a -drive file=$img_name,format=qcow2,if=virtio \
+        -kernel "$LINUX_SRC_PATH/$BUILD_FOLDER"/arch/x86_64/boot/bzImage \
+        -append 'root=/dev/vda rw console=ttyS0 nokaslr loglevel=7 raid=noautodetect audit=0 cpuidle_haltpoll.force=1' \
+        -enable-kvm -m 4G -smp 4 -cpu host \
+        -nic user,hostfwd=tcp::2222-:22,smb=$HOME/shared -s \
+        -nographic
+end
+
+abbr -a qaa qemu_aarch64
+
+function qemu_aarch64
+    set img_name $argv[1]
+
+    qemu-system-aarch64 -L ~/bin/qemu/share/qemu \
+         -smp 8 \
+         -machine virt,accel=hvf,highmem=off \
+         -cpu cortex-a72 -m 4096 \
+         -drive "if=pflash,media=disk,id=drive0,file=$HOME/vms/setup/UEFI/flash0.img,cache=writethrough,format=raw" \
+         -drive "if=pflash,media=disk,id=drive1,file=$HOME/vms/setup/UEFI/flash1.img,cache=writethrough,format=raw" \
+         -drive if=none,file="$HOME/vms/$img_name.qcow2",format=qcow2,id=hd0 \
+         -device virtio-scsi-pci,id=scsi0 \
+         -device scsi-hd,bus=scsi0.0,drive=hd0,bootindex=1 \
+         -nic user,model=virtio-net-pci,hostfwd=tcp::2222-:22,smb="$HOME"/shared \
+         -device virtio-rng-device -device virtio-balloon-device -device virtio-keyboard-device \
+         -device virtio-mouse-device -device virtio-serial-device -device virtio-tablet-device \
+         -object cryptodev-backend-builtin,id=cryptodev0 \
+         -device virtio-crypto-pci,id=crypto0,cryptodev=cryptodev0 \
+         -nographic
+end
 
 #-fsdev local,id=fs1,path=/home/tonyk/codes,security_model=none \
 #-device virtio-9p-pci,fsdev=fs1,mount_tag=$HOME/shared \
@@ -132,25 +151,25 @@ end
 
 function create-vm
     default_set disk_space $argv[1] '8G'
-    default_set disk_name $argv[2] 'arch_disk.vm'
+    default_set disk_name $argv[2] 'arch_disk'
 
     set extra_packs "vim fish git rustup strace gdb dhcpcd openssh cifs-utils samba"
     #set xforwarding_packs 'xorg-xauth xorg-xclock xorg-fonts-type1'
 
     set all_packs "$extra_packs"
 
-    echorun truncate -s $disk_space $disk_name
+    echorun truncate -s "$disk_space" "$disk_name.img"
     test $status != 0 && return 1
     echorun mkfs.ext4 $disk_name
     test $status != 0 && return 1
 
     test -d mnt || echorun mkdir mnt
-    echorun sudo mount $disk_name mnt
+    echorun sudo mount "$disk_name" mnt
     test $status != 0 && echorun sudo umount mnt && return 1
 
     wait_for_mount
 
-    echorun sudo pacstrap -c mnt base base-devel $all_packs
+    echorun sudo pacstrap -c mnt base base-devel "$all_packs"
     test $status != 0 && echorun sudo umount mnt && return 1
 
     # configure ssh
@@ -158,8 +177,8 @@ function create-vm
     test $status != 0 && echorun sudo umount mnt && return 1
 
     # copy bootstrap script
-    echorun sudo cp $HOME/scripts/start.sh mnt/root/
-    echorun sudo cp $HOME/scripts/smb.conf mnt/root/
+    echorun sudo cp "$HOME"/scripts/start.sh mnt/root/
+    echorun sudo cp "$HOME"/scripts/smb.conf mnt/root/
     test $status != 0 && echorun sudo umount mnt && return 1
 
     # remove root passwd
@@ -167,5 +186,5 @@ function create-vm
 
     echorun sudo umount mnt
 
-    echorun set-img $disk_name
+    echorun qemu-convert -O qcow2 "$disk_name.img" "$disk_name.qcow2"
 end

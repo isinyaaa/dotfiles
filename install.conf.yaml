@@ -19,8 +19,8 @@
     ~/.wacom: wacom
     ~/bin:
         path: bin/
-    ~/scripts:
-        path: scripts/
+    ~/vms/setup:
+        path: vms-setup/
     ~/.config/awesome:
         path: config/awesome/
     ~/.config/bat:

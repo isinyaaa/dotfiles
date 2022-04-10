@@ -28,7 +28,6 @@ cp smb.conf /etc/samba/smb.conf
 services="sshd dhcpcd smb home-user-shared.mount"
 systemctl enable $services --now
 
-
 mkdir .ssh
 cat id_rsa.pub > .ssh/authorized_keys
 
