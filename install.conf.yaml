@@ -59,6 +59,10 @@
         path: config/rofi/
     ~/.config/kw:
         path: config/kw/
+    ~/.gnupg/gpg.conf:
+        path: gpg.conf
+    ~/.gnupg/gpg-agent.conf:
+        path: gpg-agent.conf
     ~/.local/share/omf/themes/eseal:
         path: omf/eseal/
     ~/.local/share/nvim/site/autoload:
