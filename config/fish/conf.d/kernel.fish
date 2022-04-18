@@ -12,6 +12,11 @@ abbr -a mk 'make CC="ccache gcc -fdiagnostics-color" -j8 O=$BUILD_FOLDER'
 abbr -a gg 'git grep'
 abbr -a glg 'git log --grep='
 alias gitline='git log --oneline --graph'
+alias gtop='cd (git rev-parse --show-toplevel)'
+
+function dsf
+    diff -u "$argv[1]" "$argv[2]" | diff-so-fancy | less -R
+end
 
 function ggb -d "git grep + git blame"
     command git grep -En $argv[1] | while read --delimiter=: -l file line code

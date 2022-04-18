@@ -1,6 +1,7 @@
 # This file contains fish universal variable definitions.
 # VERSION: 3.0
 SETUVAR __fish_initialized:3400
+SETUVAR _fish_abbr_cdt:cd\x20\x28git\x20rev\x2dparse\x20\x2d\x2dshow\x2dtoplevel\x29
 SETUVAR _fish_abbr_gg:git\x20grep
 SETUVAR _fish_abbr_glg:git\x20log\x20\x2d\x2dgrep\x3d
 SETUVAR _fish_abbr_mcr:COMPILER_INSTALL_PATH\x3d\x24HOME/0day\x20COMPILER\x3dgcc\x2d11\x2e2\x2e0\x20make\x2ecross\x20\x2dj4\x20ARCH\x3d\x24ARCH\x20O\x3d\x24ARCH_BUILD
