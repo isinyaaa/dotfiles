@@ -1,28 +1,13 @@
-#!/usr/bin/fish
 # === kernel building ===
 
 function set-build
     set -g BUILD_FOLDER "$argv"
 end
 
-#find $LINUX_SRC_PATH/*_build -maxdepth 0 | head -n1
-
 abbr -a mk 'make CC="ccache gcc -fdiagnostics-color" -j8 O=$BUILD_FOLDER'
 #abbr -a mmd 'make modules CC="ccache gcc -fdiagnostics-color" -j8 O=$BUILD_FOLDER'
-abbr -a gg 'git grep'
-abbr -a glg 'git log --grep='
-alias gitline='git log --oneline --graph'
-alias gtop='cd (git rev-parse --show-toplevel)'
 
-function dsf
-    diff -u "$argv[1]" "$argv[2]" | diff-so-fancy | less -R
-end
-
-function ggb -d "git grep + git blame"
-    command git grep -En $argv[1] | while read --delimiter=: -l file line code
-        git blame -f -L $line,$line $file | grep -E --color "$argv[1]|\$"
-    end
-end
+# === output management ===
 
 function clean-output
     default_set INPUT_FILE $argv[1] 'modules1'
@@ -97,6 +82,8 @@ function qemu_x86_64
         -boot order=a -drive file=$img_name,format=qcow2,if=virtio \
         -kernel "$LINUX_SRC_PATH/$BUILD_FOLDER"/arch/x86_64/boot/bzImage \
         -append 'root=/dev/vda rw console=ttyS0 nokaslr loglevel=7 raid=noautodetect audit=0 cpuidle_haltpoll.force=1' \
+        # -fsdev local,id=fs1,path=$HOME/shared,security_model=none \
+        # -device virtio-9p-pci,fsdev=fs1,mount_tag=$HOME/shared
         -enable-kvm -m 4G -smp 4 -cpu host \
         -nic user,hostfwd=tcp::2222-:22,smb=$HOME/shared -s \
         -nographic
@@ -107,25 +94,20 @@ abbr -a qaa qemu_aarch64
 function qemu_aarch64
     set img_name $argv[1]
 
-    qemu-system-aarch64 -L ~/bin/qemu/share/qemu \
+    eval qemu-system-aarch64 -L ~/bin/qemu/share/qemu \
          -smp 8 \
          -machine virt,accel=hvf,highmem=off \
          -cpu cortex-a72 -m 4096 \
-         -drive "if=pflash,media=disk,id=drive0,file=$HOME/vms/setup/UEFI/flash0.img,cache=writethrough,format=raw" \
-         -drive "if=pflash,media=disk,id=drive1,file=$HOME/vms/setup/UEFI/flash1.img,cache=writethrough,format=raw" \
+         "-drive if=pflash,media=disk,file=$HOME/vms/setup/UEFI/flash"{"0.img,id=drive0","1.img,id=drive1"}",cache=writethrough,format=raw" \
          -drive if=none,file="$HOME/vms/$img_name.qcow2",format=qcow2,id=hd0 \
          -device virtio-scsi-pci,id=scsi0 \
          -device scsi-hd,bus=scsi0.0,drive=hd0,bootindex=1 \
          -nic user,model=virtio-net-pci,hostfwd=tcp::2222-:22,smb="$HOME"/shared \
-         -device virtio-rng-device -device virtio-balloon-device -device virtio-keyboard-device \
-         -device virtio-mouse-device -device virtio-serial-device -device virtio-tablet-device \
+         '-device virtio-'{rng,balloon,keyboard,mouse,serial,tablet}-device \
          -object cryptodev-backend-builtin,id=cryptodev0 \
          -device virtio-crypto-pci,id=crypto0,cryptodev=cryptodev0 \
          -nographic
 end
-
-#-fsdev local,id=fs1,path=/home/tonyk/codes,security_model=none \
-#-device virtio-9p-pci,fsdev=fs1,mount_tag=$HOME/shared \
 
 function default_set --no-scope-shadowing
     if set -q argv[2]
