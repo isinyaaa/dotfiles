@@ -7,62 +7,22 @@
 
 - link:
     ~/.tmux.conf: tmux.conf
-    ~/.gitconfig: gitconfig
-    ~/.gitconfig-usp: gitconfig-usp
-    ~/.gitconfig-work: gitconfig-work
-    ~/.gitconfig-common: gitconfig-common
-    ~/.xinitrc: xinitrc
-    ~/.xprofile: xprofile
-    ~/.Xresources: Xresources
     ~/.vimrc: vimrc
     ~/.vncxstartup: vncxstartup
-    ~/.wacom: wacom
-    ~/bin:
-        path: bin/
-    ~/vms/setup:
-        path: vms-setup/
-    ~/.config/awesome:
-        path: config/awesome/
     ~/.config/bat:
         path: config/bat/
-    ~/.config/dunst:
-        path: config/dunst/
     ~/.config/fish:
         path: config/fish/
-    ~/.config/gtk-3.0/gtk.css:
-        path: config/gtk-3.0/gtk.css
-    ~/.config/herbstluftwm:
-        path: config/herbstluftwm/
-    ~/.config/kitty:
-        path: config/kitty/
-    ~/.config/paru:
-        path: config/paru/
-    ~/.config/polybar:
-        path: config/polybar/
     ~/.config/ncspot/config.toml:
         path: config/ncspot/config.toml
     ~/.config/nvim:
         path: config/nvim/
-    ~/.config/paru:
-        path: config/paru/
     ~/.config/pass-git-helper:
         path: config/pass-git-helper/
-    ~/.config/picom:
-        path: config/picom/
-    ~/.config/polybar:
-        path: config/polybar/
     ~/.config/ranger:
         path: config/ranger/
-    ~/.config/redshift.conf:
-        path: config/redshift.conf
-    ~/.config/rofi:
-        path: config/rofi/
     ~/.config/kw:
         path: config/kw/
-    ~/.gnupg/gpg.conf:
-        path: gpg.conf
-    ~/.gnupg/gpg-agent.conf:
-        path: gpg-agent.conf
     ~/.local/share/omf/themes/eseal:
         path: omf/eseal/
     ~/.local/share/nvim/site/autoload:
