@@ -1,7 +1,63 @@
 if exists('g:vscode')
     " VSCode extension
 else
-    " ordinary neovim
+    call plug#begin('~/.vim/plugged')
+
+        """" Basic functionality
+
+        " Plug 'mileszs/ack.vim'                  " enabling ack (better than grep.vim)
+        Plug 'tpope/vim-apathy'                 " file searching help
+        Plug 'tpope/vim-commentary'             " comment/uncomment stuff
+        Plug 'tpope/vim-fugitive'               " git wrapper
+        Plug 'junegunn/fzf.vim', { 'do': { -> fzf#install() } } " fzf: more intuitive search than CtrlP
+        Plug 'airblade/vim-gitgutter'           " +- and hunk management
+        Plug 'scrooloose/nerdtree'              " nerdtree plugin
+        Plug 'tpope/vim-repeat'                 " enable repeating supported plugin (not just native last command)
+        Plug 'tpope/vim-rhubarb'                " vim-fugitive plugin for opening file on Github, using :Gbrowse
+        " Plug 'tpope/vim-sleuth'
+        Plug 'wakatime/vim-wakatime'            " wakatime plugin
+
+        """" Lang support
+
+        Plug 'vim-syntastic/syntastic'
+        Plug 'Valloric/YouCompleteMe'
+
+        Plug 'joe-skb7/cscope-maps'             " cscope shortcuts
+        Plug 'inkch/vim-fish'
+        Plug 'vim-scripts/indentpython.vim'
+        Plug 'nvie/vim-flake8'
+        Plug 'rust-lang/rust.vim'               " rust development plugin
+
+        Plug 'vivien/vim-linux-coding-style'
+
+        """" Prettify
+
+        Plug 'karb94/neoscroll.nvim'            " smooth scrolling
+        Plug 'vim-airline/vim-airline'          " status/tabline
+        Plug 'vim-airline/vim-airline-themes'
+        Plug 'liuchengxu/space-vim-theme'
+        " Plug 'rakr/vim-one'
+        " Plug 'liuchengxu/space-vim-dark'
+        " Plug 'drewtempelmeyer/palenight.vim'
+        " Plugin 'jpo/vim-railscasts-theme'       " railscasts-theme
+
+        """" Still not sure
+
+        " Plug 'majutsushi/tagbar'                " overview of current file structure
+        " Plugin 'tpope/vim-surround'             " manage surroundings (parenthesis, brackets, quotes, XML tags, etc.)
+        " Plugin 'psf/black'                      " Python code formatter: Black
+        " Plugin 'elzr/vim-json'                  " json filetype plugin
+        " Plugin 'godlygeek/tabular'              " dependency for vim-markdown
+        " Plugin 'plasticboy/vim-markdown'        " vim-markdown
+    call plug#end()
+
+    """" Theme stuff
+
+    colorscheme space_vim_theme
+    hi Comment cterm=italic
+
+    """" Basic functionality
+
     set number
 
     set ignorecase
@@ -17,91 +73,22 @@ else
     set ttyfast
     set noshowmode
 
-    " 80 characters line
     set colorcolumn=81
-    "execute "set colorcolumn=" . join(range(81,335), ',')
-    "highlight ColorColumn ctermbg=Black ctermfg=DarkRed
 
-    " highlight ExtraWhitespace ctermbg=red guibg=red
-    match ExtraWhitespace /\s\+$/
+    " Whitespace management
+    set hlsearch
+    highlight ExtraWhitespace ctermbg=red guibg=red
     autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
     autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
     autocmd InsertLeave * match ExtraWhitespace /\s\+$/
     autocmd BufWinLeave * call clearmatches()
 
-    filetype plugin on
-    filetype plugin indent on
-    syntax on
+    nmap ghw <ESC>:%s/\s\+$//e<CR>
+    "BufWritePre *
 
-    call plug#begin('~/.vim/plugged')
-    Plug 'wakatime/vim-wakatime'
-    Plug 'tpope/vim-fugitive'                   " git wrapper
-    Plug 'airblade/vim-gitgutter'
-    Plug 'vim-airline/vim-airline'              " status/tabline
-    Plug 'vim-airline/vim-airline-themes'
-    Plug 'tpope/vim-sleuth'
-
-    Plug 'Valloric/YouCompleteMe'
-    Plug 'vim-syntastic/syntastic'
-    Plug 'vim-scripts/indentpython.vim'
-    Plug 'nvie/vim-flake8'
-
-    Plug 'rust-lang/rust.vim'
-
-    "Plug 'drewtempelmeyer/palenight.vim'
-    "Plug 'rakr/vim-one'
-    Plug 'liuchengxu/space-vim-theme'
-    "Plug 'liuchengxu/space-vim-dark'
-
-    Plug 'inkch/vim-fish'
-
-    Plug 'tpope/vim-rhubarb'                    " vim-fugitive plugin for opening file on Github, using :Gbrowse
-    Plug 'mileszs/ack.vim'                      " enabling ack (better than grep.vim)
-    Plug 'scrooloose/nerdtree'                  " nerdtree plugin
-    Plug 'tpope/vim-commentary'                 " comment/uncomment stuff
-    Plug 'majutsushi/tagbar'                    " overview of current file structure
-    Plug 'joe-skb7/cscope-maps'                 " cscope shortcuts
-    Plug 'karb94/neoscroll.nvim'
-
-    Plug 'vivien/vim-linux-coding-style'
-
-    "Plug 'ctrlpvim/ctrlp.vim'                   " fuzzy search
-    Plug 'junegunn/fzf.vim', { 'do': { -> fzf#install() } } " fzf: more intuitive search than CtrlP
-    "Plugin 'tpope/vim-surround'                  " manage surroundings (parenthesis, brackets, quotes, XML tags, etc.)
-    Plug 'tpope/vim-repeat'                    " enable repeating supported plugin (not just native last command)
-    "Plugin 'scrooloose/syntastic'                " syntax checking
-    "Plugin 'psf/black'                           " Python code formatter: Black
-    "Plugin 'elzr/vim-json'                       " json filetype plugin
-    "Plugin 'google/vim-jsonnet'                  " jsonnet filetype plugin
-    "Plugin 'rust-lang/rust.vim'                  " rust development plugin
-    "Plugin 'godlygeek/tabular'                   " dependency for vim-markdown
-    "Plugin 'plasticboy/vim-markdown'             " vim-markdown
-    "Plugin 'jpo/vim-railscasts-theme'            " railscasts-theme
-    call plug#end()
-
-    lua require('neoscroll').setup()
-
-    let g:rust_clip_command = 'xclip -selection clipboard'
-
-    let g:ycm_autoclose_preview_window_after_completion=1
-
-    "python with virtualenv support
-    let python_highlight_all=1
-    syntax on
-
-    set statusline+=%#warningmsg#
-    set statusline+=%{SyntasticStatuslineFlag()}
-    set statusline+=%*
-
-    let g:syntastic_always_populate_loc_list = 1
-    let g:syntastic_auto_loc_list = 1
-    let g:syntastic_check_on_open = 1
-    let g:syntastic_check_on_wq = 0
-
-    autocmd BufNewFile,BufRead ~/projects/kworkflow/* let syntastic_sh_shellcheck_args="--external-sources --shell=bash --exclude=SC2016,SC2181,SC2034,SC2154,SC2001,SC1090,SC1091,SC2120"
+    set path+=**
 
     let NERDTreeShowHidden=1
-
     nmap <C-n> <ESC>:NERDTreeToggle<CR>
 
     " CTags Settings
@@ -121,21 +108,51 @@ else
     let g:ackhighlight = 1                              " hightlight matches
     let g:ackprg = 'ag --nogroup --nocolor --column'    " Ag support
 
-    " == THEME SETUP ==
-
-    "colorscheme space-vim-dark
-    colorscheme space_vim_theme
-    hi Comment cterm=italic
-
     nmap ghp <Plug>(GitGutterPreviewHunk)
     nmap ghs <Plug>(GitGutterStageHunk)
     nmap ghu <Plug>(GitGutterUndoHunk)
     nmap ]h <Plug>(GitGutterNextHunk)
     nmap [h <Plug>(GitGutterPrevHunk)
 
-    nmap ghw <ESC>:%s/\s\+$//e<CR>
-    "BufWritePre *
+    """" Lang support
+    filetype plugin on
+    filetype plugin indent on
+    syntax on
+
+    let g:rust_clip_command = 'xclip -selection clipboard'
+
+    let g:ycm_autoclose_preview_window_after_completion=1
+
+    "python with virtualenv support
+    let python_highlight_all=1
+
+    set statusline+=%#warningmsg#
+    set statusline+=%{SyntasticStatuslineFlag()}
+    set statusline+=%*
+
+    let g:syntastic_always_populate_loc_list = 1
+    let g:syntastic_auto_loc_list = 1
+    let g:syntastic_check_on_open = 1
+    let g:syntastic_check_on_wq = 0
+
+    autocmd BufNewFile,BufRead ~/projects/kworkflow/* let syntastic_sh_shellcheck_args="--external-sources --shell=bash --exclude=SC2016,SC2181,SC2034,SC2154,SC2001,SC1090,SC1091,SC2120"
+
+    """" Prettify
+
+    lua require('neoscroll').setup()
+
     "let g:airline_theme='space-vim-theme'
+
+    " ==== jellybeans ====
+    " let g:jellybeans_overrides = {
+    " \    'background': { 'ctermbg': 'none', '256ctermbg': 'none' },
+    " \}
+    " if has('termguicolors') && &termguicolors
+    "     let g:jellybeans_overrides['background']['guibg'] = 'none'
+    " endif
+
+    " ==== space-vim-dark ====
+    " hi Comment guifg=#5C6370 ctermfg=59
 
     " ==== vim-one ====
     "Use 24-bit (true-color) mode in Vim/Neovim when outside tmux.
@@ -157,30 +174,18 @@ else
     "set background=dark " for the dark version
     "set background=light " for the light version
 
-    " ==== jellybeans ====
-
-    "let g:jellybeans_overrides = {
-    "\    'background': { 'ctermbg': 'none', '256ctermbg': 'none' },
-    "\}
-    "if has('termguicolors') && &termguicolors
-    "    let g:jellybeans_overrides['background']['guibg'] = 'none'
-    "endif
-
-    " ==== space-vim-dark ====
-    "hi Comment guifg=#5C6370 ctermfg=59
-
     " to set transparent BG
-    function! AdaptColorscheme()
-        highlight clear CursorLine
-        highlight Normal ctermbg=none guibg=none
-        highlight LineNr ctermbg=none
-        highlight Folded ctermbg=none
-        highlight NonText ctermbg=none
-        highlight SpecialKey ctermbg=none
-        highlight VertSplit ctermbg=none
-        highlight SignColumn ctermbg=none
-    endfunction
-    "autocmd ColorScheme * call AdaptColorscheme()
+    " function! AdaptColorscheme()
+    "     highlight clear CursorLine
+    "     highlight Normal ctermbg=none guibg=none
+    "     highlight LineNr ctermbg=none
+    "     highlight Folded ctermbg=none
+    "     highlight NonText ctermbg=none
+    "     highlight SpecialKey ctermbg=none
+    "     highlight VertSplit ctermbg=none
+    "     highlight SignColumn ctermbg=none
+    " endfunction
+    " autocmd ColorScheme * call AdaptColorscheme()
 endif
 
 set clipboard=unnamedplus
