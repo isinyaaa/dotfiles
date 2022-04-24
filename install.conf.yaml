@@ -6,6 +6,7 @@
 - clean: ['~', '~/.config']
 
 - link:
+    ~/.mbsyncrc: mbsyncrc
     ~/.tmux.conf: tmux.conf
     ~/.vimrc: vimrc
     ~/.vncxstartup: vncxstartup
@@ -13,6 +14,8 @@
         path: config/bat/
     ~/.config/fish:
         path: config/fish/
+    ~/.config/neomutt:
+        path: config/neomutt/
     ~/.config/ncspot/config.toml:
         path: config/ncspot/config.toml
     ~/.config/nvim:

@@ -1,0 +1,82 @@
+source ~/.config/neomutt/gpg.rc
+
+source "gpg --decrypt ~/.config/neomutt/app-password.gpg |"
+
+set hostname = Desktop123
+set realname ='Isabella Basso'
+set from = isabbasso@riseup.net
+set use_from = yes
+set envelope_from = yes
+
+set folder = "imaps://isabbasso@mail.riseup.net"
+set imap_user = isabbasso@riseup.net
+set imap_check_subscribed
+
+set smtp_url = "smtps://$imap_user@mail.riseup.net"
+
+set ssl_force_tls = yes
+set ssl_starttls = yes
+
+# set ssl_force_tls = yes
+# set ssl_starttls = yes
+# set ssl_use_sslv2 = no
+# set ssl_use_sslv3 = no
+# set ssl_use_tlsv1 = no
+# set ssl_use_tlsv1_1 = no
+# set ssl_use_tlsv1_2 = yes
+# set ssl_use_tlsv1_3 = yes
+# set ssl_verify_dates = yes
+# set ssl_verify_host = yes
+# set ssl_usesystemcerts = yes
+
+set sort = 'threads'
+set sort_aux = 'last-date-received'
+set spoolfile = +INBOX
+set postponed = +Drafts
+set record    = +Sent
+set trash     = +Trash
+
+ignore *
+unignore from date subject to cc bcc tags
+#set collapse_unread = yes
+set uncollapse_jump = yes
+folder-hook . "exec collapse-all"
+
+set mailcap_path = ~/.config/neomutt/mailcap
+set editor = "nvim +/^$/+1 +':noh'"
+set charset = "utf-8"
+set send_charset = "utf-8"
+set assumed_charset = "utf-8"
+set history_remove_dups = yes
+
+set sidebar_visible
+set sidebar_width = 25
+set sidebar_divider_char = '│'
+
+set query_format="%4c %t %-70.70a %-70.70n %?e?(%e)?"
+set query_command = "notmuch address %s"
+bind editor <Tab> complete-query
+bind editor ^T complete
+
+set abort_key = <ESC>
+bind index,pager g noop
+bind pager gg top
+bind pager G bottom
+bind alias,index,browser,query gg first-entry
+bind alias,index,browser,query G last-entry
+bind pager j next-line
+bind pager k previous-line
+bind pager \Cj next-entry
+bind pager \Ck previous-entry
+bind index za collapse-thread
+bind index D delete-thread
+bind alias,index,pager,browser,query \Cd half-down
+bind alias,index,pager,browser,query \Cu half-up
+bind index,pager y group-reply
+
+bind index,pager B sidebar-toggle-visible
+bind index <left> sidebar-prev
+bind index h sidebar-prev
+bind index <right> sidebar-next
+bind index l sidebar-next
+bind index <space> sidebar-open

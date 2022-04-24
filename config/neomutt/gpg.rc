@@ -1,0 +1,10 @@
+# Use GPGME
+set crypt_use_gpgme = yes
+
+ # Don't sign, so I'm not legally liable to what I say in encrypted email
+set crypt_autosign = no
+# Encrypt replies to PGP emails by default
+set crypt_replyencrypt = yes
+
+# Timeout
+set pgp_timeout = 1800
