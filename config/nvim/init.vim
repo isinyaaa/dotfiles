@@ -14,7 +14,7 @@ else
         Plug 'scrooloose/nerdtree'              " nerdtree plugin
         Plug 'tpope/vim-repeat'                 " enable repeating supported plugin (not just native last command)
         Plug 'tpope/vim-rhubarb'                " vim-fugitive plugin for opening file on Github, using :Gbrowse
-        " Plug 'tpope/vim-sleuth'
+        Plug 'tpope/vim-sleuth'                 " auto set tab stops
         Plug 'wakatime/vim-wakatime'            " wakatime plugin
 
         """" Lang support
@@ -44,11 +44,11 @@ else
         """" Still not sure
 
         " Plug 'majutsushi/tagbar'                " overview of current file structure
-        " Plugin 'tpope/vim-surround'             " manage surroundings (parenthesis, brackets, quotes, XML tags, etc.)
-        " Plugin 'psf/black'                      " Python code formatter: Black
-        " Plugin 'elzr/vim-json'                  " json filetype plugin
-        " Plugin 'godlygeek/tabular'              " dependency for vim-markdown
-        " Plugin 'plasticboy/vim-markdown'        " vim-markdown
+        " Plug 'tpope/vim-surround'               " manage surroundings (parenthesis, brackets, quotes, XML tags, etc.)
+        " Plug 'psf/black'                        " Python code formatter: Black
+        " Plug 'elzr/vim-json'                    " json filetype plugin
+        " Plug 'godlygeek/tabular'                " dependency for vim-markdown
+        " Plug 'plasticboy/vim-markdown'          " vim-markdown
     call plug#end()
 
     """" Theme stuff
@@ -74,6 +74,8 @@ else
     set noshowmode
 
     set colorcolumn=81
+
+    set spelllang+=pt_br
 
     " Whitespace management
     set hlsearch
@@ -105,7 +107,7 @@ else
     cnoreabbrev Ack Ack!
     " Shortcut for `:Ack! ` as `<Leader>a`
     nnoremap <Leader>a :Ack!<Space>
-    let g:ackhighlight = 1                              " hightlight matches
+    let g:ackhighlight = 1                              " highlight matches
     let g:ackprg = 'ag --nogroup --nocolor --column'    " Ag support
 
     nmap ghp <Plug>(GitGutterPreviewHunk)
@@ -115,7 +117,6 @@ else
     nmap [h <Plug>(GitGutterPrevHunk)
 
     """" Lang support
-    filetype plugin on
     filetype plugin indent on
     syntax on
 
