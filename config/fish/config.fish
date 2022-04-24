@@ -32,6 +32,7 @@ end
 set -gx PATH $HOME/bin $PATH
 set -gx PATH $HOME/.local/bin $PATH
 set -gx PATH $HOME/.cargo/bin $PATH
+test $IS_MAC = true && set -gx PATH $HOME/Library/Python/3.9/bin $PATH
 set -gx PATH /opt/local/bin $PATH
 
 # set user preferences
@@ -45,6 +46,9 @@ alias login "export BW_SESSION=(pass bitwarden/session00)"
 alias sudo 'command sudo -v; command sudo '
 
 set -gx EDITOR nvim
+
+set -gx LC_CTYPE de_DE.UTF-8
+set -gx LC_ALL de_DE.UTF-8
 
 # set the correct timezone and format for prompt
 set -g theme_date_timezone America/Sao_Paulo
