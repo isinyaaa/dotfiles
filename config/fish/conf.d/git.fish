@@ -1,7 +1,6 @@
 abbr -a gg 'git grep'
 abbr -a glg 'git log --grep='
-alias gitline='git log --oneline --graph'
-alias gtop='cd (git rev-parse --show-toplevel)'
+alias gtop='cd (git top)'
 
 function ggb -d "git grep + git blame"
     command git grep -En $argv[1] | while read --delimiter=: -l file line code
