@@ -55,7 +55,9 @@ set -g theme_date_timezone America/Sao_Paulo
 set -g theme_date_format "+%l:%M%p"
 
 function fish_greeting
-    colorscript --exec spectrum
+    if command -q colorscript
+        colorscript --exec spectrum
+    end
 end
 
 alias wipe="clear; fish_greeting"
