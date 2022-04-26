@@ -77,16 +77,30 @@ abbr -a qx86a qemu_x86_64
 
 function qemu_x86_64
     set img_name $argv[1]
+    default_set mem_amount $argv[2] 4G
+    if test $IS_MAC = true
+        set cpuvar qemu64
+    else
+        set cpuvar host
+    end
 
-    qemu-system-x86_64 \
-        -boot order=a -drive file=$img_name,format=qcow2,if=virtio \
-        -kernel "$LINUX_SRC_PATH/$BUILD_FOLDER"/arch/x86_64/boot/bzImage \
-        -append 'root=/dev/vda rw console=ttyS0 nokaslr loglevel=7 raid=noautodetect audit=0 cpuidle_haltpoll.force=1' \
-        # -fsdev local,id=fs1,path=$HOME/shared,security_model=none \
-        # -device virtio-9p-pci,fsdev=fs1,mount_tag=$HOME/shared
-        -enable-kvm -m 4G -smp 4 -cpu host \
-        -nic user,hostfwd=tcp::2222-:22,smb=$HOME/shared -s \
-        -nographic
+    if test -n "$BUILD_FOLDER"
+        qemu-system-x86_64 \
+            -boot order=a -drive file="$img_name",format=qcow2,if=virtio \
+            -kernel "$LINUX_SRC_PATH/$BUILD_FOLDER"/arch/x86_64/boot/bzImage \
+            -append "root=/dev/vda rw console=ttyS0 nokaslr loglevel=7 raid=noautodetect audit=0 cpuidle_haltpoll.force=1" \
+            # -fsdev local,id=fs1,path=$HOME/shared,security_model=none \
+            # -device virtio-9p-pci,fsdev=fs1,mount_tag=$HOME/shared
+            -m "$mem_amount" -smp 4 -cpu "$cpuvar" \
+            -nic user,hostfwd=tcp::2222-:22,smb="$HOME"/shared -s \
+            -nographic
+    else
+        qemu-system-x86_64 \
+            -accel tcg -m "$mem_amount" -smp 4 -cpu "$cpuvar" \
+            -nic user,hostfwd=tcp::2222-:22,smb="$HOME"/shared -s \
+            "$img_name"
+    end
+
 end
 
 abbr -a qaa qemu_aarch64
@@ -95,10 +109,17 @@ function qemu_aarch64
     set img_name $argv[1]
     default_set mem_amount $argv[2] 4G
 
+    if test $IS_MAC = true
+        set cpuvar cortex-a72
+    else
+        set cpuvar host
+        set accelvar ",accel=hvf,highmem=off"
+    end
+
     eval qemu-system-aarch64 -L ~/bin/qemu/share/qemu \
          -smp 8 \
-         -machine virt,accel=hvf,highmem=off \
-         -cpu cortex-a72 -m "$mem_amount" \
+         -machine virt"$accelvar" \
+         -cpu "$cpuvar" -m "$mem_amount" \
          "-drive if=pflash,media=disk,file=$HOME/vms/setup/UEFI/flash"{"0.img,id=drive0","1.img,id=drive1"}",cache=writethrough,format=raw" \
          -drive if=none,file="$HOME/vms/$img_name.qcow2",format=qcow2,id=hd0 \
          -device virtio-scsi-pci,id=scsi0 \
