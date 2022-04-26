@@ -93,11 +93,12 @@ abbr -a qaa qemu_aarch64
 
 function qemu_aarch64
     set img_name $argv[1]
+    default_set mem_amount $argv[2] 4G
 
     eval qemu-system-aarch64 -L ~/bin/qemu/share/qemu \
          -smp 8 \
          -machine virt,accel=hvf,highmem=off \
-         -cpu cortex-a72 -m 4096 \
+         -cpu cortex-a72 -m "$mem_amount" \
          "-drive if=pflash,media=disk,file=$HOME/vms/setup/UEFI/flash"{"0.img,id=drive0","1.img,id=drive1"}",cache=writethrough,format=raw" \
          -drive if=none,file="$HOME/vms/$img_name.qcow2",format=qcow2,id=hd0 \
          -device virtio-scsi-pci,id=scsi0 \
