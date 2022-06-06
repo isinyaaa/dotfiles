@@ -17,6 +17,7 @@ else
         Plug 'tpope/vim-sleuth'                 " auto set tab stops
         Plug 'wakatime/vim-wakatime'
         Plug 'mbledkowski/neuleetcode.vim'      " leetcode
+        Plug 'github/copilot.vim'
 
         """" Lang support
 

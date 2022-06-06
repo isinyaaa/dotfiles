@@ -35,6 +35,9 @@ set -gx PATH $HOME/.cargo/bin $PATH
 test $IS_MAC = true && set -gx PATH $HOME/Library/Python/3.9/bin $PATH
 set -gx PATH /opt/local/bin $PATH
 
+# add node 16 to path on MacOS
+test $IS_MAC = true && set -gx PATH $PATH /opt/homebrew/opt/node@16/bin
+
 # set user preferences
 export default_user=isinyaaa
 #export NVIM_TUI_ENABLE_CURSOR_SHAPE=1
