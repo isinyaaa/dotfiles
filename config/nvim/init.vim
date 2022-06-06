@@ -15,7 +15,8 @@ else
         Plug 'tpope/vim-repeat'                 " enable repeating supported plugin (not just native last command)
         Plug 'tpope/vim-rhubarb'                " vim-fugitive plugin for opening file on Github, using :Gbrowse
         Plug 'tpope/vim-sleuth'                 " auto set tab stops
-        Plug 'wakatime/vim-wakatime'            " wakatime plugin
+        Plug 'wakatime/vim-wakatime'
+        Plug 'mbledkowski/neuleetcode.vim'      " leetcode
 
         """" Lang support
 
@@ -39,7 +40,7 @@ else
         " Plug 'rakr/vim-one'
         " Plug 'liuchengxu/space-vim-dark'
         " Plug 'drewtempelmeyer/palenight.vim'
-        " Plugin 'jpo/vim-railscasts-theme'       " railscasts-theme
+        " Plug 'jpo/vim-railscasts-theme'       " railscasts-theme
 
         """" Still not sure
 
@@ -116,13 +117,34 @@ else
     nmap ]h <Plug>(GitGutterNextHunk)
     nmap [h <Plug>(GitGutterPrevHunk)
 
+    let g:leetcode_browser = 'firefox'
+    let g:leetcode_solution_filetype = 'c'
+    let g:leetcode_hide_paid_only = 1
+
+    nnoremap gll :LeetCodeList<cr>
+    nnoremap glt :LeetCodeTest<cr>
+    nnoremap gls :LeetCodeSubmit<cr>
+    nnoremap gli :LeetCodeSignIn<cr>
+
     """" Lang support
     filetype plugin indent on
     syntax on
 
-    let g:rust_clip_command = 'xclip -selection clipboard'
+    if $IS_MAC == "true"
+        let g:rust_clip_command = 'pbcopy'
+    else
+        let g:rust_clip_command = 'xclip -selection clipboard'
+    endif
 
     let g:ycm_autoclose_preview_window_after_completion=1
+
+    let g:ycm_language_server =
+      \ [{
+      \   'name': 'ccls',
+      \   'cmdline': [ 'ccls' ],
+      \   'filetypes': [ 'c', 'cpp', 'cuda', 'objc', 'objcpp' ],
+      \   'project_root_files': [ '.ccls-root', 'compile_commands.json' ]
+      \ }]
 
     "python with virtualenv support
     let python_highlight_all=1
@@ -136,7 +158,7 @@ else
     let g:syntastic_check_on_open = 1
     let g:syntastic_check_on_wq = 0
 
-    autocmd BufNewFile,BufRead ~/projects/kworkflow/* let syntastic_sh_shellcheck_args="--external-sources --shell=bash --exclude=SC2016,SC2181,SC2034,SC2154,SC2001,SC1090,SC1091,SC2120"
+    autocmd BufNewFile,BufRead ~/shared/kworkflow/* let syntastic_sh_shellcheck_args="--external-sources --shell=bash --exclude=SC2016,SC2181,SC2034,SC2154,SC2001,SC1090,SC1091,SC2120"
 
     """" Prettify
 
