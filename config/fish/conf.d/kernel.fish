@@ -56,9 +56,9 @@ abbr -a menu 'make menuconfig -j O=$BUILD_FOLDER'
 # === vm management ===
 
 function install-mods
-    set img_name $argv[1]
-    set MNT_FOLDER "$IMG_PATH/mnt"
-    mountpoint "$MNT_FOLDER" || echorun sudo mount "$img_name" "$MNT_FOLDER"
+    set img_name "$argv[1].qcow2"
+    set MNT_FOLDER "$VM_PATH/mnt"
+    mountpoint "$MNT_FOLDER" || echorun sudo mount "$VM_PATH/$img_name" "$MNT_FOLDER"
 
     wait_for_mount "$MNT_FOLDER"
 
@@ -77,6 +77,14 @@ abbr -a qx86a qemu_x86_64
 
 function qemu_x86_64
     set img_name $argv[1]
+    set extension ""
+    set format ""
+    echo "$img_name" | cut -d'.' -f 2 | grep -q img
+    if test "$status"
+        set format ,format=raw
+    else
+        set extension .qcow2
+    end
     default_set mem_amount $argv[2] 4G
     if test $IS_MAC = true
         set cpuvar qemu64
@@ -86,7 +94,7 @@ function qemu_x86_64
 
     if test -n "$BUILD_FOLDER"
         qemu-system-x86_64 \
-            -boot order=a -drive file="$img_name",format=qcow2,if=virtio \
+            -boot order=a -drive file="$VM_PATH/$img_name$extension"$format,if=virtio \
             -kernel "$LINUX_SRC_PATH/$BUILD_FOLDER"/arch/x86_64/boot/bzImage \
             -append "root=/dev/vda rw console=ttyS0 nokaslr loglevel=7 raid=noautodetect audit=0 cpuidle_haltpoll.force=1" \
             # -fsdev local,id=fs1,path=$HOME/shared,security_model=none \
@@ -98,7 +106,7 @@ function qemu_x86_64
         qemu-system-x86_64 \
             -accel tcg -m "$mem_amount" -smp 4 -cpu "$cpuvar" \
             -nic user,hostfwd=tcp::2222-:22,smb="$HOME"/shared -s \
-            "$img_name"
+            -boot order=a -drive file="$VM_PATH/$img_name$extension"$format,if=virtio
     end
 
 end
@@ -106,14 +114,14 @@ end
 abbr -a qaa qemu_aarch64
 
 function qemu_aarch64
-    set img_name $argv[1]
+    set img_name "$argv[1].qcow2"
     default_set mem_amount $argv[2] 4G
 
     if test $IS_MAC = true
-        set cpuvar cortex-a72
-    else
         set cpuvar host
-        set accelvar ",accel=hvf,highmem=off"
+        set accelvar ",accel=hvf"
+    else
+        set cpuvar cortex-a72
     end
 
     eval qemu-system-aarch64 -L ~/bin/qemu/share/qemu \
@@ -121,7 +129,8 @@ function qemu_aarch64
          -machine virt"$accelvar" \
          -cpu "$cpuvar" -m "$mem_amount" \
          "-drive if=pflash,media=disk,file=$HOME/vms/setup/UEFI/flash"{"0.img,id=drive0","1.img,id=drive1"}",cache=writethrough,format=raw" \
-         -drive if=none,file="$HOME/vms/$img_name.qcow2",format=qcow2,id=hd0 \
+         -drive if=none,file="$VM_PATH/$img_name",format=qcow2,id=hd0 \
+         # -virtfs local,mount_tag=fs1,path=$HOME/shared,security_model=none \
          -device virtio-scsi-pci,id=scsi0 \
          -device scsi-hd,bus=scsi0.0,drive=hd0,bootindex=1 \
          -nic user,model=virtio-net-pci,hostfwd=tcp::2222-:22,smb="$HOME"/shared \

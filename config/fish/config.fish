@@ -62,8 +62,9 @@ end
 
 alias wipe="clear; fish_greeting"
 
-if test (echo "$TERM" | grep -q "kitty")
-    alias ssh="kitty +kitten ssh"
+echo "$TERM" | grep -q "kitty"
+if test $status -eq 0
+    alias ssh "kitty +kitten ssh"
 end
 
 set -g LINUX_SRC_PATH "$HOME/shared/linux"
