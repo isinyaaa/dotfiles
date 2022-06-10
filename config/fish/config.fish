@@ -50,8 +50,10 @@ alias sudo 'command sudo -v; command sudo '
 
 set -gx EDITOR nvim
 
-set -gx LC_CTYPE de_DE.UTF-8
-set -gx LC_ALL de_DE.UTF-8
+if test $IS_MAC = true
+    set -gx LC_CTYPE en_US.UTF-8
+    set -gx LC_ALL en_US.UTF-8
+end
 
 # set the correct timezone and format for prompt
 set -g theme_date_timezone America/Sao_Paulo

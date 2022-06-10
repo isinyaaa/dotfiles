@@ -2,60 +2,57 @@
 
 function set-build
     set -g BUILD_FOLDER "$argv"
-end
+    abbr -a mk make CC=\"ccache gcc -fdiagnostics-color\" -j(nproc) O=$BUILD_FOLDER
+    abbr -a menu make menuconfig -j O=$BUILD_FOLDER
 
-abbr -a mk 'make CC="ccache gcc -fdiagnostics-color" -j8 O=$BUILD_FOLDER'
-#abbr -a mmd 'make modules CC="ccache gcc -fdiagnostics-color" -j8 O=$BUILD_FOLDER'
-
-# === output management ===
-
-function clean-output
-    default_set INPUT_FILE $argv[1] 'modules1'
-    default_set SEARCH $argv[2] 'gpu.*amd'
-
-    if not set -q BUILD_FOLDER; and not set -q argv[3]
-        return 2
+    function local-install
+        default_set KNAME $argv[1] $BUILD_FOLDER
+        echorun make CC=\"ccache gcc-11 -fdiagnostics-color\" -j(nproc) O=$BUILD_FOLDER
+        echorun sudo make -j(nproc) O=$BUILD_FOLDER INSTALL_HDR_PATH=/usr headers_install modules_install
+        if test ! (uname -r | grep -q aarch64)
+            echorun sudo cp -v $BUILD_FOLDER/arch/x86_64/boot/bzImage /boot/vmlinuz-$KNAME
+            echorun sudo mkinitcpio -P
+            echorun sudo grub-mkconfig -o /boot/grub/grub.cfg
+        end
     end
 
-    default_set IO_PATH $argv[3] "$BUILD_FOLDER"
+    function clean-output
+        default_set INPUT_FILE $argv[1] 'modules1'
+        default_set SEARCH $argv[2] 'gpu.*amd'
+        default_set FILE $argv[3]/$INPUT_FILE $BUILD_FOLDER/$INPUT_FILE
 
-    set FILE $IO_PATH/$INPUT_FILE
-
-    # clear possible CLI menuconfig output
-    set LAST_LINE (grep -nm2 'GEN\s*Makefile' $FILE".log" | tail -n1 | cut -d: -f1)
-    sed -e "1,"$LAST_LINE"d" $FILE".log" | grep -v '^\s\s[A-Z]' |\
-        grep -B1 -A5 $SEARCH > $FILE".clean.log"
-end
-
-function error-count
-    default_set INPUT_FILE $argv[1] 'modules1'
-    default_set SEARCH $argv[2] 'gpu.*amd'
-
-    if not set -q BUILD_FOLDER; and not set -q argv[3]
-        return 2
+        # clear possible CLI menuconfig output
+        set LAST_LINE (grep -nm2 'GEN\s*Makefile' $FILE".log" | tail -n1 | cut -d: -f1)
+        sed -e "1,"$LAST_LINE"d" $FILE".log" | grep -v '^\s\s[A-Z]' |\
+            grep -B1 -A5 $SEARCH > $FILE".clean.log"
     end
 
-    default_set IO_PATH $argv[3] "$BUILD_FOLDER"
+    function error-count
+        default_set INPUT_FILE $argv[1] 'modules1'
+        default_set SEARCH $argv[2] 'gpu.*amd'
+        default_set FILE $argv[3]/$INPUT_FILE $BUILD_FOLDER/$INPUT_FILE
 
-    set FILE $IO_PATH/$INPUT_FILE
-
-    # clear possible CLI menuconfig output
-    set LAST_LINE (grep -nm2 'GEN\s*Makefile' $FILE".log" | tail -n1 | cut -d: -f1)
-    sed -e "1,"$LAST_LINE"d" $FILE".log" | grep -v '^\s\s[A-Z]' |\
-        grep $SEARCH | wc -l
+        # clear possible CLI menuconfig output
+        set LAST_LINE (grep -nm2 'GEN\s*Makefile' $FILE".log" | tail -n1 | cut -d: -f1)
+        sed -e "1,"$LAST_LINE"d" $FILE".log" | grep -v '^\s\s[A-Z]' |\
+            grep $SEARCH | wc -l
+    end
 end
 
 function set-arch
     set -g ARCH "$argv"
-    set -g ARCH_BUILD "$argv-build"
-end
+    set-build "$argv-build"
 
-abbr -a mcr 'COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-11.2.0 make.cross -j4 ARCH=$ARCH O=$ARCH_BUILD'
-abbr -a menu 'make menuconfig -j O=$BUILD_FOLDER'
+    if test (uname -r | grep -q aarch64)
+        abbr -a mcr COMPILER_INSTALL_PATH='$HOME'/x-tools/x86_64-unknown-linux-gnu/bin/x86_64-unknown-linux-gnu- make ARCH=x86_64 O=$BUILD_FOLDER -j(nproc)
+    else
+        abbr -a mcr COMPILER_INSTALL_PATH='$HOME'/0day COMPILER=gcc-11.2.0 make.cross ARCH=$ARCH O=$BUILD_FOLDER -j(nproc)
+    end
+end
 
 # === vm management ===
 
-function install-mods
+function vm-install-mods
     set img_name "$argv[1].qcow2"
     set MNT_FOLDER "$VM_PATH/mnt"
     mountpoint "$MNT_FOLDER" || echorun sudo mount "$VM_PATH/$img_name" "$MNT_FOLDER"
@@ -73,7 +70,7 @@ function install-mods
     echorun sudo umount $MNT_FOLDER
 end
 
-abbr -a qx86a qemu_x86_64
+abbr -a qxa qemu_x86_64
 
 function qemu_x86_64
     set img_name $argv[1]
@@ -167,6 +164,7 @@ function wait_for_mount
     end
 end
 
+# TODO move this to proper script
 function create-vm
     default_set disk_space $argv[1] '8G'
     default_set disk_name $argv[2] 'arch_disk'
