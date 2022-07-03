@@ -1,5 +1,6 @@
 abbr -a gg 'git grep'
 abbr -a glg 'git log --grep='
+abbr -a grh 'git ri HEAD~'
 alias gtop='cd (git top)'
 
 function gcd

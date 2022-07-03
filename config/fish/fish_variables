@@ -3,6 +3,8 @@
 SETUVAR __fish_initialized:3400
 SETUVAR _fish_abbr_gg:git\x20grep
 SETUVAR _fish_abbr_glg:git\x20log\x20\x2d\x2dgrep\x3d
+SETUVAR _fish_abbr_gpf:git\x20push\x20\x2df
+SETUVAR _fish_abbr_grh:git\x20ri\x20HEAD\x7e
 SETUVAR _fish_abbr_mcr:COMPILER_INSTALL_PATH\x3d\x24HOME/0day\x20COMPILER\x3dgcc\x2d11\x2e2\x2e0\x20make\x2ecross\x20\x2dj4\x20ARCH\x3d\x24ARCH\x20O\x3d\x24ARCH_BUILD
 SETUVAR _fish_abbr_menu:make\x20menuconfig\x20\x2dj\x20O\x3damd_nodcn_build/
 SETUVAR _fish_abbr_mk:make\x20CC\x3d\x22ccache\x20gcc\x20\x2dfdiagnostics\x2dcolor\x22\x20\x2dj2\x20O\x3damd_nodcn_build/
