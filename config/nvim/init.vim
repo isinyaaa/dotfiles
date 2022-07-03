@@ -5,30 +5,35 @@ else
 
         """" Basic functionality
 
-        " Plug 'mileszs/ack.vim'                  " enabling ack (better than grep.vim)
+        Plug 'mileszs/ack.vim'                  " enabling ack (better than grep.vim)
         Plug 'tpope/vim-apathy'                 " file searching help
         Plug 'tpope/vim-commentary'             " comment/uncomment stuff
         Plug 'tpope/vim-fugitive'               " git wrapper
         Plug 'junegunn/fzf.vim', { 'do': { -> fzf#install() } } " fzf: more intuitive search than CtrlP
         Plug 'airblade/vim-gitgutter'           " +- and hunk management
         Plug 'scrooloose/nerdtree'              " nerdtree plugin
-        Plug 'tpope/vim-repeat'                 " enable repeating supported plugin (not just native last command)
+        Plug 'tpope/vim-repeat'                 " enable repeating supported plugins (not just native last command)
         Plug 'tpope/vim-rhubarb'                " vim-fugitive plugin for opening file on Github, using :Gbrowse
         Plug 'tpope/vim-sleuth'                 " auto set tab stops
         Plug 'wakatime/vim-wakatime'
         Plug 'mbledkowski/neuleetcode.vim'      " leetcode
-        Plug 'github/copilot.vim'
+        Plug 'junegunn/vim-emoji'               " Emoji support
+        " Plug 'SirVer/ultisnips'                 " snippets engine
+        " Plug 'honza/vim-snippets'
 
         """" Lang support
 
         Plug 'vim-syntastic/syntastic'
-        Plug 'Valloric/YouCompleteMe'
+        Plug 'dpelle/vim-LanguageTool'
+        Plug 'github/copilot.vim'
+        Plug 'plasticboy/vim-markdown'
+        " Plug 'Valloric/YouCompleteMe'
 
         Plug 'joe-skb7/cscope-maps'             " cscope shortcuts
         Plug 'inkch/vim-fish'
-        Plug 'vim-scripts/indentpython.vim'
-        Plug 'nvie/vim-flake8'
-        Plug 'rust-lang/rust.vim'               " rust development plugin
+        " Plug 'vim-scripts/indentpython.vim'
+        " Plug 'nvie/vim-flake8'
+        " Plug 'rust-lang/rust.vim'               " rust development plugin
 
         Plug 'vivien/vim-linux-coding-style'
 
@@ -50,7 +55,6 @@ else
         " Plug 'psf/black'                        " Python code formatter: Black
         " Plug 'elzr/vim-json'                    " json filetype plugin
         " Plug 'godlygeek/tabular'                " dependency for vim-markdown
-        " Plug 'plasticboy/vim-markdown'          " vim-markdown
     call plug#end()
 
     """" Theme stuff
@@ -87,13 +91,13 @@ else
     autocmd InsertLeave * match ExtraWhitespace /\s\+$/
     autocmd BufWinLeave * call clearmatches()
 
-    nmap ghw <ESC>:%s/\s\+$//e<CR>
+    nmap ghw :%s/\s\+$//e<CR>
     "BufWritePre *
 
     set path+=**
 
     let NERDTreeShowHidden=1
-    nmap <C-n> <ESC>:NERDTreeToggle<CR>
+    nmap <C-n> :NERDTreeToggle<CR>
 
     " CTags Settings
     " Refer: http://ctags.sourceforge.net/ or `man ctags`
@@ -107,8 +111,6 @@ else
 
     " ack.vim Settings
     cnoreabbrev Ack Ack!
-    " Shortcut for `:Ack! ` as `<Leader>a`
-    nnoremap <Leader>a :Ack!<Space>
     let g:ackhighlight = 1                              " highlight matches
     let g:ackprg = 'ag --nogroup --nocolor --column'    " Ag support
 
@@ -127,7 +129,21 @@ else
     nnoremap gls :LeetCodeSubmit<cr>
     nnoremap gli :LeetCodeSignIn<cr>
 
-    """" Lang support
+    " set completefunc=emoji#complete
+
+    fun! <SID>Sub_movend(lineno)
+            if (match(getline(a:lineno), ':\([^:]\+\):') != -1) " There is a match
+                    exe a:lineno . 'su /:\([^:]\+\):/\=emoji#for(submatch(1), submatch(0))/g'
+                    star!
+            endif
+    endfun
+
+    " let g:UltiSnipsExpandTrigger="<CR>"
+    " let g:UltiSnipsJumpForwardTrigger="<c-b>"
+    " let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+
+    nmap get <ESC>:call <SID>Sub_movend(line('.'))<cr>
+
     filetype plugin indent on
     syntax on
 
@@ -137,15 +153,7 @@ else
         let g:rust_clip_command = 'xclip -selection clipboard'
     endif
 
-    let g:ycm_autoclose_preview_window_after_completion=1
-
-    let g:ycm_language_server =
-      \ [{
-      \   'name': 'ccls',
-      \   'cmdline': [ 'ccls' ],
-      \   'filetypes': [ 'c', 'cpp', 'cuda', 'objc', 'objcpp' ],
-      \   'project_root_files': [ '.ccls-root', 'compile_commands.json' ]
-      \ }]
+    " let g:ycm_autoclose_preview_window_after_completion=1
 
     "python with virtualenv support
     let python_highlight_all=1
@@ -159,7 +167,17 @@ else
     let g:syntastic_check_on_open = 1
     let g:syntastic_check_on_wq = 0
 
+    nmap gst :SyntasticToggleMode<cr>
+
     autocmd BufNewFile,BufRead ~/shared/kworkflow/* let syntastic_sh_shellcheck_args="--external-sources --shell=bash --exclude=SC2016,SC2181,SC2034,SC2154,SC2001,SC1090,SC1091,SC2120"
+
+    let g:languagetool_jar='$HOME/LanguageTool-5.7-stable/languagetool-commandline.jar'
+    let g:languagetool_enable_rules='PASSIVE_VOICE'
+
+    nmap glc :LanguageToolCheck<cr>
+    nmap gle :LanguageToolClear<cr>
+    nmap [l :lpr<cr>
+    nmap ]l :lne<cr>
 
     """" Prettify
 
