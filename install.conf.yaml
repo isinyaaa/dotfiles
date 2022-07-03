@@ -9,7 +9,6 @@
     ~/.mbsyncrc: mbsyncrc
     ~/.tmux.conf: tmux.conf
     ~/.vimrc: vimrc
-    ~/.vncxstartup: vncxstartup
     ~/.config/bat:
         path: config/bat/
     ~/.config/fish:
