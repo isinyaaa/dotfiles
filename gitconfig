@@ -1,0 +1,109 @@
+[user]
+    name = Isabella Basso
+[sendemail]
+    confirm = auto
+    smtpEncryption = ssl
+    smtpServerPort = 465
+    chainReplyTo = false
+[include]
+    path = ~/.gitconfig-common
+[includeIf "gitdir:~/repos/redhat/"]
+    path = ~/.gitconfig-work
+[includeIf "gitdir:~/repos/usp/"]
+    path = ~/.gitconfig-usp
+[color]
+    diff = auto
+    status = auto
+    branch = auto
+    interactive = auto
+    pager = true
+    ui = auto
+[commit]
+    gpgSign = true
+[credential]
+    helper = !pass-git-helper
+[core]
+    autocrlf = input
+    pager = diff-so-fancy | less -RFX
+[diff]
+    tool = nvim
+    submodule = log
+    colorMoved = zebra
+[difftool]
+    prompt = true
+[difftool "code"]
+    cmd = code --wait --diff \"$LOCAL\" \"$REMOTE\"
+[difftool "nvim"]
+    cmd = nvim -d \"$LOCAL\" \"$REMOTE\"
+[difftool "vscodium"]
+    cmd = vscodium --wait --diff \"$LOCAL\" \"$REMOTE\"
+[fetch]
+    prune = true
+[format]
+    signOff = true
+[init]
+    defaultBranch = main
+[merge]
+    conflictstyle = diff3
+    tool = nvim
+[mergetool]
+    prompt = false
+[mergetool "code"]
+    cmd = code --wait \"$MERGED\"
+[mergetool "nvim"]
+    cmd = nvim -f -c \"Gdiffsplit!\" \"$MERGED\"
+[mergetool "vscodium"]
+    cmd = vscodium --wait \"$MERGED\"
+[pull]
+    rebase = true
+[push]
+    gpgSign = if-asked
+[alias]
+    br = branch -vv
+    cs = commit -s
+    ca = commit --amend
+    can = commit --amend --no-edit
+    cpf = "!git can && git pf"
+    fa = fetch --all
+    get-hash = log --format="%H" -n1
+    line = log --oneline --graph
+    lines = line --name-status
+    lp = log -p
+    lost = log --oneline --stat
+    pf = push -f
+    ra = rebase --abort
+    rc = rebase --continue
+    ri = rebase -i
+    rh = reset --hard
+    rv = remote -v
+    save = commit -m "Save" --no-gpg-sign --no-verify
+    save-staged = "!git stash --keep-index; \
+            git stash push -m 'staged' --keep-index; \
+            git stash pop stash@{1}"
+    st = status -sb
+    staged = diff --cached
+    stash-staged = "!git save-staged && \
+            git commit -m 'temp' && \
+            git stash && \
+            git reset --hard HEAD^ && \
+            git stash pop"
+    top = rev-parse --show-toplevel
+    update = "!f(){\
+            before=$(git stash list | wc -l); \
+            git stash --keep-index; \
+            after=$(git stash list | wc -l); \
+            test $# > 1 && { \
+                branch=$2; \
+                tracking=$1; \
+            } || { \
+                branch=$1; \
+                tracking=origin; \
+            }; \
+            hash=$(git get-hash $branch); \
+            git fa; \
+            git checkout $branch; \
+            git pull $tracking $branch; \
+            git checkout -; \
+            git rebase $hash --onto $tracking/$branch && \
+            test $before = $after || git stash pop; \
+        };f"
