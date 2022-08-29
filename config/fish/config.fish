@@ -32,7 +32,7 @@ end
 set -gx PATH $HOME/bin $PATH
 set -gx PATH $HOME/.local/bin $PATH
 set -gx PATH $HOME/.cargo/bin $PATH
-test $IS_MAC = true && set -gx PATH $HOME/Library/Python/3.9/bin $PATH
+test $IS_MAC = true && set -gx PATH /opt/homebrew/opt/python@3.10/bin $PATH
 set -gx PATH /opt/local/bin $PATH
 
 # add node 16 to path on MacOS
