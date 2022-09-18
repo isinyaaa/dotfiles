@@ -33,6 +33,7 @@ set -gx PATH $HOME/bin $PATH
 set -gx PATH $HOME/.local/bin $PATH
 set -gx PATH $HOME/.cargo/bin $PATH
 test $IS_MAC = true && set -gx PATH /opt/homebrew/opt/python@3.10/bin $PATH
+test $IS_MAC = true && set -gx PATH $HOME/.gem/ruby/2.6.0/bin $PATH
 set -gx PATH /opt/local/bin $PATH
 
 # add node 16 to path on MacOS
@@ -74,6 +75,9 @@ end
 
 set -g LINUX_SRC_PATH "$HOME/shared/linux"
 set -g VM_PATH "$HOME/vms"
+
+abbr -ag ef exec fish
+abbr -ag tc topgrade -c
 
 # pyenv setup
 if command -q pyenv

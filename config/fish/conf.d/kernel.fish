@@ -115,16 +115,15 @@ function qemu_aarch64
     default_set mem_amount $argv[2] 4G
 
     if test $IS_MAC = true
-        set cpuvar host
+        default_set cpuvar $argv[3] host
         set accelvar ",accel=hvf"
     else
-        set cpuvar cortex-a72
+        default_set cpuvar $argv[3] cortex-a72
     end
 
     eval qemu-system-aarch64 -L ~/bin/qemu/share/qemu \
-         -smp 8 \
          -machine virt"$accelvar" \
-         -cpu "$cpuvar" -m "$mem_amount" \
+         -cpu "$cpuvar" -smp 8 -m "$mem_amount" \
          "-drive if=pflash,media=disk,file=$HOME/vms/setup/UEFI/flash"{"0.img,id=drive0","1.img,id=drive1"}",cache=writethrough,format=raw" \
          -drive if=none,file="$VM_PATH/$img_name",format=qcow2,id=hd0 \
          # -virtfs local,mount_tag=fs1,path=$HOME/shared,security_model=none \
