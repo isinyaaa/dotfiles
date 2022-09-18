@@ -59,10 +59,17 @@
 [push]
     gpgSign = if-asked
 [alias]
+    aa = am --abort
     br = branch -vv
     cs = commit -s
     ca = commit --amend
     can = commit --amend --no-edit
+    cm = "!f(){\
+            NUM=${1:-0};\
+            git commit -m \"temp $NUM\";\
+        };f"
+    cp = cherry-pick
+    cpa = cherry-pick --abort
     cpf = "!git can && git pf"
     fa = fetch --all
     get-hash = log --format="%H" -n1
@@ -73,37 +80,50 @@
     pf = push -f
     ra = rebase --abort
     rc = rebase --continue
-    ri = rebase -i
     rh = reset --hard
+    ri = rebase -i
+    ro = "!f(){\
+            CURRENT=$(git rev-parse --abbrev-ref @);\
+            test $# -gt 1 && { \
+                BRANCH=$2; \
+                TRACKING=$1; \
+            } || { \
+                BRANCH=$1; \
+                TRACKING=origin; \
+            }; \
+            git rebase $(git get-hash $TRACKING/$BRANCH) --onto $BRANCH;\
+        };f"
     rv = remote -v
     save = commit -m "Save" --no-gpg-sign --no-verify
-    save-staged = "!git stash --keep-index; \
-            git stash push -m 'staged' --keep-index; \
-            git stash pop stash@{1}"
+    ski = stash push --keep-index
+    ssp = stash show -p
+    sd = stash drop
+    sl = stash list
+    sp = stash pop
     st = status -sb
     staged = diff --cached
-    stash-staged = "!git save-staged && \
-            git commit -m 'temp' && \
+    stash-staged = "!git ski && \
+            git commit --no-verify -m 'temp' && \
             git stash && \
-            git reset --hard HEAD^ && \
+            git rh @~ && \
             git stash pop"
     top = rev-parse --show-toplevel
     update = "!f(){\
-            before=$(git stash list | wc -l); \
+            BEFORE=$(git stash list | wc -l); \
             git stash --keep-index; \
-            after=$(git stash list | wc -l); \
-            test $# > 1 && { \
-                branch=$2; \
-                tracking=$1; \
+            AFTER=$(git stash list | wc -l); \
+            test $# -gt 1 && { \
+                BRANCH=$2; \
+                TRACKING=$1; \
             } || { \
-                branch=$1; \
-                tracking=origin; \
+                BRANCH=$1; \
+                TRACKING=origin; \
             }; \
-            hash=$(git get-hash $branch); \
+            hash=$(git get-hash $BRANCH); \
             git fa; \
-            git checkout $branch; \
-            git pull $tracking $branch; \
+            git checkout $BRANCH; \
+            git pull $TRACKING $BRANCH; \
             git checkout -; \
-            git rebase $hash --onto $tracking/$branch && \
-            test $before = $after || git stash pop; \
+            git ro $TRACKING $BRANCH && \
+            test $BEFORE = $AFTER || git stash pop; \
         };f"
