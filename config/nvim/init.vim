@@ -12,12 +12,16 @@ else
         Plug 'junegunn/fzf.vim', { 'do': { -> fzf#install() } } " fzf: more intuitive search than CtrlP
         Plug 'airblade/vim-gitgutter'           " +- and hunk management
         Plug 'scrooloose/nerdtree'              " nerdtree plugin
+        Plug 'tpope/vim-unimpaired'             " handy shortcuts
         Plug 'tpope/vim-repeat'                 " enable repeating supported plugins (not just native last command)
         Plug 'tpope/vim-rhubarb'                " vim-fugitive plugin for opening file on Github, using :Gbrowse
         Plug 'tpope/vim-sleuth'                 " auto set tab stops
         Plug 'wakatime/vim-wakatime'
         Plug 'mbledkowski/neuleetcode.vim'      " leetcode
         Plug 'junegunn/vim-emoji'               " Emoji support
+        Plug 'jiangmiao/auto-pairs'             " auto pairs for (), [], {}, '', \"\"
+        Plug 'sbdchd/neoformat'                 " auto format code
+        Plug 'terryma/vim-multiple-cursors'
         " Plug 'SirVer/ultisnips'                 " snippets engine
         " Plug 'honza/vim-snippets'
 
@@ -29,6 +33,7 @@ else
         Plug 'plasticboy/vim-markdown'
         " Plug 'Valloric/YouCompleteMe'
 
+        Plug 'davidhalter/jedi-vim'             " Go to definition, find references, auto complete, etc.
         Plug 'joe-skb7/cscope-maps'             " cscope shortcuts
         Plug 'inkch/vim-fish'
         " Plug 'vim-scripts/indentpython.vim'
@@ -182,6 +187,26 @@ else
     """" Prettify
 
     lua require('neoscroll').setup()
+
+    """ Neoformat
+    " Enable alignment
+    let g:neoformat_basic_format_align = 1
+
+    " Enable tab to space conversion
+    let g:neoformat_basic_format_retab = 1
+
+    " Enable trimmming of trailing whitespace
+    let g:neoformat_basic_format_trim = 1
+
+    let g:jedi#completions_enabled = 0
+
+    let g:jedi#goto_command = "gjd"
+    let g:jedi#goto_assignments_command = "gjg"
+    let g:jedi#goto_stubs_command = "gjs"
+    let g:jedi#goto_definitions_command = ""
+    let g:jedi#documentation_command = "K"
+    let g:jedi#usages_command = "gjn"
+    let g:jedi#rename_command = "gjr"
 
     "let g:airline_theme='space-vim-theme'
 
