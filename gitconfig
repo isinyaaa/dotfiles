@@ -64,22 +64,39 @@
     cs = commit -s
     ca = commit --amend
     can = commit --amend --no-edit
+    canv = can --no-verify
     cm = "!f(){\
             NUM=${1:-0};\
             git commit -m \"temp $NUM\";\
         };f"
+    cnv = commit --no-verify
     cp = cherry-pick
     cpa = cherry-pick --abort
     cpf = "!git can && git pf"
+    crc = "!git can && git rc"
     fa = fetch --all
     get-hash = log --format="%H" -n1
     line = log --oneline --graph
     lines = line --name-status
+    lnra = "!f(){\
+            git line ${1:-master}..${2:-HEAD};\
+        };f"
     lp = log -p
+    lpra = "!f(){\
+            git lp ${1:-master}..${2:-HEAD};\
+        };f"
+    lpr = "!f(){\
+            git lp --reverse ${1:-master}..${2:-HEAD};\
+        };f"
+    lr = "!f(){\
+            git log --reverse ${1:-master}..${2:-HEAD};\
+        };f"
     lost = log --oneline --stat
     pf = push -f
+    pu = push -u
     ra = rebase --abort
     rc = rebase --continue
+    ret = rebase --edit-todo
     rh = reset --hard
     ri = rebase -i
     ro = "!f(){\
