@@ -19,7 +19,7 @@ else
         Plug 'wakatime/vim-wakatime'
         Plug 'mbledkowski/neuleetcode.vim'      " leetcode
         Plug 'junegunn/vim-emoji'               " Emoji support
-        Plug 'jiangmiao/auto-pairs'             " auto pairs for (), [], {}, '', \"\"
+        " Plug 'jiangmiao/auto-pairs'             " auto pairs for (), [], {}, '', \"\"
         Plug 'sbdchd/neoformat'                 " auto format code
         Plug 'terryma/vim-multiple-cursors'
         " Plug 'SirVer/ultisnips'                 " snippets engine
