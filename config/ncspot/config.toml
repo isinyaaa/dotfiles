@@ -3,7 +3,7 @@ volnorm_pregain = -10
 gapless = true
 use_nerdfont = true
 audio_cache_size = 4096
-cover_max_scale = 2
+cover_max_scale = 8
 
 [saved_state]
 volume = 80
