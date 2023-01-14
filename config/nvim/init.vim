@@ -64,6 +64,9 @@ else
 
     """" Theme stuff
 
+    if has('termguicolors')
+        set termguicolors
+    endif
     colorscheme space_vim_theme
     hi Comment cterm=italic
 
