@@ -60,7 +60,8 @@
     gpgSign = if-asked
 [alias]
     aa = am --abort
-    br = branch -vv
+    bl = branch -vv
+    blr = branch -rv
     cs = commit -s
     ca = commit --amend
     can = commit --amend --no-edit
