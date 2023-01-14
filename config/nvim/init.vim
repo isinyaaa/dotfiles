@@ -27,17 +27,13 @@ else
 
         """" Lang support
 
-        Plug 'vim-syntastic/syntastic'
+        Plug 'dense-analysis/ale'
         Plug 'dpelle/vim-LanguageTool'
         Plug 'github/copilot.vim'
         Plug 'plasticboy/vim-markdown'
-        " Plug 'Valloric/YouCompleteMe'
 
-        Plug 'davidhalter/jedi-vim'             " Go to definition, find references, auto complete, etc.
         Plug 'joe-skb7/cscope-maps'             " cscope shortcuts
-        Plug 'inkch/vim-fish'
-        " Plug 'vim-scripts/indentpython.vim'
-        " Plug 'nvie/vim-flake8'
+        " Plug 'inkch/vim-fish'
         " Plug 'rust-lang/rust.vim'               " rust development plugin
 
         Plug 'vivien/vim-linux-coding-style'
@@ -55,9 +51,8 @@ else
 
         """" Still not sure
 
-        " Plug 'majutsushi/tagbar'                " overview of current file structure
+        Plug 'majutsushi/tagbar'                " overview of current file structure
         " Plug 'tpope/vim-surround'               " manage surroundings (parenthesis, brackets, quotes, XML tags, etc.)
-        " Plug 'psf/black'                        " Python code formatter: Black
         " Plug 'elzr/vim-json'                    " json filetype plugin
         " Plug 'godlygeek/tabular'                " dependency for vim-markdown
     call plug#end()
@@ -111,11 +106,7 @@ else
     " Refer: http://ctags.sourceforge.net/ or `man ctags`
     " enabling CTags
     set tags=tags;                               " tags file within project directory
-    " open ctag in new tab
     map <C-\> :tab split<CR>:exec("tag ".expand("<cword>"))<CR>
-    " list all mapping using `:map`
-    " if you do `Ctrl-k` and then press a key, the vim
-    " will tell you how this key is know to vim
 
     " ack.vim Settings
     cnoreabbrev Ack Ack!
@@ -125,8 +116,8 @@ else
     nmap ghp <Plug>(GitGutterPreviewHunk)
     nmap ghs <Plug>(GitGutterStageHunk)
     nmap ghu <Plug>(GitGutterUndoHunk)
-    nmap ]h <Plug>(GitGutterNextHunk)
     nmap [h <Plug>(GitGutterPrevHunk)
+    nmap ]h <Plug>(GitGutterNextHunk)
 
     let g:leetcode_browser = 'firefox'
     let g:leetcode_solution_filetype = 'c'
@@ -161,23 +152,39 @@ else
         let g:rust_clip_command = 'xclip -selection clipboard'
     endif
 
-    " let g:ycm_autoclose_preview_window_after_completion=1
-
     "python with virtualenv support
     let python_highlight_all=1
 
-    set statusline+=%#warningmsg#
-    set statusline+=%{SyntasticStatuslineFlag()}
-    set statusline+=%*
+    let g:airline#extensions#ale#enabled = 1
 
-    let g:syntastic_always_populate_loc_list = 1
-    let g:syntastic_auto_loc_list = 1
-    let g:syntastic_check_on_open = 1
-    let g:syntastic_check_on_wq = 0
+    let g:ale_lint_on_text_changed = 'never'
+    let g:ale_lint_on_insert_leave = 0
+    " You can disable this option too
+    " if you don't want linters to run on opening a file
+    " let g:ale_lint_on_enter = 0
 
-    nmap gst :SyntasticToggleMode<cr>
+    " autocmd BufNewFile,BufRead ~/shared/kworkflow/* let syntastic_sh_shellcheck_args="--external-sources --shell=bash --exclude=SC2016,SC2181,SC2034,SC2154,SC2001,SC1090,SC1091,SC2120"
 
-    autocmd BufNewFile,BufRead ~/shared/kworkflow/* let syntastic_sh_shellcheck_args="--external-sources --shell=bash --exclude=SC2016,SC2181,SC2034,SC2154,SC2001,SC1090,SC1091,SC2120"
+    nmap gjd :ALEGoToDefinition -tab<cr>
+    nmap gfr :ALEFindReferences<cr>
+    nmap grs :ALERename<cr>
+    nmap gca :ALECodeAction<cr>
+
+    nmap gst :ALEToggle<cr>
+    nmap gsd :let g:ale_disable_lsp=1<cr>:ALELint<cr>
+    nmap gse :let g:ale_disable_lsp=0<cr>gstgst
+
+    nmap [a :ALEPreviousWrap<cr>
+    nmap ]a :ALENextWrap<cr>
+
+    let g:ale_linters = {
+    \   'bash': ['shellcheck'],
+    \   'fish': ['-n flag', 'fish_indent'],
+    \   'c': ['clangtidy', 'cppcheck'],
+    \   'cpp': ['clangtidy'],
+    \   'python': ['flake8', 'mypy', 'pylsp'],
+    \}
+    let g:ale_linters_explicit = 1
 
     let g:languagetool_jar='$HOME/LanguageTool-5.7-stable/languagetool-commandline.jar'
     let g:languagetool_enable_rules='PASSIVE_VOICE'
@@ -200,16 +207,6 @@ else
 
     " Enable trimmming of trailing whitespace
     let g:neoformat_basic_format_trim = 1
-
-    let g:jedi#completions_enabled = 0
-
-    let g:jedi#goto_command = "gjd"
-    let g:jedi#goto_assignments_command = "gjg"
-    let g:jedi#goto_stubs_command = "gjs"
-    let g:jedi#goto_definitions_command = ""
-    let g:jedi#documentation_command = "K"
-    let g:jedi#usages_command = "gjn"
-    let g:jedi#rename_command = "gjr"
 
     "let g:airline_theme='space-vim-theme'
 
