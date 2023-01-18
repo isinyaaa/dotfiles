@@ -75,23 +75,22 @@
     cp = cherry-pick
     cpa = cherry-pick --abort
     cpf = "!git can && git pf"
-    crc = "!git can && git rc"
     fa = fetch --all
     get-hash = log --format="%H" -n1
-    line = log --oneline --graph
-    lines = line --name-status
-    lnra = "!f(){\
-            git line ${1:-master}..${2:-HEAD};\
+    lfr = "!f(){\
+            git log --reverse ${1:-master}..${2:-HEAD};\
         };f"
+    ln = log --oneline --graph
+    lnf = "!f(){\
+            git ln ${1:-master}..${2:-HEAD};\
+        };f"
+    lnns = line --name-status
     lp = log -p
-    lpra = "!f(){\
+    lpf = "!f(){\
             git lp ${1:-master}..${2:-HEAD};\
         };f"
-    lpr = "!f(){\
+    lpfr = "!f(){\
             git lp --reverse ${1:-master}..${2:-HEAD};\
-        };f"
-    lr = "!f(){\
-            git log --reverse ${1:-master}..${2:-HEAD};\
         };f"
     lost = log --oneline --stat
     pf = push -f
@@ -100,9 +99,8 @@
     rc = rebase --continue
     ret = rebase --edit-todo
     rh = reset --hard
-    ri = rebase -i
+    ri = rebase -i --autosquash
     ro = "!f(){\
-            CURRENT=$(git rev-parse --abbrev-ref @);\
             test $# -gt 1 && { \
                 BRANCH=$2; \
                 TRACKING=$1; \
@@ -121,11 +119,12 @@
     sp = stash pop
     st = status -sb
     staged = diff --cached
-    stash-staged = "!git ski && \
-            git commit --no-verify -m 'temp' && \
-            git stash && \
-            git rh @~ && \
-            git stash pop"
+    stash-staged = "!f(){git ski; \
+            git cnv -m 'temp'; \
+            git stash; \
+            git rh @~; \
+            git stash pop; \
+        };f"
     top = rev-parse --show-toplevel
     update = "!f(){\
             BEFORE=$(git stash list | wc -l); \
@@ -138,7 +137,6 @@
                 BRANCH=$1; \
                 TRACKING=origin; \
             }; \
-            hash=$(git get-hash $BRANCH); \
             git fa; \
             git checkout $BRANCH; \
             git pull $TRACKING $BRANCH; \
