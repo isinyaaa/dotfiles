@@ -33,7 +33,7 @@ else
         Plug 'plasticboy/vim-markdown'
 
         Plug 'joe-skb7/cscope-maps'             " cscope shortcuts
-        " Plug 'inkch/vim-fish'
+        Plug 'inkch/vim-fish'
         " Plug 'rust-lang/rust.vim'               " rust development plugin
 
         Plug 'vivien/vim-linux-coding-style'
@@ -179,7 +179,7 @@ else
 
     let g:ale_linters = {
     \   'bash': ['shellcheck'],
-    \   'fish': ['-n flag', 'fish_indent'],
+    \   'fish': ['fish'],
     \   'c': ['clangtidy', 'cppcheck'],
     \   'cpp': ['clangtidy'],
     \   'python': ['flake8', 'mypy', 'pylsp'],
