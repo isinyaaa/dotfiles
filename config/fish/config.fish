@@ -69,7 +69,7 @@ end
 alias wipe="clear; fish_greeting"
 
 echo "$TERM" | grep -q "kitty"
-if test $status -eq 0
+if test -z $SSH_CLIENT -a $status -eq 0
     alias ssh "kitty +kitten ssh"
 end
 
