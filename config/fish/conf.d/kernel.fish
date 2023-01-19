@@ -5,7 +5,7 @@ function set-build
     abbr -a mk make CC=\"ccache gcc -fdiagnostics-color\" -j(nproc) O=$BUILD_FOLDER
     abbr -a menu make menuconfig -j O=$BUILD_FOLDER
 
-    function local-install
+    function local-install-mods
         default_set KNAME $argv[1] $BUILD_FOLDER
         echorun make CC=\"ccache gcc-11 -fdiagnostics-color\" -j(nproc) O=$BUILD_FOLDER
         echorun sudo make -j(nproc) O=$BUILD_FOLDER INSTALL_HDR_PATH=/usr headers_install modules_install
@@ -14,6 +14,26 @@ function set-build
             echorun sudo mkinitcpio -P
             echorun sudo grub-mkconfig -o /boot/grub/grub.cfg
         end
+    end
+
+    function vm-install-mods
+        set img_name "$argv[1]"
+        set MNT_FOLDER "$VM_PATH/mnt"
+        echorun qemu-img convert -O raw "$VM_PATH/$img_name.qcow2" "$VM_PATH/$img_name.raw"
+        mountpoint "$MNT_FOLDER" || echorun sudo mount "$VM_PATH/$img_name.raw" "$MNT_FOLDER"
+
+        wait_for_mount "$MNT_FOLDER"
+
+        pwd | grep -q 'linux$' || echo "entering directory '$HOME/shared/linux'" && pushd "$HOME"/shared/linux
+
+        echorun sudo make -j(nproc) O="$BUILD_FOLDER" \
+            INSTALL_HDR_PATH="$MNT_FOLDER"/usr INSTALL_MOD_PATH="$MNT_FOLDER" \
+            headers_install modules_install
+
+        dirs > /dev/null && echo "leaving directory '"(pwd)"'" && popd
+
+        echorun sudo umount $MNT_FOLDER
+        echorun qemu-img convert -O qcow2 "$VM_PATH/$img_name.raw" "$VM_PATH/$img_name.qcow2"
     end
 
     function clean-output
@@ -52,32 +72,14 @@ end
 
 # === vm management ===
 
-function vm-install-mods
-    set img_name "$argv[1].qcow2"
-    set MNT_FOLDER "$VM_PATH/mnt"
-    mountpoint "$MNT_FOLDER" || echorun sudo mount "$VM_PATH/$img_name" "$MNT_FOLDER"
-
-    wait_for_mount "$MNT_FOLDER"
-
-    pwd | grep -q 'linux$' || echo "entering directory '$HOME/shared/linux'" && pushd "$HOME"/shared/linux
-
-    echorun sudo make -j8 O="$BUILD_FOLDER" \
-        INSTALL_HDR_PATH="$MNT_FOLDER"/usr INSTALL_MOD_PATH="$MNT_FOLDER" \
-        headers_install modules_install
-
-    dirs > /dev/null && echo "leaving directory '"(pwd)"'" && popd
-
-    echorun sudo umount $MNT_FOLDER
-end
-
 abbr -a qxa qemu_x86_64
 
 function qemu_x86_64
     set img_name $argv[1]
     set extension ""
     set format ""
-    echo "$img_name" | cut -d'.' -f 2 | grep -q img
-    if test "$status"
+    echo "$img_name" | cut -d'.' -f 2 | grep -q raw
+    if test "$status" = 0
         set format ,format=raw
     else
         set extension .qcow2
@@ -87,21 +89,22 @@ function qemu_x86_64
         set cpuvar qemu64
     else
         set cpuvar host
+        set accelvar '-enable-kvm'
     end
 
     if test -n "$BUILD_FOLDER"
-        qemu-system-x86_64 \
+        eval qemu-system-x86_64 \
             -boot order=a -drive file="$VM_PATH/$img_name$extension"$format,if=virtio \
             -kernel "$LINUX_SRC_PATH/$BUILD_FOLDER"/arch/x86_64/boot/bzImage \
-            -append "root=/dev/vda rw console=ttyS0 nokaslr loglevel=7 raid=noautodetect audit=0 cpuidle_haltpoll.force=1" \
+            -append \"root=/dev/vda rw console=ttyS0 nokaslr loglevel=7 raid=noautodetect audit=0 cpuidle_haltpoll.force=1\" \
             # -fsdev local,id=fs1,path=$HOME/shared,security_model=none \
             # -device virtio-9p-pci,fsdev=fs1,mount_tag=$HOME/shared
-            -m "$mem_amount" -smp 4 -cpu "$cpuvar" \
+            -m "$mem_amount" -smp 4 -cpu "$cpuvar" "$accelvar" \
             -nic user,hostfwd=tcp::2222-:22,smb="$HOME"/shared -s \
             -nographic
     else
-        qemu-system-x86_64 \
-            -accel tcg -m "$mem_amount" -smp 4 -cpu "$cpuvar" \
+        eval qemu-system-x86_64 \
+            -m "$mem_amount" -smp 4 -cpu "$cpuvar" "$accelvar" \
             -nic user,hostfwd=tcp::2222-:22,smb="$HOME"/shared -s \
             -boot order=a -drive file="$VM_PATH/$img_name$extension"$format,if=virtio
     end
@@ -161,45 +164,4 @@ function wait_for_mount
         sleep 1
         mountpoint $MNT_FOLDER > /dev/null && break
     end
-end
-
-# TODO move this to proper script
-function create-vm
-    default_set disk_space $argv[1] '8G'
-    default_set disk_name $argv[2] 'arch_disk'
-
-    set extra_packs "vim fish git rustup strace gdb dhcpcd openssh cifs-utils samba"
-    #set xforwarding_packs 'xorg-xauth xorg-xclock xorg-fonts-type1'
-
-    set all_packs "$extra_packs"
-
-    echorun truncate -s "$disk_space" "$disk_name.img"
-    test $status != 0 && return 1
-    echorun mkfs.ext4 $disk_name
-    test $status != 0 && return 1
-
-    test -d mnt || echorun mkdir mnt
-    echorun sudo mount "$disk_name" mnt
-    test $status != 0 && echorun sudo umount mnt && return 1
-
-    wait_for_mount
-
-    echorun sudo pacstrap -c mnt base base-devel "$all_packs"
-    test $status != 0 && echorun sudo umount mnt && return 1
-
-    # configure ssh
-    echorun sudo cp ~/.ssh/id_rsa.pub mnt/root/
-    test $status != 0 && echorun sudo umount mnt && return 1
-
-    # copy bootstrap script
-    echorun sudo cp "$HOME"/scripts/start.sh mnt/root/
-    echorun sudo cp "$HOME"/scripts/smb.conf mnt/root/
-    test $status != 0 && echorun sudo umount mnt && return 1
-
-    # remove root passwd
-    sudo arch-chroot mnt/ sh -c "echo 'root:xx' | chpasswd"
-
-    echorun sudo umount mnt
-
-    echorun qemu-convert -O qcow2 "$disk_name.img" "$disk_name.qcow2"
 end
