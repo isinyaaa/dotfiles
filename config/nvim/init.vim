@@ -165,7 +165,11 @@ else
 
     " autocmd BufNewFile,BufRead ~/shared/kworkflow/* let syntastic_sh_shellcheck_args="--external-sources --shell=bash --exclude=SC2016,SC2181,SC2034,SC2154,SC2001,SC1090,SC1091,SC2120"
 
-    nmap gjd :ALEGoToDefinition -tab<cr>
+    nmap gjt :ALEGoToDefinition -tab<cr>
+    nmap gjd :ALEGoToDefinition<cr>
+    nmap gtt :ALEGoToTypeDefinition -tab<cr>
+    nmap gtd :ALEGoToTypeDefinition<cr>
+    nmap gmd :ALEDetail<cr>
     nmap gfr :ALEFindReferences<cr>
     nmap grs :ALERename<cr>
     nmap gca :ALECodeAction<cr>
@@ -180,8 +184,8 @@ else
     let g:ale_linters = {
     \   'bash': ['shellcheck'],
     \   'fish': ['fish'],
-    \   'c': ['clangtidy', 'cppcheck'],
-    \   'cpp': ['clangtidy'],
+    \   'c': ['clangtidy', 'cppcheck', 'clangd'],
+    \   'cpp': ['clangtidy', 'cppcheck', 'clangd'],
     \   'python': ['flake8', 'mypy', 'pylsp'],
     \}
     let g:ale_linters_explicit = 1
