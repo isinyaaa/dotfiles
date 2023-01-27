@@ -66,6 +66,7 @@
     ca = commit --amend
     can = commit --amend --no-edit
     canv = can --no-verify
+    cf = cs --fixup
     cm = "!f(){\
             NUM=${1:-0};\
             git commit -m \"temp $NUM\";\
