@@ -34,6 +34,7 @@ set -gx PATH $HOME/.local/bin $PATH
 set -gx PATH $HOME/.cargo/bin $PATH
 test $IS_MAC = true && set -gx PATH /opt/homebrew/opt/python@3.10/bin $PATH
 test $IS_MAC = true && set -gx PATH $HOME/.gem/ruby/2.6.0/bin $PATH
+test $IS_MAC = true && set -gx PATH $HOME/go/bin $PATH
 set -gx PATH /opt/local/bin $PATH
 
 # add node 16 to path on MacOS
@@ -69,7 +70,7 @@ end
 alias wipe="clear; fish_greeting"
 
 echo "$TERM" | grep -q "kitty"
-if test -z $SSH_CLIENT -a $status -eq 0
+if test -z "$SSH_CLIENT" -a $status -eq 0
     alias ssh "kitty +kitten ssh"
 end
 
@@ -78,6 +79,8 @@ set -g VM_PATH "$HOME/vms"
 
 abbr -ag ef exec fish
 abbr -ag tc topgrade -c
+
+alias rsp 'rsync -avzh --progress'
 
 # pyenv setup
 if command -q pyenv
