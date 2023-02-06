@@ -60,6 +60,7 @@
     gpgSign = if-asked
 [alias]
     aa = am --abort
+    ap = add -p
     bl = branch -vv
     blr = branch -rv
     cs = commit -s
@@ -77,20 +78,24 @@
     cpf = "!git can && git pf"
     fa = fetch --all
     get-hash = log --format="%H" -n1
-    lfr = "!f(){\
-            git log --reverse ${1:-master}..${2:-HEAD};\
+    get-default-branch = "!f(){\
+            git symbolic-ref refs/remotes/${1:-origin}/HEAD | cut -d'/' -f4;\
+        };f"
+    lrf = "!f(){\
+            git log --reverse ${1:-$(git get-default-branch)}..${2:-HEAD};\
         };f"
     ln = log --oneline --graph
     lnf = "!f(){\
-            git ln ${1:-master}..${2:-HEAD};\
+            git ln ${1:-$(git get-default-branch)}..${2:-HEAD};\
         };f"
-    lnns = line --name-status
+    lnna = log --pretty=oneline --graph
+    lnns = ln --name-status
     lp = log -p
     lpf = "!f(){\
-            git lp ${1:-master}..${2:-HEAD};\
+            git lp ${1:-$(git get-default-branch)}..${2:-HEAD};\
         };f"
-    lpfr = "!f(){\
-            git lp --reverse ${1:-master}..${2:-HEAD};\
+    lprf = "!f(){\
+            git lp --reverse ${1:-$(git get-default-branch)}..${2:-HEAD};\
         };f"
     lost = log --oneline --stat
     pf = push -f
