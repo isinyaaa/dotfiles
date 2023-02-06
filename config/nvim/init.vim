@@ -186,7 +186,7 @@ else
     \   'fish': ['fish'],
     \   'c': ['clangtidy', 'cppcheck', 'clangd'],
     \   'cpp': ['clangtidy', 'cppcheck', 'clangd'],
-    \   'python': ['flake8', 'mypy', 'pylsp'],
+    \   'python': ['flake8', 'pylsp'],
     \}
     let g:ale_linters_explicit = 1
 
