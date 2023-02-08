@@ -72,6 +72,8 @@
             NUM=${1:-0};\
             git commit -m \"temp $NUM\";\
         };f"
+    canv = ca --no-verify
+    cannv = can --no-verify
     cnv = commit --no-verify
     cp = cherry-pick
     cpa = cherry-pick --abort
@@ -124,11 +126,12 @@
     sp = stash pop
     st = status -sb
     staged = diff --cached
-    stash-staged = "!f(){git ski; \
+    stash-staged = "!f(){\
             git cnv -m 'temp'; \
             git stash; \
-            git rh @~; \
-            git stash pop; \
+            git reset @~; \
+            git stash; \
+            git sp stash@{1}; \
         };f"
     top = rev-parse --show-toplevel
     update = "!f(){\

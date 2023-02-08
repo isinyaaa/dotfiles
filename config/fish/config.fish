@@ -79,6 +79,7 @@ set -g VM_PATH "$HOME/vms"
 
 abbr -ag ef exec fish
 abbr -ag tc topgrade -c
+abbr -ag ssa ssh arch
 
 alias rsp 'rsync -avzh --progress'
 
