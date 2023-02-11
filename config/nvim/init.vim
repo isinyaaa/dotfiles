@@ -24,16 +24,20 @@ else
         Plug 'terryma/vim-multiple-cursors'
         " Plug 'SirVer/ultisnips'               " snippets engine
         " Plug 'honza/vim-snippets'
+        Plug 'nvim-lua/plenary.nvim'            " dependency for telescope
+        " Plug 'TimUntersberger/neogit'
+        Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.1' }
 
         """" Lang support
 
+        Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
         Plug 'dense-analysis/ale'
         Plug 'dpelle/vim-LanguageTool'
         Plug 'github/copilot.vim'
-        Plug 'plasticboy/vim-markdown'
+        " Plug 'plasticboy/vim-markdown'
 
         Plug 'joe-skb7/cscope-maps'             " cscope shortcuts
-        Plug 'inkch/vim-fish'
+        " Plug 'inkch/vim-fish'
         " Plug 'rust-lang/rust.vim'               " rust development plugin
 
         Plug 'vivien/vim-linux-coding-style'
@@ -86,8 +90,13 @@ else
 
     set spelllang+=pt_br
 
-    " Whitespace management
+    set foldmethod=expr
+    set foldexpr=nvim_treesitter#foldexpr()
+    set nofoldenable                     " Disable folding at startup.
+
     set hlsearch
+
+    " Whitespace management
     highlight ExtraWhitespace ctermbg=red guibg=red
     autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
     autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
@@ -143,8 +152,8 @@ else
 
     nmap get <ESC>:call <SID>Sub_movend(line('.'))<cr>
 
-    filetype plugin indent on
-    syntax on
+    " filetype plugin indent on
+    " syntax on
 
     if $IS_MAC == "true"
         let g:rust_clip_command = 'pbcopy'
@@ -153,7 +162,7 @@ else
     endif
 
     "python with virtualenv support
-    let python_highlight_all=1
+    " let python_highlight_all=1
 
     let g:airline#extensions#ale#enabled = 1
 
@@ -212,6 +221,53 @@ else
     " Enable trimmming of trailing whitespace
     let g:neoformat_basic_format_trim = 1
 
+    lua << EOF
+require'nvim-treesitter.configs'.setup {
+  -- A list of parser names, or "all" (the four listed parsers should always be installed)
+  ensure_installed = { "bash", "c", "cpp", "fish", "markdown", "python", "lua", "vim", "help" },
+
+  -- Install parsers synchronously (only applied to `ensure_installed`)
+  sync_install = false,
+
+  -- Automatically install missing parsers when entering buffer
+  -- Recommendation: set to false if you don't have `tree-sitter` CLI installed locally
+  auto_install = true,
+
+  -- List of parsers to ignore installing (for "all")
+  ignore_install = { "javascript" },
+
+  ---- If you need to change the installation directory of the parsers (see -> Advanced Setup)
+  -- parser_install_dir = "/some/path/to/store/parsers", -- Remember to run vim.opt.runtimepath:append("/some/path/to/store/parsers")!
+
+  highlight = {
+    -- `false` will disable the whole extension
+    enable = true,
+
+    -- NOTE: these are the names of the parsers and not the filetype. (for example if you want to
+    -- disable highlighting for the `tex` filetype, you need to include `latex` in this list as this is
+    -- the name of the parser)
+    -- list of language that will be disabled
+    -- disable = { "c", "rust" },
+    -- Or use a function for more flexibility, e.g. to disable slow treesitter highlight for large files
+    disable = function(lang, buf)
+        local max_filesize = 100 * 1024 -- 100 KB
+        local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
+        if ok and stats and stats.size > max_filesize then
+            return true
+        end
+    end,
+
+    -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
+    -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
+    -- Using this option may slow down your editor, and you may see some duplicate highlights.
+    -- Instead of true it can also be a list of languages
+    additional_vim_regex_highlighting = false,
+  },
+  indent = {
+    enable = true
+  },
+}
+EOF
 endif
 
 set clipboard=unnamedplus
