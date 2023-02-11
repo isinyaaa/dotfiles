@@ -94,7 +94,10 @@ else
     set foldexpr=nvim_treesitter#foldexpr()
     set nofoldenable                     " Disable folding at startup.
 
+    let mapleader = " "
+
     set hlsearch
+    nmap <leader>h :noh<CR>
 
     " Whitespace management
     highlight ExtraWhitespace ctermbg=red guibg=red
@@ -103,7 +106,7 @@ else
     autocmd InsertLeave * match ExtraWhitespace /\s\+$/
     autocmd BufWinLeave * call clearmatches()
 
-    nmap ghw :%s/\s\+$//e<CR>
+    nmap <leader>hw :%s/\s\+$//e<CR>
     "BufWritePre *
 
     set path+=**
@@ -122,9 +125,9 @@ else
     let g:ackhighlight = 1                              " highlight matches
     let g:ackprg = 'ag --nogroup --nocolor --column'    " Ag support
 
-    nmap ghp <Plug>(GitGutterPreviewHunk)
-    nmap ghs <Plug>(GitGutterStageHunk)
-    nmap ghu <Plug>(GitGutterUndoHunk)
+    nmap <leader>hp <Plug>(GitGutterPreviewHunk)
+    nmap <leader>hs <Plug>(GitGutterStageHunk)
+    nmap <leader>hu <Plug>(GitGutterUndoHunk)
     nmap [h <Plug>(GitGutterPrevHunk)
     nmap ]h <Plug>(GitGutterNextHunk)
 
@@ -132,10 +135,9 @@ else
     let g:leetcode_solution_filetype = 'c'
     let g:leetcode_hide_paid_only = 1
 
-    nnoremap gll :LeetCodeList<cr>
-    nnoremap glt :LeetCodeTest<cr>
-    nnoremap gls :LeetCodeSubmit<cr>
-    nnoremap gli :LeetCodeSignIn<cr>
+    nnoremap <leader>ll :LeetCodeList<cr>
+    nnoremap <leader>lt :LeetCodeTest<cr>
+    nnoremap <leader>ls :LeetCodeSubmit<cr>
 
     " set completefunc=emoji#complete
 
@@ -150,7 +152,7 @@ else
     " let g:UltiSnipsJumpForwardTrigger="<c-b>"
     " let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 
-    nmap get <ESC>:call <SID>Sub_movend(line('.'))<cr>
+    nmap <leader>me <ESC>:call <SID>Sub_movend(line('.'))<cr>
 
     " filetype plugin indent on
     " syntax on
@@ -174,18 +176,18 @@ else
 
     " autocmd BufNewFile,BufRead ~/shared/kworkflow/* let syntastic_sh_shellcheck_args="--external-sources --shell=bash --exclude=SC2016,SC2181,SC2034,SC2154,SC2001,SC1090,SC1091,SC2120"
 
-    nmap gjt :ALEGoToDefinition -tab<cr>
-    nmap gjd :ALEGoToDefinition<cr>
-    nmap gtt :ALEGoToTypeDefinition -tab<cr>
-    nmap gtd :ALEGoToTypeDefinition<cr>
-    nmap gmd :ALEDetail<cr>
-    nmap gfr :ALEFindReferences<cr>
-    nmap grs :ALERename<cr>
-    nmap gca :ALECodeAction<cr>
+    nmap <leader>jt :ALEGoToDefinition -tab<cr>
+    nmap <leader>jd :ALEGoToDefinition<cr>
+    nmap <leader>tt :ALEGoToTypeDefinition -tab<cr>
+    nmap <leader>td :ALEGoToTypeDefinition<cr>
+    nmap <leader>md :ALEDetail<cr>
+    nmap <leader>fr :ALEFindReferences<cr>
+    nmap <leader>rs :ALERename<cr>
+    nmap <leader>ca :ALECodeAction<cr>
 
-    nmap gst :ALEToggle<cr>
-    nmap gsd :let g:ale_disable_lsp=1<cr>:ALELint<cr>
-    nmap gse :let g:ale_disable_lsp=0<cr>gstgst
+    nmap <leader>st :ALEToggle<cr>
+    nmap <leader>sd :let g:ale_disable_lsp=1<cr>:ALELint<cr>
+    nmap <leader>se :let g:ale_disable_lsp=0<cr>gstgst
 
     nmap [a :ALEPreviousWrap<cr>
     nmap ]a :ALENextWrap<cr>
@@ -202,8 +204,8 @@ else
     let g:languagetool_jar='$HOME/LanguageTool-5.7-stable/languagetool-commandline.jar'
     let g:languagetool_enable_rules='PASSIVE_VOICE'
 
-    nmap glc :LanguageToolCheck<cr>
-    nmap gle :LanguageToolClear<cr>
+    nmap <leader>lc :LanguageToolCheck<cr>
+    nmap <leader>le :LanguageToolClear<cr>
     nmap [l :lpr<cr>
     nmap ]l :lne<cr>
 
@@ -220,6 +222,12 @@ else
 
     " Enable trimmming of trailing whitespace
     let g:neoformat_basic_format_trim = 1
+
+    " Find files using Telescope command-line sugar.
+    nnoremap <leader>ff <cmd>Telescope find_files<cr>
+    nnoremap <leader>fg <cmd>Telescope live_grep<cr>
+    nnoremap <leader>fb <cmd>Telescope buffers<cr>
+    nnoremap <leader>fh <cmd>Telescope help_tags<cr>
 
     lua << EOF
 require'nvim-treesitter.configs'.setup {
