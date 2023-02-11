@@ -43,6 +43,8 @@
     prune = true
 [format]
     signOff = true
+[gc]
+    writeCommitGraph = true
 [init]
     defaultBranch = main
 [merge]
