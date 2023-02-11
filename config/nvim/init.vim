@@ -19,10 +19,10 @@ else
         Plug 'wakatime/vim-wakatime'
         Plug 'mbledkowski/neuleetcode.vim'      " leetcode
         Plug 'junegunn/vim-emoji'               " Emoji support
-        " Plug 'jiangmiao/auto-pairs'             " auto pairs for (), [], {}, '', \"\"
+        " Plug 'jiangmiao/auto-pairs'           " auto pairs for (), [], {}, '', \"\"
         Plug 'sbdchd/neoformat'                 " auto format code
         Plug 'terryma/vim-multiple-cursors'
-        " Plug 'SirVer/ultisnips'                 " snippets engine
+        " Plug 'SirVer/ultisnips'               " snippets engine
         " Plug 'honza/vim-snippets'
 
         """" Lang support
@@ -212,51 +212,6 @@ else
     " Enable trimmming of trailing whitespace
     let g:neoformat_basic_format_trim = 1
 
-    "let g:airline_theme='space-vim-theme'
-
-    " ==== jellybeans ====
-    " let g:jellybeans_overrides = {
-    " \    'background': { 'ctermbg': 'none', '256ctermbg': 'none' },
-    " \}
-    " if has('termguicolors') && &termguicolors
-    "     let g:jellybeans_overrides['background']['guibg'] = 'none'
-    " endif
-
-    " ==== space-vim-dark ====
-    " hi Comment guifg=#5C6370 ctermfg=59
-
-    " ==== vim-one ====
-    "Use 24-bit (true-color) mode in Vim/Neovim when outside tmux.
-    "If you're using tmux version 2.2 or later, you can remove the outermost $TMUX check and use tmux's 24-bit color support
-    "(see < http://sunaku.github.io/tmux-24bit-color.html#usage > for more information.)
-    "if (empty($TMUX))
-    "    if (has("nvim"))
-    "        "For Neovim 0.1.3 and 0.1.4 < https://github.com/neovim/neovim/pull/2198 >
-    "        let $NVIM_TUI_ENABLE_TRUE_COLOR=1
-    "  endif
-      "For Neovim > 0.1.5 and Vim > patch 7.4.1799 < https://github.com/vim/vim/commit/61be73bb0f965a895bfb064ea3e55476ac175162 >
-      "Based on Vim patch 7.4.1770 (`guicolors` option) < https://github.com/vim/vim/commit/8a633e3427b47286869aa4b96f2bfc1fe65b25cd >
-      " < https://github.com/neovim/neovim/wiki/Following-HEAD#20160511 >
-    "    if (has("termguicolors"))
-    "        set termguicolors
-    "    endif
-    "endif
-
-    "set background=dark " for the dark version
-    "set background=light " for the light version
-
-    " to set transparent BG
-    " function! AdaptColorscheme()
-    "     highlight clear CursorLine
-    "     highlight Normal ctermbg=none guibg=none
-    "     highlight LineNr ctermbg=none
-    "     highlight Folded ctermbg=none
-    "     highlight NonText ctermbg=none
-    "     highlight SpecialKey ctermbg=none
-    "     highlight VertSplit ctermbg=none
-    "     highlight SignColumn ctermbg=none
-    " endfunction
-    " autocmd ColorScheme * call AdaptColorscheme()
 endif
 
 set clipboard=unnamedplus
