@@ -7,7 +7,7 @@ else
 
         Plug 'mileszs/ack.vim'                  " enabling ack (better than grep.vim)
         Plug 'tpope/vim-apathy'                 " file searching help
-        Plug 'tpope/vim-commentary'             " comment/uncomment stuff
+        Plug 'terrortylor/nvim-comment'         " comment/uncomment stuff
         Plug 'tpope/vim-fugitive'               " git wrapper
         Plug 'junegunn/fzf.vim', { 'do': { -> fzf#install() } } " fzf: more intuitive search than CtrlP
         Plug 'airblade/vim-gitgutter'           " +- and hunk management
@@ -21,7 +21,7 @@ else
         Plug 'junegunn/vim-emoji'               " Emoji support
         " Plug 'jiangmiao/auto-pairs'           " auto pairs for (), [], {}, '', \"\"
         Plug 'sbdchd/neoformat'                 " auto format code
-        Plug 'terryma/vim-multiple-cursors'
+        " Plug 'terryma/vim-multiple-cursors'
         " Plug 'SirVer/ultisnips'               " snippets engine
         " Plug 'honza/vim-snippets'
         Plug 'nvim-lua/plenary.nvim'            " dependency for telescope
@@ -31,6 +31,7 @@ else
         """" Lang support
 
         Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
+        Plug 'nvim-treesitter/playground'
         Plug 'dense-analysis/ale'
         Plug 'dpelle/vim-LanguageTool'
         Plug 'github/copilot.vim'
@@ -94,7 +95,13 @@ else
     set foldexpr=nvim_treesitter#foldexpr()
     set nofoldenable                     " Disable folding at startup.
 
+    filetype indent off
+    " syntax on
+
     let mapleader = " "
+
+    " reload vimrc
+    nnoremap <silent> <Leader><Leader> :source $MYVIMRC<CR>:noh<CR>
 
     set hlsearch
     nmap <leader>h :noh<CR>
@@ -109,7 +116,41 @@ else
     nmap <leader>hw :%s/\s\+$//e<CR>
     "BufWritePre *
 
+    "function! FormatNoWrap()
+    "    set nowrapscan
+    "    try
+    "        exe "normal" "/[\.?!>]$<CR>jV/^\s*[A-Z<]<CR>kgq"
+    "    catch /^Vim\%((\a\+)\)\=:E385/
+    "        " search hit BOTTOM without match
+    "        " ought to print an error message here
+    "    endtry
+    "    exe "normal" ":noh<CR>"
+    "    set wrapscan
+    "endfunction
+
+    "" auto format text
+    "nmap <leader>ml :call FormatNoWrap()<CR>
+
+    "function FindNextSentence()
+    "    set nowrapscan
+    "    /[\.\?!>]$
+    "    j
+    "    V
+    "    /^\s*[A-Z<]
+    "    k
+    "    gq
+    "    normal! ggVG
+    "    :noh
+    "    set wrapscan
+    "endfunction
+
+    "nnoremap <leader>ml :call FindNextSentence()<CR>
+
+    nmap <leader>ml :set nowrapscan<CR>/[\.?!>]$<CR>jV/^\s*[A-Z<]<CR>kgq<Esc>:noh<CR>:set wrapscan<CR>
+
     set path+=**
+
+    lua require('nvim_comment').setup({comment_empty = false})
 
     let NERDTreeShowHidden=1
     nmap <C-n> :NERDTreeToggle<CR>
@@ -153,9 +194,6 @@ else
     " let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 
     nmap <leader>me <ESC>:call <SID>Sub_movend(line('.'))<cr>
-
-    " filetype plugin indent on
-    " syntax on
 
     if $IS_MAC == "true"
         let g:rust_clip_command = 'pbcopy'
@@ -255,11 +293,17 @@ require'nvim-treesitter.configs'.setup {
     -- disable highlighting for the `tex` filetype, you need to include `latex` in this list as this is
     -- the name of the parser)
     -- list of language that will be disabled
-    -- disable = { "c", "rust" },
+    disable = { "diff" },
     -- Or use a function for more flexibility, e.g. to disable slow treesitter highlight for large files
     disable = function(lang, buf)
+        -- if the buffer name ends in diff
+        if vim.api.nvim_buf_get_name(buf):match('diff$') then
+            return true
+        end
+
         local max_filesize = 100 * 1024 -- 100 KB
         local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
+
         if ok and stats and stats.size > max_filesize then
             return true
         end
@@ -272,7 +316,9 @@ require'nvim-treesitter.configs'.setup {
     additional_vim_regex_highlighting = false,
   },
   indent = {
-    enable = true
+    enable = true,
+
+    disable = { "html" },
   },
 }
 EOF
