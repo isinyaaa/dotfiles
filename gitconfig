@@ -66,96 +66,178 @@
 [push]
     gpgSign = if-asked
 [alias]
+    ## am (a+)
     aa = am --abort
+
+    ## add (a+)
     ap = add -p
+
+    ## branch (bl*)
     bl = branch -vv
     blr = branch -rv
+
+    ## commit (c+)
     cs = commit -s
-    ca = commit --amend
-    can = commit --amend --no-edit
-    canv = can --no-verify
-    cf = cs --fixup
-    cm = "!f(){\
-            NUM=${1:-0};\
-            git commit -m \"temp $NUM\";\
-        };f"
+    # amends
+    ca = cs --amend
+    can = cs --amend --no-edit
+    # no-verifies
+    cnv = commit --no-verify
     canv = ca --no-verify
     cannv = can --no-verify
-    cnv = commit --no-verify
+
+    ## cherry-pick (cp*)
     cp = cherry-pick
     cpa = cherry-pick --abort
-    cpf = "!git can && git pf"
+
+    ## fetch (f+)
     fa = fetch --all
-    get-hash = log --format="%H" -n1
-    get-default-branch = "!f(){\
-            git symbolic-ref refs/remotes/${1:-origin}/HEAD | cut -d'/' -f4;\
-        };f"
-    lrf = "!f(){\
-            git log --reverse ${1:-$(git get-default-branch)}..${2:-HEAD};\
-        };f"
-    ln = log --oneline --graph
-    lnf = "!f(){\
-            git ln ${1:-$(git get-default-branch)}..${2:-HEAD};\
-        };f"
-    lnna = log --pretty=oneline --graph
+
+    ## log (l+)
+    # all
+    lnm = log --oneline --graph
+    lnnam = log --pretty=oneline --graph
+    lostm = log --oneline --stat
+
+    lpm = log -p
     lnns = ln --name-status
-    lp = log -p
-    lpf = "!f(){\
-            git lp ${1:-$(git get-default-branch)}..${2:-HEAD};\
-        };f"
-    lprf = "!f(){\
-            git lp --reverse ${1:-$(git get-default-branch)}..${2:-HEAD};\
-        };f"
-    lost = log --oneline --stat
+
+    # no-merges
+    ln = lnm --no-merges
+    lnna = lnnam --no-merges
+    lp = lp --no-merges
+    lost = lostm --no-merges
+
+    ## push (p+)
     pf = push -f
     pu = push -u
+
+    ## rebase (r+ ~[v])
     ra = rebase --abort
     rc = rebase --continue
     ret = rebase --edit-todo
     rh = reset --hard
     ri = rebase -i --autosquash
-    ro = "!f(){\
-            test $# -gt 1 && { \
-                BRANCH=$2; \
-                TRACKING=$1; \
-            } || { \
-                BRANCH=$1; \
-                TRACKING=origin; \
-            }; \
-            git rebase $(git get-hash $TRACKING/$BRANCH) --onto $BRANCH;\
-        };f"
+
+    ## remote (r+)
     rv = remote -v
-    save = commit -m "Save" --no-gpg-sign --no-verify
+
+    ## stash (s+ ~[t])
     ski = stash push --keep-index
+    sst = git stash -S
     ssp = stash show -p
     sd = stash drop
-    sl = stash list
     sp = stash pop
+
+    ## status (st*)
     st = status -sb
-    staged = diff --cached
-    stash-staged = "!f(){\
-            git cnv -m 'temp'; \
-            git stash; \
-            git reset @~; \
-            git stash; \
-            git sp stash@{1}; \
-        };f"
+
+    ## misc
+
+    # get a commit hash
+    get-hash = log --format="%H" -n1
+
+    # show staged content
+    staged = diff --staged
+
+    # get the root of the repo
     top = rev-parse --show-toplevel
+
+    ### functions
+
+    # commit and push force
+    cpf = "!git can && git pf"
+
+    ## temporary commits
+    tempsave = "!f(){\
+            NUM=${1:-0};\
+            git commit --no-gpg-sign --no-verify -m \"temp $NUM\";\
+        };f"
+    save = "!f(){\
+            NUM=${1:-0};\
+            git cs -m \"save $NUM\";\
+        };f"
+
+    # get default branch
+    get-default-branch = "!f(){\
+            git symbolic-ref refs/remotes/${1:-origin}/HEAD | cut -d'/' -f4;\
+        };f"
+
+    ## reverse the log output
+    lrf = "!f(){\
+            git log --reverse ${1:-$(git get-default-branch)}..${2:-HEAD};\
+        };f"
+
+    # reverse log line output
+    lnf = "!f(){\
+            git ln ${1:-$(git get-default-branch)}..${2:-HEAD};\
+        };f"
+
+    # get patch-set log
+    lpf = "!f(){\
+            git lp ${1:-$(git get-default-branch)}..${2:-HEAD};\
+        };f"
+
+    ## reverse patch-set log
+    lprf = "!f(){\
+            git lp --reverse ${1:-$(git get-default-branch)}..${2:-HEAD};\
+        };f"
+
+    ## rebase onto a branch
+    # first we test arguments, if there are two, we assume the first is the
+    # tracking
+    # then rebase the current branch onto the specified
+    ro = "!f(){\
+            case $# in \
+                0) \
+                    BRANCH=$(git get-default-branch); \
+                    TRACKING=origin;; \
+                1) \
+                    BRANCH=$1; \
+                    TRACKING=origin;; \
+                2) \
+                    BRANCH=$2; \
+                    TRACKING=$1;; \
+            esac; \
+            git rebase $(git branch --show-current)~ --onto $(git get-hash $TRACKING/$BRANCH);\
+        };f"
+
+    ## update working branch
+    # it can either be to work again on top of another branch (usually main) or
+    # to update the current branch
+    #
+    # first we test arguments, if there are two, we assume the first is the
+    # tracking branch and the second is the branch itself
+    # then, if we're updating the current branch, we simply stash, pull and pop
+    # if we're updating another branch, we stash, checkout the branch, pull,
+    # checkout back, rebase and then pop
     update = "!f(){\
+            TRACKING=origin; \
+            case $# in \
+                0) \
+                    BRANCH=$(git get-default-branch);; \
+                1) \
+                    BRANCH=$1;; \
+                2) \
+                    BRANCH=$2; \
+                    TRACKING=$1;; \
+            esac; \
+            git stash -S; \
             BEFORE=$(git stash list | wc -l); \
-            git stash --keep-index; \
+            git stash; \
             AFTER=$(git stash list | wc -l); \
-            test $# -gt 1 && { \
-                BRANCH=$2; \
-                TRACKING=$1; \
-            } || { \
-                BRANCH=$1; \
-                TRACKING=origin; \
+            git fetch $TRACKING; \
+            UPDATE=0; \
+            test $(git branch --show-current) = $BRANCH || UPDATE=1; \
+            test $UPDATE = 1 && git checkout $BRANCH; \
+            UNPOP=0; \
+            git pull $TRACKING $BRANCH && UNPOP=1; \
+            test $UPDATE = 1 && { \
+                git checkout -; \
+                git ro $TRACKING $BRANCH && UNPOP=1; \
             }; \
-            git fa; \
-            git checkout $BRANCH; \
-            git pull $TRACKING $BRANCH; \
-            git checkout -; \
-            git ro $TRACKING $BRANCH && \
-            test $BEFORE = $AFTER || git stash pop; \
+            test $UNPOP = 1 && { \
+                test $BEFORE = $AFTER || git stash pop; \
+                echo \"updated\"; \
+            }; \
         };f"
