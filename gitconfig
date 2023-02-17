@@ -47,8 +47,11 @@
     writeCommitGraph = true
 [init]
     defaultBranch = main
+[log]
+    date = iso
+    decorate = true
 [merge]
-    conflictstyle = diff3
+    # conflictstyle = diff3
     tool = nvim
 [mergetool]
     prompt = false
