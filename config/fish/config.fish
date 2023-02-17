@@ -50,7 +50,7 @@ alias login "export BW_SESSION=(pass bitwarden/session00)"
 # refresh sudo timeout
 alias sudo 'command sudo -v; command sudo '
 
-set -gx EDITOR nvim
+alias rsp 'rsync -avzh --progress'
 
 if test $IS_MAC = true
     set -gx LC_CTYPE en_US.UTF-8
@@ -80,8 +80,6 @@ set -g VM_PATH "$HOME/vms"
 abbr -ag ef exec fish
 abbr -ag tc topgrade -c
 abbr -ag ssa ssh arch
-
-alias rsp 'rsync -avzh --progress'
 
 # pyenv setup
 if command -q pyenv

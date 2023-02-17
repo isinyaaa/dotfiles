@@ -25,7 +25,6 @@ else
         " Plug 'SirVer/ultisnips'               " snippets engine
         " Plug 'honza/vim-snippets'
         Plug 'nvim-lua/plenary.nvim'            " dependency for telescope
-        " Plug 'TimUntersberger/neogit'
         Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.1' }
 
         """" Lang support
@@ -35,9 +34,9 @@ else
         Plug 'github/copilot.vim'
         " Plug 'plasticboy/vim-markdown'
 
-        Plug 'joe-skb7/cscope-maps'             " cscope shortcuts
-        " Plug 'inkch/vim-fish'
-        " Plug 'rust-lang/rust.vim'               " rust development plugin
+        Plug 'joe-skb7/cscope-maps'
+        Plug 'inkch/vim-fish'
+        " Plug 'rust-lang/rust.vim'
 
         Plug 'vivien/vim-linux-coding-style'
 
@@ -47,10 +46,6 @@ else
         Plug 'vim-airline/vim-airline'          " status/tabline
         Plug 'vim-airline/vim-airline-themes'
         Plug 'liuchengxu/space-vim-theme'
-        " Plug 'rakr/vim-one'
-        " Plug 'liuchengxu/space-vim-dark'
-        " Plug 'drewtempelmeyer/palenight.vim'
-        " Plug 'jpo/vim-railscasts-theme'       " railscasts-theme
 
         """" Still not sure
 
