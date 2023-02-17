@@ -26,6 +26,7 @@ else
         " Plug 'honza/vim-snippets'
         Plug 'nvim-lua/plenary.nvim'            " dependency for telescope
         Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.1' }
+        Plug 'will133/vim-dirdiff'
 
         """" Lang support
 

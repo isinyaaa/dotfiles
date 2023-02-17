@@ -1,0 +1,10 @@
+[user]
+    name = "Isabella Basso"
+    email = "isabbasso@riseup.net"
+[ui]
+    color = "auto"
+    editor = "nvim"
+    diff-editor = "nvimdiff"
+    merge-editor = "nvim -f -c \"Gvdiffsplit!\""
+# [git]
+#     auto-local-branch = false
