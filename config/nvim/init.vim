@@ -232,6 +232,7 @@ else
     \   'c': ['clangtidy', 'cppcheck', 'clangd'],
     \   'cpp': ['clangtidy', 'cppcheck', 'clangd'],
     \   'python': ['flake8', 'pylsp'],
+    \   'rust': ['analyzer'],
     \}
     let g:ale_linters_explicit = 1
 
