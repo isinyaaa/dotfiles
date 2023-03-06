@@ -88,6 +88,7 @@ alias login "export BW_SESSION=(pass bitwarden/session00)"
 abbr -a ef exec fish
 abbr -a tc topgrade -c
 abbr -a ssa ssh arch
+abbr -a ssl ssh local-arch
 
 function last_history_item
     echo $history[1]
