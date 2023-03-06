@@ -267,9 +267,9 @@ else
 
     " Find files using Telescope command-line sugar.
     nnoremap <leader>ff <cmd>Telescope find_files<cr>
-    nnoremap <leader>fg <cmd>Telescope live_grep<cr>
-    nnoremap <leader>fb <cmd>Telescope buffers<cr>
-    nnoremap <leader>fh <cmd>Telescope help_tags<cr>
+    nnoremap <leader>lg <cmd>Telescope live_grep<cr>
+    nnoremap <leader>tb <cmd>Telescope buffers<cr>
+    nnoremap <leader>ht <cmd>Telescope help_tags<cr>
 endif
 
 set clipboard=unnamedplus
