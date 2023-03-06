@@ -36,7 +36,7 @@ else
         Plug 'github/copilot.vim'
         " Plug 'plasticboy/vim-markdown'
 
-        Plug 'joe-skb7/cscope-maps'
+        Plug 'isinyaaa/cscope-maps'
         Plug 'inkch/vim-fish'
         Plug 'rust-lang/rust.vim'
 
@@ -154,8 +154,8 @@ else
     " CTags Settings
     " Refer: http://ctags.sourceforge.net/ or `man ctags`
     " enabling CTags
-    set tags=tags;                               " tags file within project directory
-    map <C-\> :tab split<CR>:exec("tag ".expand("<cword>"))<CR>
+    " set tags=tags;                               " tags file within project directory
+    " map <C-\> :tab split<CR>:exec("tag ".expand("<cword>"))<CR>
 
     " ack.vim Settings
     cnoreabbrev Ack Ack!
@@ -235,11 +235,12 @@ else
     \   'python': ['flake8', 'pylsp'],
     \   'rust': ['analyzer'],
     \}
+
     let g:ale_fixers = {
-    \   'c': ['clang-format'],
-    \   'cpp': ['clang-format'],
-    \   'python': ['black'],
-    \   'rust': ['rustfmt'],
+    \   'c': ['clangtidy', 'clangd'],
+    \   'cpp': ['clangtidy', 'clangd'],
+    \   'python': ['black', 'isort'],
+    \   'rust': ['rustfmt']
     \}
     let g:ale_linters_explicit = 1
 
