@@ -27,6 +27,7 @@ else
         Plug 'nvim-lua/plenary.nvim'            " dependency for telescope
         Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.1' }
         Plug 'will133/vim-dirdiff'
+        Plug 'junegunn/goyo.vim'                " distraction free writing
 
         """" Lang support
 
@@ -140,6 +141,8 @@ else
     "nnoremap <leader>ml :call FindNextSentence()<CR>
 
     nmap <leader>ml :set nowrapscan<CR>/[\.?!>]$<CR>jV/^\s*[A-Z<]<CR>kgq<Esc>:noh<CR>:set wrapscan<CR>
+
+    nmap <leader>gm :Goyo<CR>
 
     set path+=**
 
