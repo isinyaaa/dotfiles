@@ -94,4 +94,4 @@ function last_history_item
 end
 
 abbr -a !! --position anywhere --function last_history_item
-abbr -a --position anywhere -- -ab --allow-backwards
+abbr -a fw --set-cursor "file (which %)"
