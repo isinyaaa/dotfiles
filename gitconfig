@@ -83,12 +83,6 @@
     can = cs --amend --no-edit
     # no-verifies
     cnv = commit --no-verify
-    canv = ca --no-verify
-    cannv = can --no-verify
-
-    ## cherry-pick (cp*)
-    cp = cherry-pick
-    cpa = cherry-pick --abort
 
     ## fetch (f+)
     fa = fetch --all
@@ -96,35 +90,30 @@
     ## log (l+)
     # all
     lnm = log --oneline --graph
-    lnnam = log --pretty=oneline --graph
     lostm = log --oneline --stat
-
     lpm = log -p
     lnns = ln --name-status
 
     # no-merges
     ln = lnm --no-merges
-    lnna = lnnam --no-merges
-    lp = lp --no-merges
     lost = lostm --no-merges
 
     ## push (p+)
     pf = push -f
-    pu = push -u
 
     ## rebase (r+ ~[v])
     ra = rebase --abort
     rc = rebase --continue
     ret = rebase --edit-todo
-    rh = reset --hard
     ri = rebase -i --autosquash
+
+    ## reset
+    rh = reset --hard
 
     ## remote (r+)
     rv = remote -v
 
     ## stash (s+ ~[t])
-    ski = stash push --keep-index
-    sst = git stash -S
     ssp = stash show -p
     sd = stash drop
     sp = stash pop
@@ -144,9 +133,6 @@
     top = rev-parse --show-toplevel
 
     ### functions
-
-    # commit and push force
-    cpf = "!git can && git pf"
 
     ## temporary commits
     tempsave = "!f(){\
