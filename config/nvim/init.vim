@@ -98,7 +98,6 @@ else
     nnoremap <silent> <Leader><Leader> :source $MYVIMRC<CR>:noh<CR>
 
     set hlsearch
-    nmap <leader>h :noh<CR>
 
     " Whitespace management
     highlight ExtraWhitespace ctermbg=red guibg=red
