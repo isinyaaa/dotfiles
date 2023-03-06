@@ -11,8 +11,6 @@
     path = ~/.gitconfig-work
 [includeIf "gitdir:~/repos/usp/"]
     path = ~/.gitconfig-usp
-[blame]
-    ignoreRevsFile = .git-blame-ignore-revs
 [color]
     diff = auto
     status = auto
