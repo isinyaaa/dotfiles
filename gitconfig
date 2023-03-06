@@ -9,8 +9,6 @@
     path = ~/.gitconfig-common
 [includeIf "gitdir:~/repos/redhat/"]
     path = ~/.gitconfig-work
-[includeIf "gitdir:~/repos/usp/"]
-    path = ~/.gitconfig-usp
 [color]
     diff = auto
     status = auto
@@ -94,6 +92,7 @@
 
     # no-merges
     ln = lnm --no-merges
+    lp = lpm --no-merges
     lost = lostm --no-merges
 
     ## push (p+)
