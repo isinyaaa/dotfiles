@@ -38,7 +38,7 @@ else
 
         Plug 'joe-skb7/cscope-maps'
         Plug 'inkch/vim-fish'
-        " Plug 'rust-lang/rust.vim'
+        Plug 'rust-lang/rust.vim'
 
         Plug 'vivien/vim-linux-coding-style'
 
@@ -214,8 +214,9 @@ else
     nmap <leader>jd :ALEGoToDefinition<cr>
     nmap <leader>tt :ALEGoToTypeDefinition -tab<cr>
     nmap <leader>td :ALEGoToTypeDefinition<cr>
-    nmap <leader>md :ALEDetail<cr>
+    nmap <leader>ft :ALEFindReferences -tab<cr>
     nmap <leader>fr :ALEFindReferences<cr>
+    nmap <leader>md :ALEDetail<cr>
     nmap <leader>rs :ALERename<cr>
     nmap <leader>ca :ALECodeAction<cr>
 
@@ -229,10 +230,16 @@ else
     let g:ale_linters = {
     \   'bash': ['shellcheck'],
     \   'fish': ['fish'],
-    \   'c': ['clangtidy', 'cppcheck', 'clangd'],
+    \   'c': ['clangd', 'cppcheck'],
     \   'cpp': ['clangtidy', 'cppcheck', 'clangd'],
     \   'python': ['flake8', 'pylsp'],
     \   'rust': ['analyzer'],
+    \}
+    let g:ale_fixers = {
+    \   'c': ['clang-format'],
+    \   'cpp': ['clang-format'],
+    \   'python': ['black'],
+    \   'rust': ['rustfmt'],
     \}
     let g:ale_linters_explicit = 1
 
