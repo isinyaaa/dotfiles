@@ -1,90 +1,97 @@
-#source ~/.fancy-bash-promt.sh
-
-set -gx OSTYPE (uname -s | tr -s '[:upper:]' '[:lower:]')(uname -r)
-echo "$OSTYPE" | grep -q 'darwin'
-if test $status
+set -gx IS_MAC false
+# find out if we're on mac
+if uname -s | grep -iq 'darwin'
+    # we redefine the OSTYPE to be the same as any UNIX system
+    # because MacOS doesn't have it
+    set -gx OSTYPE (uname -s | tr -s '[:upper:]' '[:lower:]')(uname -r)
     set -gx IS_MAC true
+end
+
+# set user preferences
+set -gx MANPAGER "sh -c 'col -bx | bat -l man -p'"
+set -gx EDITOR (which nvim)
+
+# set prompt variables
+set -g default_user isinyaaa
+set -g theme_date_timezone America/Sao_Paulo
+set -g theme_date_format "+%l:%M%p"
+
+# enable GPG agent
+set -gx GPG_TTY (tty)
+
+# update path
+set -gx PATH $HOME/bin $PATH
+set -gx PATH $HOME/.local/bin $PATH
+set -gx PATH $HOME/.cargo/bin $PATH # rust
+set -gx PATH /opt/local/bin $PATH
+
+# system specific setup
+if test $IS_MAC = true
+    set -gx PATH /opt/homebrew/opt/python@3.10/bin $PATH # python 3.10
+    set -gx PATH $HOME/.gem/ruby/2.6.0/bin $PATH # ruby gems
+    set -gx PATH $HOME/go/bin $PATH # go
+
+    # copilot needs node@16
+    set -gx PATH /opt/homebrew/opt/node@16/bin $PATH
+
+    # locale variables
+    set -gx LC_CTYPE en_US.UTF-8
+    set -gx LC_ALL en_US.UTF-8
 else
-    set -gx IS_MAC false
+    # we need to start the gnome keyring daemon if we're on a desktop session
+    test -n "$DESKTOP_SESSION" &&\
+        set -x (gnome-keyring-daemon --start | string split "=")
+    # we also need to set up the docker socket
+    systemctl --user is-active --quiet docker.socket &&\
+        set -g DOCKER_HOST=unix://$XDG_RUNTIME_DIR/docker.sock
 end
 
-# add export for working with android
-#export ANDROID_HOME=/opt/android-sdk
-#set -gx PATH $PATH $ANDROID_HOME/cmdline-tools/latest/bin
-
-# for managing keys
-export GPG_TTY=(tty)
-
-if test -n "$DESKTOP_SESSION" && test $IS_MAC != true
-    set -x (gnome-keyring-daemon --start | string split "=")
-end
-
-# setup docker
-test $IS_MAC != true && export DOCKER_HOST=unix://$XDG_RUNTIME_DIR/docker.sock
-
-# for managing ruby
+# rbenv setup
 if command -q rbenv
     status --is-interactive; and source (rbenv init -|psub)
     set -gx PATH $PATH $HOME/.local/share/gem/ruby/3.0.0/bin
 end
 
-# update path
-set -gx PATH $HOME/bin $PATH
-set -gx PATH $HOME/.local/bin $PATH
-set -gx PATH $HOME/.cargo/bin $PATH
-test $IS_MAC = true && set -gx PATH /opt/homebrew/opt/python@3.10/bin $PATH
-test $IS_MAC = true && set -gx PATH $HOME/.gem/ruby/2.6.0/bin $PATH
-test $IS_MAC = true && set -gx PATH $HOME/go/bin $PATH
-set -gx PATH /opt/local/bin $PATH
-
-# add node 16 to path on MacOS
-test $IS_MAC = true && set -gx PATH /opt/homebrew/opt/node@16/bin $PATH
-
-# set user preferences
-export default_user=isinyaaa
-#export NVIM_TUI_ENABLE_CURSOR_SHAPE=1
-export MANPAGER="sh -c 'col -bx | bat -l man -p'"
-
-alias login "export BW_SESSION=(pass bitwarden/session00)"
+# pyenv setup
+if command -q pyenv
+    set -gx PYENV_ROOT $HOME/.pyenv
+    set -gx PATH $PYENV_ROOT/bin $PATH
+    status is-login; and pyenv init --path | source
+    status is-interactive; and pyenv init - | source
+end
 
 # refresh sudo timeout
 alias sudo 'command sudo -v; command sudo '
 
-alias rsp 'rsync -avzh --progress'
-
-jj debug completion --fish | source
-
-if test $IS_MAC = true
-    set -gx LC_CTYPE en_US.UTF-8
-    set -gx LC_ALL en_US.UTF-8
+# jj completion setup
+if command -q jj
+    jj debug completion --fish | source
 end
 
-# set the correct timezone and format for prompt
-set -g theme_date_timezone America/Sao_Paulo
-set -g theme_date_format "+%l:%M%p"
-
+# override fish greeting
 function fish_greeting
     if command -q colorscript
         colorscript --exec spectrum
     end
 end
 
-alias wipe="clear; fish_greeting"
+alias wipe="clear; exec fish"
 
-echo "$TERM" | grep -q "kitty"
-if test -z "$SSH_CLIENT" -a $status -eq 0
+# kitty ssh setup
+if echo "$TERM" | grep -q "kitty"; and test -z "$SSH_CLIENT"
     alias ssh "kitty +kitten ssh"
 end
 
-set -g LINUX_SRC_PATH "$HOME/shared/linux"
-set -g VM_PATH "$HOME/vms"
+# quality of life aliases and abbrs
+alias rsp 'rsync -avzh --progress'
+alias login "export BW_SESSION=(pass bitwarden/session00)"
+abbr -a ef exec fish
+abbr -a tc topgrade -c
+abbr -a ssa ssh arch
 
-abbr -ag ef exec fish
-abbr -ag tc topgrade -c
-abbr -ag ssa ssh arch
-
-# pyenv setup
-if command -q pyenv
-    status is-login; and pyenv init --path | source
-    status is-interactive; and pyenv init - | source
+function last_history_item
+    echo $history[1]
 end
+
+abbr -a !! --position anywhere --function last_history_item
+abbr -a --position anywhere -- -ab --allow-backwards

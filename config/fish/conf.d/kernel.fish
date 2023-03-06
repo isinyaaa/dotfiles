@@ -1,41 +1,77 @@
+# needed env vars
+set -gx LINUX_SRC_PATH "$HOME/shared/linux"
+set -gx VM_PATH "$HOME/vms"
+
 # === kernel building ===
 
 function set-build
+    # the build is relative to the linux source path
     set -g BUILD_FOLDER "$argv"
+
+    # == aliases ==
     abbr -a mk make CC=\"ccache gcc -fdiagnostics-color\" -j(nproc) O=$BUILD_FOLDER
     abbr -a menu make menuconfig -j O=$BUILD_FOLDER
 
+    # == functions ==
+    # install modules to the system
+    # $1: kernel name
     function local-install-mods
-        default_set KNAME $argv[1] $BUILD_FOLDER
-        echorun make CC=\"ccache gcc-11 -fdiagnostics-color\" -j(nproc) O=$BUILD_FOLDER
+        default_set kernel_name $argv[1] $BUILD_FOLDER
+
+        # first, we build the kernel
+        echorun make CC=\"ccache gcc -fdiagnostics-color\" -j(nproc) O=$BUILD_FOLDER
+        # then, we install the modules
         echorun sudo make -j(nproc) O=$BUILD_FOLDER INSTALL_HDR_PATH=/usr headers_install modules_install
-        if test ! (uname -r | grep -q aarch64)
-            echorun sudo cp -v $BUILD_FOLDER/arch/x86_64/boot/bzImage /boot/vmlinuz-$KNAME
+
+        # if we are not on aarch64, we need to update the boot config
+        if ! uname -r | grep -q aarch64
+            echorun sudo cp -v $BUILD_FOLDER/arch/x86_64/boot/bzImage /boot/vmlinuz-$kernel_name
             echorun sudo mkinitcpio -P
             echorun sudo grub-mkconfig -o /boot/grub/grub.cfg
         end
     end
 
+    # install modules to a vm
+    # $1: vm name
     function vm-install-mods
         set img_name "$argv[1]"
+
         set MNT_FOLDER "$VM_PATH/mnt"
+
+        # convert qcow2 to raw
         echorun qemu-img convert -O raw "$VM_PATH/$img_name.qcow2" "$VM_PATH/$img_name.raw"
-        mountpoint "$MNT_FOLDER" || echorun sudo mount "$VM_PATH/$img_name.raw" "$MNT_FOLDER"
+        # mount the image
+        mountpoint "$MNT_FOLDER" &&\
+            echorun sudo umount "$MNT_FOLDER"
+
+        echorun sudo mount "$VM_PATH/$img_name.raw" "$MNT_FOLDER"
 
         wait_for_mount "$MNT_FOLDER"
 
-        pwd | grep -q 'linux$' || echo "entering directory '$HOME/shared/linux'" && pushd "$HOME"/shared/linux
+        # as we don't have subshells, we need to pushd and popd manually
+        if ! pwd | grep -q 'linux$'
+            echo "entering directory '$HOME/shared/linux'"
+            pushd "$HOME"/shared/linux || exit
+        end
 
+        # now, we build the kernel
+        echorun make CC=\"ccache gcc -fdiagnostics-color\" -j(nproc) O=$BUILD_FOLDER
+        # then, we install the modules
         echorun sudo make -j(nproc) O="$BUILD_FOLDER" \
             INSTALL_HDR_PATH="$MNT_FOLDER"/usr INSTALL_MOD_PATH="$MNT_FOLDER" \
             headers_install modules_install
 
-        dirs > /dev/null && echo "leaving directory '"(pwd)"'" && popd
+        echo "leaving directory '"(pwd)"'" &&\
+            popd
 
         echorun sudo umount $MNT_FOLDER
+
+        # convert raw back to qcow2
         echorun qemu-img convert -O qcow2 "$VM_PATH/$img_name.raw" "$VM_PATH/$img_name.qcow2"
     end
 
+    # == OBSOLETE ==
+    # clean kernel compilation output for clearing warnings on a given path
     function clean-output
         default_set INPUT_FILE $argv[1] 'modules1'
         default_set SEARCH $argv[2] 'gpu.*amd'
@@ -59,11 +95,15 @@ function set-build
     end
 end
 
+# cross-compilation functions
 function set-arch
     set -g ARCH "$argv"
+
+    # we set the build folder to the arch name
     set-build "$argv-build"
 
-    if test (uname -r | grep -q aarch64)
+    if uname -r | grep -q aarch64
+        # OBSOLETE: cross-compilation never worked properly on aarch64
         abbr -a mcr COMPILER_INSTALL_PATH='$HOME'/x-tools/x86_64-unknown-linux-gnu/bin/x86_64-unknown-linux-gnu- make ARCH=x86_64 O=$BUILD_FOLDER -j(nproc)
     else
         abbr -a mcr COMPILER_INSTALL_PATH='$HOME'/0day COMPILER=gcc-11.2.0 make.cross ARCH=$ARCH O=$BUILD_FOLDER -j(nproc)
