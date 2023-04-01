@@ -28,6 +28,7 @@ else
         Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.1' }
         Plug 'will133/vim-dirdiff'
         Plug 'junegunn/goyo.vim'                " distraction free writing
+        Plug 'micarmst/vim-spellsync'
 
         """" Lang support
 
@@ -85,6 +86,17 @@ else
     set colorcolumn=81
 
     set spelllang+=pt_br
+
+    " Run SpellSync automatically when Vim starts
+    let g:spellsync_run_at_startup = 1
+
+    " Enable the Git union merge option
+    " Creates a .gitattributes file in the spell directories if one does not exist
+    let g:spellsync_enable_git_union_merge = 1
+
+    " Enable Git ignore for binary spell files
+    " Creates a .gitignore file in the spell directories if one does not exist
+    let g:spellsync_enable_git_ignore = 1
 
     set foldmethod=expr
     set foldexpr=nvim_treesitter#foldexpr()
