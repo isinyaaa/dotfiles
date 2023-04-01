@@ -85,6 +85,7 @@ end
 # quality of life aliases and abbrs
 alias rsp 'rsync -avzh --progress'
 alias login "export BW_SESSION=(pass bitwarden/session00)"
+alias tssh 'TERM=xterm-256color command ssh'
 abbr -a ef exec fish
 abbr -a tc topgrade -c
 abbr -a ssa ssh arch
