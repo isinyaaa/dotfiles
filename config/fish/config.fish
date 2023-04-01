@@ -39,8 +39,8 @@ if test $IS_MAC = true
     set -gx LC_ALL en_US.UTF-8
 else
     # we need to start the gnome keyring daemon if we're on a desktop session
-    test -n "$DESKTOP_SESSION" &&\
-        set -x (gnome-keyring-daemon --start | string split "=")
+    # test -n "$DESKTOP_SESSION" &&\
+    #     set -x (gnome-keyring-daemon --start | string split "=")
     # we also need to set up the docker socket
     systemctl --user is-active --quiet docker.socket &&\
         set -g DOCKER_HOST=unix://$XDG_RUNTIME_DIR/docker.sock
