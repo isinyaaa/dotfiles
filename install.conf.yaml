@@ -6,6 +6,7 @@
 - clean: ['~', '~/.config']
 
 - link:
+    ~/.config/ncspot/config.toml: config/ncspot/config.toml
     ~/.gitconfig: gitconfig
     ~/.jjconfig.toml: jjconfig.toml
     ~/.mbsyncrc: mbsyncrc
@@ -17,8 +18,6 @@
         path: config/fish/
     ~/.config/neomutt:
         path: config/neomutt/
-    ~/.config/ncspot/config.toml:
-        path: config/ncspot/config.toml
     ~/.config/nvim:
         path: config/nvim/
     ~/.config/omf:
