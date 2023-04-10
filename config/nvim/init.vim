@@ -11,7 +11,7 @@ else
         Plug 'tpope/vim-fugitive'               " git wrapper
         Plug 'junegunn/fzf.vim', { 'do': { -> fzf#install() } } " fzf: more intuitive search than CtrlP
         Plug 'airblade/vim-gitgutter'           " +- and hunk management
-        Plug 'scrooloose/nerdtree'              " nerdtree plugin
+        Plug 'preservim/nerdtree'               " nerdtree plugin
         Plug 'tpope/vim-unimpaired'             " handy shortcuts
         Plug 'tpope/vim-repeat'                 " enable repeating supported plugins (not just native last command)
         Plug 'tpope/vim-rhubarb'                " vim-fugitive plugin for opening file on Github, using :Gbrowse
