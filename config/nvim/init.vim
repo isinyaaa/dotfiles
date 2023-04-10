@@ -87,6 +87,11 @@ else
 
     set spelllang+=pt_br,de
 
+    nnoremap <C-h> <C-w>h
+    nnoremap <C-j> <C-w>j
+    nnoremap <C-k> <C-w>k
+    nnoremap <C-l> <C-w>l
+
     " Run SpellSync automatically when Vim starts
     let g:spellsync_run_at_startup = 1
 
