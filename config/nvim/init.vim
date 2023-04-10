@@ -85,7 +85,7 @@ else
 
     set colorcolumn=81
 
-    set spelllang+=pt_br
+    set spelllang+=pt_br,de
 
     " Run SpellSync automatically when Vim starts
     let g:spellsync_run_at_startup = 1
