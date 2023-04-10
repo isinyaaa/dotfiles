@@ -240,12 +240,12 @@ else
     nmap ]a :ALENextWrap<cr>
 
     let g:ale_linters = {
-    \   'bash': ['shellcheck'],
     \   'fish': ['fish'],
     \   'c': ['clangd', 'cppcheck'],
     \   'cpp': ['clangtidy', 'cppcheck', 'clangd'],
     \   'python': ['flake8', 'pylsp'],
     \   'rust': ['analyzer'],
+    \   'sh': ['shellcheck'],
     \}
 
     let g:ale_fixers = {
