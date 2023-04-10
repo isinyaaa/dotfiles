@@ -43,7 +43,7 @@ else
     #     set -x (gnome-keyring-daemon --start | string split "=")
     # we also need to set up the docker socket
     systemctl --user is-active --quiet docker.socket &&\
-        set -g DOCKER_HOST=unix://$XDG_RUNTIME_DIR/docker.sock
+        export DOCKER_HOST=unix://$XDG_RUNTIME_DIR/docker.sock
 end
 
 # rbenv setup
