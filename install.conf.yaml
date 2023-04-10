@@ -21,6 +21,8 @@
         path: config/ncspot/config.toml
     ~/.config/nvim:
         path: config/nvim/
+    ~/.config/omf:
+        path: config/omf/
     ~/.config/pass-git-helper:
         path: config/pass-git-helper/
     ~/.config/ranger:
