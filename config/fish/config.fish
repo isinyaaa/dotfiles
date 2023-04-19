@@ -10,6 +10,7 @@ end
 # set user preferences
 set -gx MANPAGER "sh -c 'col -bx | bat -l man -p'"
 set -gx EDITOR (which nvim)
+set -gx VISUAL (which nvim)
 
 # set prompt variables
 set -g default_user isinyaaa
