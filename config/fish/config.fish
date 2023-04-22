@@ -69,6 +69,11 @@ if command -q jj
     jj debug completion --fish | source
 end
 
+# zoxide setup
+if command -q zoxide
+    zoxide init fish | source
+end
+
 # override fish greeting
 function fish_greeting
     if command -q colorscript
