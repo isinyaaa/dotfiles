@@ -8,9 +8,11 @@ if uname -s | grep -iq 'darwin'
 end
 
 # set user preferences
-set -gx MANPAGER "sh -c 'col -bx | bat -l man -p'"
-set -gx EDITOR (which nvim)
-set -gx VISUAL (which nvim)
+command -q bat
+and set -gx MANPAGER "sh -c 'col -bx | bat -l man -p'"
+command -q nvim
+and set -gx EDITOR (which nvim)
+and set -gx VISUAL (which nvim)
 
 # set prompt variables
 set -g default_user isinyaaa
@@ -43,13 +45,16 @@ else
     # test -n "$DESKTOP_SESSION" &&\
     #     set -x (gnome-keyring-daemon --start | string split "=")
     # we also need to set up the docker socket
-    systemctl --user is-active --quiet docker.socket &&\
-        export DOCKER_HOST=unix://$XDG_RUNTIME_DIR/docker.sock
+    command -q docker
+    and systemctl --user is-active --quiet docker.socket
+    and export DOCKER_HOST=unix://$XDG_RUNTIME_DIR/docker.sock
 end
 
 # rbenv setup
 if command -q rbenv
-    status --is-interactive; and source (rbenv init -|psub)
+    status --is-interactive
+    and source (rbenv init -|psub)
+
     set -gx PATH $PATH $HOME/.local/share/gem/ruby/3.0.0/bin
 end
 
@@ -57,48 +62,55 @@ end
 if command -q pyenv
     set -gx PYENV_ROOT $HOME/.pyenv
     set -gx PATH $PYENV_ROOT/bin $PATH
-    status is-login; and pyenv init --path | source
-    status is-interactive; and pyenv init - | source
+
+    status is-login
+    and pyenv init --path | source
+
+    status is-interactive
+    and pyenv init - | source
 end
 
 # refresh sudo timeout
 alias sudo 'command sudo -v; command sudo '
 
 # jj completion setup
-if command -q jj
-    jj debug completion --fish | source
-end
+command -q jj
+and jj debug completion --fish | source
 
 # zoxide setup
-if command -q zoxide
-    zoxide init fish | source
-end
+command -q zoxide
+and zoxide init fish | source
 
 # override fish greeting
 function fish_greeting
-    if command -q colorscript
-        colorscript --exec spectrum
-    end
+    command -q colorscript
+    and colorscript --exec spectrum
 end
 
-alias wipe="clear; exec fish"
+alias clear 'command clear; and exec fish'
+alias wipe clear
 
 # kitty ssh setup
-if echo "$TERM" | grep -q "kitty"; and test -z "$SSH_CLIENT"
-    alias ssh "kitty +kitten ssh"
-end
+echo "$TERM" | grep -q "kitty"
+and test -z "$SSH_CLIENT"
+and alias ssh "kitty +kitten ssh"
 
 # quality of life aliases and abbrs
 alias rsp 'rsync -avzh --progress'
-alias login "export BW_SESSION=(pass bitwarden/session00)"
 alias tssh 'TERM=xterm-256color command ssh'
+
+function rdelta
+    command diff -ru "$argv[1]" "$argv[2]" | delta
+end
+
+function mkd
+	mkdir -p $argv; and cd $argv
+end
+
 abbr -a ef exec fish
 abbr -a tc topgrade -c
 abbr -a ssa ssh arch
 abbr -a ssl ssh local-arch
-
-function last_history_item
-    echo $history[1]
-end
-
 abbr -a fw --set-cursor "file (which %)"
+abbr -a gg 'git grep'
+abbr -a glg 'git log --grep='
