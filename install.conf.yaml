@@ -26,8 +26,6 @@
         path: config/pass-git-helper/
     ~/.config/ranger:
         path: config/ranger/
-    ~/.config/kw:
-        path: config/kw/
     ~/.local/share/nvim/site/autoload:
         path: autoload/
     ~/.vim/autoload:
