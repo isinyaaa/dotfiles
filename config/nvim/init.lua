@@ -1,5 +1,10 @@
 HOME = vim.fn.expand("$HOME")
 
+-- Pre-config
+
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+
 vim.cmd([[
 call plug#begin('~/.vim/plugged')
 
@@ -11,7 +16,7 @@ Plug 'terrortylor/nvim-comment'         " comment/uncomment stuff
 Plug 'tpope/vim-apathy'                 " appends to path
 Plug 'tpope/vim-fugitive'               " git wrapper
 Plug 'airblade/vim-gitgutter'           " +- and hunk management
-Plug 'preservim/nerdtree'
+Plug 'nvim-tree/nvim-tree.lua'          " file explorer
 Plug 'tpope/vim-surround'               " manage surroundings (parenthesis, brackets, quotes, XML tags, etc.)
 Plug 'tpope/vim-sleuth'                 " auto set tab stops
 Plug 'sbdchd/neoformat'                 " auto format code
@@ -171,8 +176,17 @@ vim.keymap.set("n", "<leader>gm", ":Goyo<CR>")
 
 require('nvim_comment').setup({comment_empty = false})
 
-vim.cmd("let NERDTreeShowHidden = 1")
-vim.keymap.set("n", "<C-n>", ":NERDTreeToggle<CR>")
+vim.keymap.set("n", "<leader>cc", ":CommentToggle<CR>")
+
+require("nvim-tree").setup()
+
+local git_top = io.popen("git -C " .. vim.fn.expand("%:p:h") .. " top"):read()
+
+if git_top == nil or git_top == "" then
+    vim.keymap.set("n", "<C-n>", ":NvimTreeToggle<CR>")
+else
+    vim.keymap.set("n", "<C-n>", ":NvimTreeToggle " .. git_top .. "<CR>")
+end
 
 vim.keymap.set("n", "]h", "<Plug>(GitGutterNextHunk)")
 vim.keymap.set("n", "[h", "<Plug>(GitGutterPrevHunk)")
