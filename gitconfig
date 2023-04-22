@@ -18,23 +18,20 @@
     ui = auto
 [commit]
     gpgSign = true
-[credential]
-    helper = !pass-git-helper
 [core]
     autocrlf = input
-    pager = diff-so-fancy | less -RFX
+    pager = delta
+[credential]
+    helper = !pass-git-helper
+[delta]
+    navigate = true
+    light = false
 [diff]
     tool = nvim
     submodule = log
-    colorMoved = zebra
+    colorMoved = default
 [difftool]
     prompt = true
-[difftool "code"]
-    cmd = code --wait --diff \"$LOCAL\" \"$REMOTE\"
-[difftool "nvim"]
-    cmd = nvim -d \"$LOCAL\" \"$REMOTE\"
-[difftool "vscodium"]
-    cmd = vscodium --wait --diff \"$LOCAL\" \"$REMOTE\"
 [fetch]
     prune = true
 [format]
@@ -43,20 +40,16 @@
     writeCommitGraph = true
 [init]
     defaultBranch = main
+[interactive]
+    diffFilter = delta --color-only
 [log]
     date = iso
     decorate = true
 [merge]
-    # conflictstyle = diff3
+    conflictstyle = diff3
     tool = nvim
 [mergetool]
     prompt = false
-[mergetool "code"]
-    cmd = code --wait \"$MERGED\"
-[mergetool "nvim"]
-    cmd = nvim -f -c \"Gdiffsplit!\" \"$MERGED\"
-[mergetool "vscodium"]
-    cmd = vscodium --wait \"$MERGED\"
 [pull]
     rebase = true
 [push]
