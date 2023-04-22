@@ -271,6 +271,11 @@ require("mason-lspconfig").setup {
 require("mason-null-ls").setup({
     automatic_setup = true,
 })
+require("null-ls").setup({
+    on_init = function(new_client, _)
+        new_client.offset_encoding = 'utf-32'
+    end,
+})
 
 local lspconfig = require("lspconfig")
 lspconfig.bashls.setup {}
