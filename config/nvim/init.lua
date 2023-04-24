@@ -178,7 +178,30 @@ require('nvim_comment').setup({comment_empty = false})
 
 vim.keymap.set("n", "<leader>cc", ":CommentToggle<CR>")
 
-require("nvim-tree").setup()
+local function nvimtree_on_attach(bufnr)
+    local api = require('nvim-tree.api')
+
+    local function opts(desc)
+      return { desc = 'nvim-tree: ' .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
+    end
+
+    api.config.mappings.default_on_attach(bufnr)
+
+    vim.keymap.del('n', ']c', { buffer = bufnr })
+    vim.keymap.del('n', '[c', { buffer = bufnr })
+    vim.keymap.del('n', '<C-k>', { buffer = bufnr })
+
+    vim.keymap.set('n', '<leader>k', api.node.show_info_popup, opts('Info'))
+    vim.keymap.set('n', ']h', api.node.navigate.git.next, opts('Next Git'))
+    vim.keymap.set('n', '[h', api.node.navigate.git.prev, opts('Prev Git'))
+
+    vim.keymap.set('n', '?', api.tree.toggle_help, opts('Help'))
+  end
+
+
+require("nvim-tree").setup({
+    on_attach = nvimtree_on_attach,
+})
 
 local git_top = io.popen("git -C " .. vim.fn.expand("%:p:h") .. " top"):read()
 
@@ -187,6 +210,7 @@ if git_top == nil or git_top == "" then
 else
     vim.keymap.set("n", "<C-n>", ":NvimTreeToggle " .. git_top .. "<CR>")
 end
+
 
 vim.keymap.set("n", "<C-m>", ":TagbarToggle<CR>")
 
@@ -357,8 +381,8 @@ vim.api.nvim_create_autocmd('LspAttach', {
         vim.keymap.set('n', '<leader>gi', ':tab split | lua vim.lsp.buf.implementation()<cr>', opts)
         vim.keymap.set('n', '<leader>jr', vim.lsp.buf.references, opts)
         vim.keymap.set('n', '<leader>gr', ':tab split | lua vim.lsp.buf.references()<cr>', opts)
-        vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
-        vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts)
+        vim.keymap.set('n', '<leader>K', vim.lsp.buf.hover, opts)
+        vim.keymap.set('n', '<leader>k', vim.lsp.buf.signature_help, opts)
         vim.keymap.set('n', '<leader>wa', vim.lsp.buf.add_workspace_folder, opts)
         vim.keymap.set('n', '<leader>wr', vim.lsp.buf.remove_workspace_folder, opts)
         vim.keymap.set('n', '<leader>wl', function()
