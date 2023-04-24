@@ -97,7 +97,8 @@ and alias ssh "kitty +kitten ssh"
 
 # quality of life aliases and abbrs
 alias rsp 'rsync -avzh --progress'
-alias tssh 'TERM=xterm-256color command ssh'
+alias tssh 'TERM=xterm-256color command ssh -p 2222'
+alias mssh 'TERM=minix command ssh -p 2222 -oHostKeyAlgorithms=+ssh-rsa'
 
 function rdelta
     command diff -ru "$argv[1]" "$argv[2]" | delta
