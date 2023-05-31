@@ -41,6 +41,8 @@ if test $IS_MAC = true
     set -gx LC_CTYPE en_US.UTF-8
     set -gx LC_ALL en_US.UTF-8
 else
+    set -gx PATH /opt/cuda/bin/ $PATH # cuda
+    set -gx PATH /opt/cuda/nsight_compute/ $PATH # cuda
     # we need to start the gnome keyring daemon if we're on a desktop session
     # test -n "$DESKTOP_SESSION" &&\
     #     set -x (gnome-keyring-daemon --start | string split "=")
