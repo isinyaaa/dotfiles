@@ -107,6 +107,8 @@ vim.opt.spelllang = { "en", "pt_br", "de" }
 
 vim.opt.path:append("**")
 
+vim.g.copilot_filetypes = { markdown = true, gitcommit = true }
+
 vim.keymap.set("n", "<C-h>", "<C-w>h")
 vim.keymap.set("n", "<C-j>", "<C-w>j")
 vim.keymap.set("n", "<C-k>", "<C-w>k")
