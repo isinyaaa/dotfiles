@@ -52,6 +52,8 @@ Plug 'jay-babu/mason-null-ls.nvim'
 
 Plug 'github/copilot.vim'
 
+Plug 'lervag/vimtex'
+
 " Plug 'godlygeek/tabular'                " dependency for vim-markdown
 " Plug 'plasticboy/vim-markdown'
 
@@ -135,6 +137,7 @@ vim.cmd.syntax("on")
 vim.cmd.filetype("plugin", "indent", "on")
 
 vim.g.mapleader = " "
+vim.g.maplocalleader = " "
 
 -- reload vimrc
 vim.keymap.set("n", "<leader><leader>", ":so<CR>", { silent = true })
@@ -397,6 +400,19 @@ vim.api.nvim_create_autocmd('LspAttach', {
         end, opts)
     end,
 })
+
+------ Latex ------
+
+-- test if system is macos
+
+vim.g.vimtex_quickfix_mode = 0
+vim.g.vimtex_syntax_enabled = 0
+vim.g.vimtex_compiler_latexmk_engines = {
+    _ = '-xelatex',
+}
+if vim.fn.has('mac') == 1 then
+    vim.g.vimtex_view_general_viewer = 'open'
+end
 
 ------ Prettify ------
 
