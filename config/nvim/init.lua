@@ -65,6 +65,7 @@ Plug 'vivien/vim-linux-coding-style'
 Plug 'karb94/neoscroll.nvim'            " smooth scrolling
 Plug 'vim-airline/vim-airline'          " status/tabline
 Plug 'vim-airline/vim-airline-themes'
+Plug 'nvim-tree/nvim-web-devicons'
 Plug 'bluz71/vim-nightfly-colors', { 'as': 'nightfly' }
 
 """" Still not sure
