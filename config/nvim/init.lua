@@ -303,12 +303,14 @@ vim.opt.foldenable = false  -- Disable folding at startup
 ------ LSP config ------
 
 require("mason").setup()
+local lspconfig = require("lspconfig")
 require("mason-lspconfig").setup {
     ensure_installed = {
         "bashls",
         "clangd",
         "lua_ls",
-        "pylyzer",
+        "pyright",
+        "pylsp",
         "rust_analyzer",
         "texlab",
         "yamlls"
@@ -323,7 +325,6 @@ require("null-ls").setup({
     end,
 })
 
-local lspconfig = require("lspconfig")
 lspconfig.bashls.setup {}
 lspconfig.clangd.setup {}
 lspconfig.lua_ls.setup {
@@ -348,7 +349,18 @@ lspconfig.lua_ls.setup {
         },
     },
 }
-lspconfig.pylyzer.setup {}
+lspconfig.pylsp.setup {
+    settings = {
+        pylsp = {
+            plugins = {
+                jedi_completion = {
+                    enabled = false,
+                },
+            },
+        },
+    },
+}
+lspconfig.pyright.setup {}
 lspconfig.rust_analyzer.setup {}
 lspconfig.texlab.setup {
     settings = {
