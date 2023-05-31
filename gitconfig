@@ -65,11 +65,14 @@
     bl = branch -vv
     blr = branch -rv
 
-    ## commit (c+)
+    ## commit (c*)
+    c = commit
+    cf = commit --fixup
     cs = commit -s
     # amends
-    ca = cs --amend
-    can = cs --amend --no-edit
+    ca = commit --amend
+    can = ca --no-edit
+    cas = ca -s
     # no-verifies
     cnv = commit --no-verify
 
