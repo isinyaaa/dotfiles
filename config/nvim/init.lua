@@ -352,10 +352,15 @@ lspconfig.lua_ls.setup {
 lspconfig.pylsp.setup {
     settings = {
         pylsp = {
+            configurationSources = {"flake8"},
             plugins = {
-                jedi_completion = {
-                    enabled = false,
+                flake8 = {
+                    enabled = true,
                 },
+                jedi_completion = { enabled = false },
+                pycodestyle = { enabled = false },
+                mccabe = { enabled = false },
+                pyflakes = { enabled = false },
             },
         },
     },
