@@ -98,7 +98,8 @@
     ra = rebase --abort
     rc = rebase --continue
     ret = rebase --edit-todo
-    ri = rebase -i --autosquash
+    ri = rebase -i
+    ria = ri --autosquash
 
     ## reset
     rh = reset --hard
