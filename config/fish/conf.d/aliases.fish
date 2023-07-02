@@ -1,7 +1,6 @@
 alias clear 'command clear; and exec fish'
 alias wipe clear
 
-# quality of life aliases and abbrs
 alias rsp 'rsync -avzh --progress'
 alias tssh 'TERM=xterm-256color command ssh -p 2222'
 alias mssh 'TERM=minix command ssh -p 2222 -oHostKeyAlgorithms=+ssh-rsa'
@@ -11,7 +10,13 @@ function rdelta
 end
 
 function mkd
-	mkdir -p $argv; and cd $argv
+    mkdir -p $argv
+    and cd $argv
+end
+
+function jsd
+    PAGER="less -R" jj show $argv
+    jj describe $argv
 end
 
 abbr -a ef exec fish
