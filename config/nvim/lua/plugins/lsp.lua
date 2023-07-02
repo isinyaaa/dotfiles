@@ -25,6 +25,13 @@ return {
         opts = {
             servers = {
                 bashls = {},
+                ltex = {
+                    settings = {
+                        ltex = {
+                            language = "auto",
+                        },
+                    },
+                },
             },
         },
     },
