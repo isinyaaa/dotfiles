@@ -68,6 +68,7 @@
     ## commit (c*)
     c = commit
     cf = commit --fixup
+    csq = commit --squash
     cs = commit -s
     # amends
     ca = commit --amend
