@@ -63,3 +63,5 @@ and jj util completion --fish | source
 
 command -q zoxide
 and zoxide init fish | source
+
+__set_aliases
