@@ -33,3 +33,6 @@ and abbr -a tc topgrade -c
 
 command -q eza
 and alias ls 'eza -l --git --icons --group-directories-first'
+
+command -q huggingface-cli
+and alias hf huggingface-cli
