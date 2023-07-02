@@ -60,7 +60,7 @@ Plug 'vivien/vim-linux-coding-style'
 
 """" Prettify
 
-Plug 'karb94/neoscroll.nvim'            " smooth scrolling
+Plug 'LostNeophyte/neoscroll.nvim', { 'branch': 'fix/eof' }  " smooth scrolling
 Plug 'vim-airline/vim-airline'          " status/tabline
 Plug 'vim-airline/vim-airline-themes'
 Plug 'nvim-tree/nvim-web-devicons'
