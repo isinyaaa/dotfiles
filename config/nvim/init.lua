@@ -24,7 +24,6 @@ Plug 'micarmst/vim-spellsync'
 Plug 'will133/vim-dirdiff'
 Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }   " improve telescope performance
 Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.1' }
-" Plug 'terryma/vim-multiple-cursors'
 " Plug 'SirVer/ultisnips'               " snippets engine
 " Plug 'honza/vim-snippets'
 
@@ -33,7 +32,6 @@ Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.1' }
 Plug 'junegunn/goyo.vim'                " distraction free writing
 Plug 'wakatime/vim-wakatime'
 Plug 'junegunn/vim-emoji'               " Emoji support
-" Plug 'tpope/vim-rhubarb'                " vim-fugitive plugin for opening file on Github, using :Gbrowse
 
 """" Lang support
 
@@ -42,7 +40,6 @@ Plug 'williamboman/mason.nvim'
 Plug 'williamboman/mason-lspconfig.nvim'
 Plug 'neovim/nvim-lspconfig'
 
-" Plug 'dense-analysis/ale'
 Plug 'dpelle/vim-LanguageTool' " TODO: replace with grammarous
 
 Plug 'jose-elias-alvarez/null-ls.nvim'  " LSP linter
