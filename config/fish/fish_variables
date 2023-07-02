@@ -1,15 +1,6 @@
 # This file contains fish universal variable definitions.
 # VERSION: 3.0
 SETUVAR __fish_initialized:3400
-SETUVAR _fish_abbr_gg:git\x20grep
-SETUVAR _fish_abbr_glg:git\x20log\x20\x2d\x2dgrep\x3d
-SETUVAR _fish_abbr_grh:git\x20ri\x20HEAD\x7e
-SETUVAR _fish_abbr_menu:make\x20menuconfig\x20\x2dj\x20O\x3dalinux
-SETUVAR _fish_abbr_mk:make\x20CC\x3d\x22ccache\x20gcc\x20\x2dfdiagnostics\x2dcolor\x22\x20\x2dj16\x20O\x3dalinux
-SETUVAR _fish_abbr_qaa:qemu_aarch64
-SETUVAR _fish_abbr_qxa:qemu_x86_64
-SETUVAR _fish_abbr_spdown:sudo\x20nmcli\x20connection\x20down\x20S\u00e3o\x5c\x20Paulo\x5c\x20\x5c\x28GRU2\x5c\x29
-SETUVAR _fish_abbr_spup:sudo\x20nmcli\x20\x2d\x2dask\x20connection\x20up\x20S\u00e3o\x5c\x20Paulo\x5c\x20\x5c\x28GRU2\x5c\x29
 SETUVAR fish_color_autosuggestion:969896
 SETUVAR fish_color_cancel:\x2d\x2dreverse
 SETUVAR fish_color_command:c397d8
