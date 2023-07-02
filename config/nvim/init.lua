@@ -236,7 +236,7 @@ else
     vim.keymap.set("n", "<C-n>", ":NvimTreeToggle " .. git_top .. "<CR>")
 end
 
-vim.g.tagbar_map_jump = "<leader>tj"
+vim.g.tagbar_map_jump = "<CR>"
 vim.keymap.set("n", "<leader>tt", ":TagbarToggle<CR>")
 
 vim.keymap.set("n", "]h", "<Plug>(GitGutterNextHunk)")
