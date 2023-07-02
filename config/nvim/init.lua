@@ -39,6 +39,7 @@ Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
 Plug 'williamboman/mason.nvim'
 Plug 'williamboman/mason-lspconfig.nvim'
 Plug 'neovim/nvim-lspconfig'
+Plug 'simrat39/rust-tools.nvim'
 
 Plug 'dpelle/vim-LanguageTool' " TODO: replace with grammarous
 
@@ -117,8 +118,8 @@ vim.keymap.set("n", "<C-l>", "<C-w>l")
 vim.keymap.set("n", "<C-d>", "<C-d>zz")
 vim.keymap.set("n", "<C-u>", "<C-u>zz")
 
-vim.keymap.set("n", "n", "nzzzv")
-vim.keymap.set("n", "N", "Nzzzv")
+-- vim.keymap.set("n", "n", "nzzzv")
+-- vim.keymap.set("n", "N", "Nzzzv")
 
 -- Run SpellSync automatically when Vim starts
 vim.g.spellsync_run_at_startup = 1
@@ -363,7 +364,40 @@ lspconfig.pylsp.setup {
     },
 }
 lspconfig.pyright.setup {}
-lspconfig.rust_analyzer.setup {}
+
+-- See https://rust-analyzer.github.io/manual.html#nvim-lsp
+local opts = {
+    tools = {
+        runnables = {
+            use_telescope = true,
+        },
+        inlay_hints = {
+            auto = true,
+            show_parameter_hints = false,
+            parameter_hints_prefix = "",
+            other_hints_prefix = "",
+        },
+    },
+
+    -- all the opts to send to nvim-lspconfig
+    -- these override the defaults set by rust-tools.nvim
+    -- see https://github.com/neovim/nvim-lspconfig/blob/master/CONFIG.md#rust_analyzer
+    server = {
+        settings = {
+            -- to enable rust-analyzer settings visit:
+            -- https://github.com/rust-analyzer/rust-analyzer/blob/master/docs/user/generated_config.adoc
+            ["rust-analyzer"] = {
+                -- enable clippy on save
+                checkOnSave = {
+                    command = "clippy",
+                },
+            },
+        },
+    },
+}
+
+require("rust-tools").setup(opts)
+
 lspconfig.texlab.setup {
     settings = {
         latex = {
