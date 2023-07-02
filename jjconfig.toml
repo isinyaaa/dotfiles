@@ -8,6 +8,7 @@
     merge-editor = "nvim -f -c \"Gvdiffsplit!\""
 [aliases]
     b = ["branch"]
+    d = ["describe"]
     hide = ["abandon"]
     r = ["rebase"]
 # [git]
