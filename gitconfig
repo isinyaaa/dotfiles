@@ -145,22 +145,22 @@
 
     ## reverse the log output
     lrf = "!f(){\
-            git log --reverse ${1:-$(git get-default-branch)}..${2:-HEAD};\
+            git log --reverse ${1:-$(git get-default-branch)}..${2:-@};\
         };f"
 
     # reverse log line output
     lnf = "!f(){\
-            git ln ${1:-$(git get-default-branch)}..${2:-HEAD};\
+            git ln ${1:-$(git get-default-branch)}..${2:-@};\
         };f"
 
     # get patch-set log
     lpf = "!f(){\
-            git lp ${1:-$(git get-default-branch)}..${2:-HEAD};\
+            git lp ${1:-$(git get-default-branch)}..${2:-@};\
         };f"
 
     ## reverse patch-set log
     lprf = "!f(){\
-            git lp --reverse ${1:-$(git get-default-branch)}..${2:-HEAD};\
+            git lp --reverse ${1:-$(git get-default-branch)}..${2:-@};\
         };f"
 
     ## rebase onto a branch
