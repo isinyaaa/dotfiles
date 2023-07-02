@@ -28,3 +28,6 @@ abbr -a glg 'git log --grep='
 
 command -q topgrade
 and abbr -a tc topgrade -c
+
+command -q exa
+and alias ls 'exa -l --git --icons --group-directories-first'
