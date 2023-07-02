@@ -9,4 +9,7 @@ function __setup_linux
     and export DOCKER_HOST=unix:///run/docker.sock
     and systemctl --user is-active --quiet docker.socket
     and export DOCKER_HOST=unix://$XDG_RUNTIME_DIR/docker.sock
+    # fix bat man formatting
+    command -q bat
+    and export MANROFFOPT='-c'
 end
