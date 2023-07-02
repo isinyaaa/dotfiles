@@ -6,6 +6,7 @@ function __setup_linux
     #     set -x (gnome-keyring-daemon --start | string split "=")
     # we also need to set up the docker socket
     command -q docker
+    and export DOCKER_HOST=unix:///run/docker.sock
     and systemctl --user is-active --quiet docker.socket
     and export DOCKER_HOST=unix://$XDG_RUNTIME_DIR/docker.sock
 end
