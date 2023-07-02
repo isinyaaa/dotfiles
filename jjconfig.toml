@@ -8,6 +8,7 @@
     merge-editor = "nvim -f -c \"Gvdiffsplit!\""
 [aliases]
     b = ["branch"]
+    hide = ["abandon"]
     r = ["rebase"]
 # [git]
 #     auto-local-branch = false
