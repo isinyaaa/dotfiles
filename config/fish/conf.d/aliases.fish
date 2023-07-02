@@ -25,6 +25,8 @@ abbr -a ssl ssh local-arch
 abbr -a fw --set-cursor "file (which %)"
 abbr -a gg 'git grep'
 abbr -a glg 'git log --grep='
+abbr -a jla 'jj log -r :@'
+abbr -a jlr 'jj log -r'
 
 command -q topgrade
 and abbr -a tc topgrade -c
