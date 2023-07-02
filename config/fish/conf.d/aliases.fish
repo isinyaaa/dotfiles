@@ -31,5 +31,5 @@ abbr -a jlr 'jj log -r'
 command -q topgrade
 and abbr -a tc topgrade -c
 
-command -q exa
-and alias ls 'exa -l --git --icons --group-directories-first'
+command -q eza
+and alias ls 'eza -l --git --icons --group-directories-first'
