@@ -30,3 +30,5 @@
         path: autoload/
     ~/.vim/autoload:
         path: autoload/
+    ~/.local/share/omf/themes/eseal:
+        path: omf/eseal/
