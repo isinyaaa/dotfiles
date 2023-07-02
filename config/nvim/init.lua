@@ -327,6 +327,7 @@ require("mason-lspconfig").setup {
     ensure_installed = {
         "bashls",
         "clangd",
+        "ltex",
         "lua_ls",
         "pyright",
         "pylsp",
@@ -346,6 +347,7 @@ require("null-ls").setup({
 
 lspconfig.bashls.setup {}
 lspconfig.clangd.setup {}
+lspconfig.ltex.setup {}
 lspconfig.lua_ls.setup {
     settings = {
         Lua = {
