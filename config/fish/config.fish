@@ -55,6 +55,7 @@ if command -q rbenv
 end
 
 if command -q pyenv
+    __setup_pyenv
 end
 
 command -q jj
