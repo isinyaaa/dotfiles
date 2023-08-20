@@ -24,7 +24,8 @@ Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.1' }
 
 Plug 'junegunn/goyo.vim'                " distraction free writing
 Plug 'wakatime/vim-wakatime'
-Plug 'junegunn/vim-emoji'               " Emoji support
+Plug 'junegunn/vim-emoji'
+Plug 'epwalsh/obsidian.nvim'
 
 """" Lang support
 
