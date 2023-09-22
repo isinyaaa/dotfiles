@@ -149,3 +149,13 @@ vim.api.nvim_create_autocmd('LspAttach', {
         end, opts)
     end,
 })
+
+require('toggle_lsp_diagnostics').init {
+    underline = false,
+    -- virtual_text = {
+        -- prefix = 'XXX',
+        -- spacing = 5
+    -- }
+}
+
+vim.keymap.set('n', '<leader>dt', '<Plug>(toggle-lsp-diag)<CR>')

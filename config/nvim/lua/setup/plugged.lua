@@ -35,6 +35,7 @@ Plug 'epwalsh/obsidian.nvim'
 """" Lang support
 
 Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
+Plug 'WhoIsSethDaniel/toggle-lsp-diagnostics.nvim'
 Plug 'williamboman/mason.nvim'
 Plug 'williamboman/mason-lspconfig.nvim'
 Plug 'neovim/nvim-lspconfig'
