@@ -1,5 +1,6 @@
 local telescope = require('telescope')
 telescope.load_extension('fzf')
+telescope.load_extension('media_files')
 telescope.load_extension('live_grep_args')
 
 local select_dir_for_grep = function(prompt_bufnr)
@@ -36,6 +37,10 @@ telescope.setup({
             -- hidden = true,
             hijack_netrw = true,
             -- disable_devicons = false,
+        },
+        media_files = {
+            -- filetypes = { "png", "webp", "jpg", "jpeg" },
+            -- find_cmd = "rg",
         },
     },
     pickers = {

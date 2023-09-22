@@ -20,6 +20,7 @@ Plug 'will133/vim-dirdiff'
 Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }   " improve telescope performance
 Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.1' }
 Plug 'nvim-telescope/telescope-live-grep-args.nvim'
+Plug 'nvim-telescope/telescope-media-files.nvim'
 Plug 'nvim-telescope/telescope-file-browser.nvim'
 " Plug 'SirVer/ultisnips'               " snippets engine
 " Plug 'honza/vim-snippets'
