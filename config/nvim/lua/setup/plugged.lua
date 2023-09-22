@@ -3,6 +3,8 @@ call plug#begin('~/.vim/plugged')
 
 """" Basic functionality
 
+Plug 'nvim-tree/nvim-web-devicons'
+Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'            " basic lua functions
 Plug 'tpope/vim-repeat'                 " enable repeating supported plugins (not just native last command)
 Plug 'terrortylor/nvim-comment'         " comment/uncomment stuff
@@ -17,6 +19,8 @@ Plug 'micarmst/vim-spellsync'
 Plug 'will133/vim-dirdiff'
 Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }   " improve telescope performance
 Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.1' }
+Plug 'nvim-telescope/telescope-live-grep-args.nvim'
+Plug 'nvim-telescope/telescope-file-browser.nvim'
 " Plug 'SirVer/ultisnips'               " snippets engine
 " Plug 'honza/vim-snippets'
 
@@ -57,7 +61,6 @@ Plug 'vivien/vim-linux-coding-style'
 Plug 'LostNeophyte/neoscroll.nvim', { 'branch': 'fix/eof' }  " smooth scrolling
 Plug 'vim-airline/vim-airline'          " status/tabline
 Plug 'vim-airline/vim-airline-themes'
-Plug 'nvim-tree/nvim-web-devicons'
 Plug 'bluz71/vim-nightfly-colors', { 'as': 'nightfly' }
 
 """" Still not sure
