@@ -37,4 +37,7 @@ function __set_aliases
 
     command -q huggingface-cli
     and alias hf huggingface-cli
+
+    command -q neofetch
+    and alias neopets neofetch
 end
