@@ -3,3 +3,8 @@ vim.keymap.set("n", "<leader>ml", [[:set nowrapscan<CR>/[\.?!>]$<CR>jV/^\s*[A-Z<
 
 -- create a map to run %s/:\([^:]\+\):/\=emoji#for(submatch(1), submatch(0))/g
 vim.keymap.set("n", "<leader>re", [[:%s/:\([^:]\+\):/\=emoji#for(submatch(1), submatch(0))/g<CR>]])
+
+vim.api.nvim_create_autocmd({"BufNewFile", "BufRead"}, {
+    pattern="*.jjdescription",
+    command = "set filetype=gitcommit",
+})
