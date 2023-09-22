@@ -30,6 +30,7 @@ set -gx PATH $HOME/bin $PATH
 set -gx PATH $HOME/.local/bin $PATH
 set -gx PATH $HOME/.cargo/bin $PATH # rust
 set -gx PATH /opt/local/bin $PATH
+set -gx PATH $HOME/.rye/shims $PATH
 
 # kitty ssh setup
 echo "$TERM" | grep -q "kitty"
