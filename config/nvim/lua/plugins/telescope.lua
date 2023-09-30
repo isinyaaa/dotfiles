@@ -1,37 +1,38 @@
 return {
-    { "nvim-telescope/telescope-live-grep-args.nvim" },
-    { "nvim-telescope/telescope-media-files.nvim" },
-    { "nvim-telescope/telescope-file-browser.nvim" },
-
+    {
+        "nvim-telescope/telescope-fzf-native.nvim",
+        config = function()
+            require("telescope").load_extension("fzf")
+        end,
+    },
+    {
+        "nvim-telescope/telescope-live-grep-args.nvim",
+        config = function()
+            require("telescope").load_extension("live_grep_args")
+        end,
+    },
+    {
+        "nvim-telescope/telescope-media-files.nvim",
+        config = function()
+            require("telescope").load_extension("media_files")
+        end,
+    },
+    {
+        "nvim-telescope/telescope-file-browser.nvim",
+        config = function()
+            require("telescope").load_extension("file_browser")
+        end,
+    },
     {
         "telescope.nvim",
         dependencies = {
             {
-                "nvim-telescope/telescope-fzf-native.nvim",
+                "telescope-fzf-native.nvim",
                 build = "make",
-                config = function()
-                    require("telescope").load_extension("fzf")
-                end,
             },
-            {
-                "nvim-telescope/telescope-live-grep-args.nvim",
-                config = function()
-                    require("telescope").load_extension("live_grep_args")
-                end,
-            },
-            {
-                "nvim-telescope/telescope-media-files.nvim",
-                config = function()
-                    require("telescope").load_extension("media_files")
-                end,
-            },
-            {
-                "nvim-telescope/telescope-file-browser.nvim",
-                config = function()
-                    local telescope = require("telescope")
-                    telescope.load_extension("file_browser")
-                end,
-            },
+            { "telescope-live-grep-args.nvim" },
+            { "telescope-media-files.nvim" },
+            { "telescope-file-browser.nvim" },
         },
         opts = function(_, opts)
             local select_dir_for_grep = function(prompt_bufnr)
