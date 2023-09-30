@@ -6,8 +6,7 @@ require("mason-lspconfig").setup {
         "clangd",
         "ltex",
         "lua_ls",
-        "pyright",
-        "pylsp",
+        "ruff_lsp",
         "rust_analyzer",
         "texlab",
         "yamlls"
@@ -47,23 +46,29 @@ lspconfig.lua_ls.setup {
         },
     },
 }
-lspconfig.pylsp.setup {
-    settings = {
-        pylsp = {
-            configurationSources = {"flake8"},
-            plugins = {
-                flake8 = {
-                    enabled = true,
-                },
-                jedi_completion = { enabled = false },
-                pycodestyle = { enabled = false },
-                mccabe = { enabled = false },
-                pyflakes = { enabled = false },
-            },
-        },
-    },
+-- lspconfig.pylsp.setup {
+--     settings = {
+--         pylsp = {
+--             configurationSources = {"flake8"},
+--             plugins = {
+--                 flake8 = {
+--                     enabled = true,
+--                 },
+--                 jedi_completion = { enabled = false },
+--                 pycodestyle = { enabled = false },
+--                 mccabe = { enabled = false },
+--                 pyflakes = { enabled = false },
+--             },
+--         },
+--     },
+-- }
+lspconfig.ruff_lsp.setup {
+    -- cmd = { "ruff check" },
+    -- init_options = {
+        -- settings = {
+        -- }
+    -- }
 }
-lspconfig.pyright.setup {}
 
 -- See https://rust-analyzer.github.io/manual.html#nvim-lsp
 local opts = {
