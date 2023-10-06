@@ -27,7 +27,7 @@ function __set_aliases
     abbr -a gg 'git grep'
     abbr -a glg 'git log --grep='
     abbr -a jl 'jj log'
-    abbr -a js 'jj show'
+    abbr -a js 'jj st'
 
     command -q topgrade
     and abbr -a tc topgrade -c

@@ -1,14 +1,20 @@
 [user]
 name = "Isabella Basso"
 email = "isabellabdoamaral@usp.br"
+
 [snapshot]
 max-new-file-size = "2M"
+
 [ui]
-default-command = "log"
+default-command = "show"
 color = "auto"
 editor = "nvim"
 diff-editor = "nvimdiff"
 merge-editor = "nvim -f -c \"Gvdiffsplit!\""
+
+# [git]
+#     auto-local-branch = false
+
 [aliases]
 b = ["branch"]
 bsmr = ["branch", "set", "main", "-r"]
@@ -23,5 +29,4 @@ rr = ["rebase", "-r"]
 ra = ["rebase", "-s", "@"]
 rs = ["rebase", "-s"]
 s = ["split"]
-# [git]
-#     auto-local-branch = false
+sq = ["squash", "-i"]
