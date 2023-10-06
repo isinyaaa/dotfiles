@@ -35,4 +35,9 @@ return {
             })
         end,
     },
+    {
+        "kaarmu/typst.vim",
+        ft = "typst",
+        lazy = false,
+    },
 }
