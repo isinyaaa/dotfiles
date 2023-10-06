@@ -23,6 +23,7 @@ set -gx PATH /opt/local/bin $PATH
 set -gx PATH $HOME/.cargo/bin $PATH
 set -gx PATH $HOME/.local/bin $PATH
 set -gx PATH $HOME/bin $PATH
+set -gx PATH $HOME/.zig $PATH
 
 # system specific setup
 if test $IS_MAC = true
