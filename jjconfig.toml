@@ -1,25 +1,27 @@
 [user]
-    name = "Isabella Basso"
-    email = "isabellabdoamaral@usp.br"
+name = "Isabella Basso"
+email = "isabellabdoamaral@usp.br"
+[snapshot]
+max-new-file-size = "2M"
 [ui]
-    default-command = "log"
-    color = "auto"
-    editor = "nvim"
-    diff-editor = "nvimdiff"
-    merge-editor = "nvim -f -c \"Gvdiffsplit!\""
+default-command = "log"
+color = "auto"
+editor = "nvim"
+diff-editor = "nvimdiff"
+merge-editor = "nvim -f -c \"Gvdiffsplit!\""
 [aliases]
-    b = ["branch"]
-    bsmr = ["branch", "set", "main", "-r"]
-    cm = ["commit", "-m"]
-    d = ["describe"]
-    da = ["describe", "@-"]
-    gp = ["git", "push"]
-    h = ["abandon"]
-    hide = ["abandon"]
-    r = ["rebase"]
-    rr = ["rebase", "-r"]
-    ra = ["rebase", "-s", "@"]
-    rs = ["rebase", "-s"]
-    s = ["split"]
+b = ["branch"]
+bsmr = ["branch", "set", "main", "-r"]
+cm = ["commit", "-m"]
+d = ["describe"]
+da = ["describe", "@-"]
+gp = ["git", "push"]
+h = ["abandon"]
+hide = ["abandon"]
+r = ["rebase"]
+rr = ["rebase", "-r"]
+ra = ["rebase", "-s", "@"]
+rs = ["rebase", "-s"]
+s = ["split"]
 # [git]
 #     auto-local-branch = false
