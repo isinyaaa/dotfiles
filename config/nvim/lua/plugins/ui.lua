@@ -20,4 +20,19 @@ return {
             require("neoscroll.config").set_mappings(t)
         end,
     },
+    {
+        "lualine.nvim",
+        opts = function(_, _)
+            vim.keymap.set("n", "<leader>glt", "", {
+                callback = function()
+                    local statusline = vim.o.statusline
+
+                    require("lualine").hide({
+                        place = { "statusline" },
+                        unhide = statusline == "" or statusline == "%#Normal#",
+                    })
+                end,
+            })
+        end,
+    },
 }

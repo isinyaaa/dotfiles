@@ -5,4 +5,5 @@ return {
     "wakatime/vim-wakatime",
     "blankname/vim-fish",
     "tpope/vim-fugitive",
+    "junegunn/goyo.vim",
 }
