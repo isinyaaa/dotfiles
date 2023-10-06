@@ -24,7 +24,9 @@ set -gx PATH $HOME/.cargo/bin $PATH
 set -gx PATH $HOME/.local/bin $PATH
 set -gx PATH $HOME/bin $PATH
 set -gx PATH $HOME/go/bin $PATH
-set -gx PATH $HOME/.zig $PATH
+set -gx ZVM_INSTALL $HOME/.zvm/self
+set -gx PATH $HOME/.zvm/bin $PATH
+set -gx PATH $ZVM_INSTALL/ $PATH
 
 # system specific setup
 if test $IS_MAC = true
