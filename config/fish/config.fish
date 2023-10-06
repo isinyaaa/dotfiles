@@ -27,6 +27,9 @@ set -gx PATH $HOME/go/bin $PATH
 set -gx ZVM_INSTALL $HOME/.zvm/self
 set -gx PATH $HOME/.zvm/bin $PATH
 set -gx PATH $ZVM_INSTALL/ $PATH
+set -gx MODULAR_HOME $HOME/.modular
+set -gx PATH $MODULAR_HOME/pkg/packages.modular.com_mojo/bin $PATH
+set -gx PATH $MODULAR_HOME/pkg/packages.modular.com_max/bin $PATH
 
 # system specific setup
 if test $IS_MAC = true
