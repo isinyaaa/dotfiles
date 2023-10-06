@@ -3,32 +3,31 @@
       create: true
       relink: true
 
-- clean: ['~', '~/.config']
+- clean: ["~", "~/.config"]
 
 - link:
     ~/.config/ncspot/config.toml: config/ncspot/config.toml
     ~/.gitconfig: gitconfig
     ~/.jjconfig.toml: jjconfig.toml
-    ~/.mbsyncrc: mbsyncrc
-    ~/.tmux.conf: tmux.conf
+    # ~/.mbsyncrc: mbsyncrc
     ~/.vimrc: vimrc
     ~/.config/bat:
-        path: config/bat/
+      path: config/bat/
     ~/.config/fish:
-        path: config/fish/
+      path: config/fish/
     ~/.config/neomutt:
-        path: config/neomutt/
+      path: config/neomutt/
     ~/.config/nvim:
-        path: config/nvim/
+      path: config/nvim/
     ~/.config/omf:
-        path: config/omf/
+      path: config/omf/
     ~/.config/pass-git-helper:
-        path: config/pass-git-helper/
+      path: config/pass-git-helper/
     ~/.config/ranger:
-        path: config/ranger/
+      path: config/ranger/
     ~/.local/share/nvim/site/autoload:
-        path: autoload/
+      path: autoload/
     ~/.vim/autoload:
-        path: autoload/
+      path: autoload/
     ~/.local/share/omf/themes/eseal:
-        path: omf/eseal/
+      path: omf/eseal/
