@@ -15,12 +15,13 @@ function __set_aliases
         and cd $argv
     end
 
-    function jsd
+    function nsd
         PAGER="less -R" jj show $argv
         jj describe $argv
     end
 
     abbr -a ef exec fish
+    abbr -a lsb 'lemonade server 2>&1 >/dev/null &'
     abbr -a ssa ssh arch
     abbr -a ssl ssh local-arch
     abbr -a fw --set-cursor "file (which %)"
