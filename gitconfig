@@ -16,8 +16,6 @@
     interactive = auto
     pager = true
     ui = auto
-[commit]
-    gpgSign = true
 [core]
     autocrlf = input
     pager = delta
