@@ -32,6 +32,7 @@ return {
                         },
                     },
                 },
+                zls = { mason = false },
             },
         },
     },
