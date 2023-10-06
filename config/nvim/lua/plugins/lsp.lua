@@ -23,6 +23,9 @@ return {
             "williamboman/mason-lspconfig.nvim",
         },
         opts = {
+            document_highlight = {
+                enabled = false,
+            },
             servers = {
                 bashls = {},
                 ltex = {
