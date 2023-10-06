@@ -26,8 +26,8 @@ function __set_aliases
     abbr -a fw --set-cursor "file (which %)"
     abbr -a gg 'git grep'
     abbr -a glg 'git log --grep='
-    abbr -a jla 'jj log -r :@'
-    abbr -a jlr 'jj log -r'
+    abbr -a jl 'jj log'
+    abbr -a js 'jj show'
 
     command -q topgrade
     and abbr -a tc topgrade -c
