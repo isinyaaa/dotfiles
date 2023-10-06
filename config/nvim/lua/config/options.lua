@@ -22,7 +22,7 @@ vim.opt.relativenumber = false
 -- vim.opt.lazyredraw = true
 vim.opt.ttyfast = true
 
-vim.opt.textwidth = 99
+vim.opt.textwidth = 119
 vim.opt.colorcolumn = "+1"
 
 vim.opt.spelllang = { "en", "pt_br", "de" }
