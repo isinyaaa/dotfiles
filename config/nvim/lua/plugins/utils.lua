@@ -18,4 +18,12 @@ return {
             vim.keymap.set("n", "<leader>ygd", 'T#vt":s;/;>;g<CR>:noh<CR>gvyu:call SearchYamlKey()<CR><C-r>+<CR>')
         end,
     },
+    {
+        "zk-org/zk-nvim",
+        config = function()
+            require("zk").setup({
+                picker = "telescope",
+            })
+        end,
+    },
 }
