@@ -7,6 +7,11 @@ vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
     command = "set filetype=gitcommit",
 })
 
+vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
+    pattern = "*.xit",
+    command = "set filetype=xit",
+})
+
 -- vim.cmd.highlight({ "ExtraWhitespace", "ctermbg=red", "guibg=red" })
 -- vim.api.nvim_create_autocmd("BufWinEnter", {
 --   pattern = "*",
