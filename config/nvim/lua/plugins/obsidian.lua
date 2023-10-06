@@ -1,8 +1,15 @@
 return {
-    {
-        "epwalsh/obsidian.nvim",
-        opts = {
-            dir = "~/personal/obsidian/current/",
+    "epwalsh/obsidian.nvim",
+    ft = "markdown",
+    dependencies = {
+        "nvim-lua/plenary.nvim",
+    },
+    opts = {
+        workspaces = {
+            {
+                name = "personal",
+                path = "~/personal/obsidian/current/",
+            },
         },
     },
 }
