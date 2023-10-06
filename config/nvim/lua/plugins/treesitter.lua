@@ -6,7 +6,7 @@ return {
         local parser_config = require("nvim-treesitter.parsers").get_parser_configs()
         parser_config.xit = {
             install_info = {
-                url = "~/repos/install/tree-sitter-xit",
+                url = "~/install/tree-sitter-xit",
                 files = { "src/parser.c" },
                 branch = "main",
                 generate_requires_npm = true,
