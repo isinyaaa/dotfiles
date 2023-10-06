@@ -27,10 +27,11 @@ function __set_aliases
     abbr -a gg 'git grep'
     abbr -a glg 'git log --grep='
     command -q jj
-    and abbr -a jl 'jj log'
-    and abbr -a js 'jj st'
-    and abbr -a jpm 'jj smb && jj pm'
-    and abbr -a jpb --set-cursor 'jj sb % && jj pm'
+    and abbr -a nn jj
+    and abbr -a nnl 'jj log'
+    and abbr -a nns 'jj st'
+    and abbr -a nnpm 'jj smb && jj pm'
+    and abbr -a nnpb --set-cursor 'jj sb % && jj pm'
 
     command -q topgrade
     and abbr -a tc topgrade -c
