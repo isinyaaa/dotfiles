@@ -29,8 +29,6 @@ vim.opt.spelllang = { "en", "pt_br", "de" }
 
 vim.opt.path:append("**")
 
-vim.g.python3_host_prog = HOME .. ".pyenv/shims/python3"
-
 vim.opt.clipboard:append("unnamedplus")
 
 -- Run SpellSync automatically when Vim starts
