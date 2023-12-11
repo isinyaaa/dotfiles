@@ -72,5 +72,6 @@
   "vim-startuptime": { "branch": "master", "commit": "454b3de856b7bd298700de33d79774ca9b9e3875" },
   "vim-wakatime": { "branch": "master", "commit": "a4c66faea1eca47dce7c7c3586332f75cfbe9edf" },
   "vimtex": { "branch": "master", "commit": "cb0fd1b437a6b3797ed4dfd01a0aa0ae97b23871" },
-  "which-key.nvim": { "branch": "main", "commit": "4433e5ec9a507e5097571ed55c02ea9658fb268a" }
+  "which-key.nvim": { "branch": "main", "commit": "4433e5ec9a507e5097571ed55c02ea9658fb268a" },
+  "yaml-revealer": { "branch": "master", "commit": "0476c6ead1111f8dbe993be76a75c867ef76ea6b" }
 }
