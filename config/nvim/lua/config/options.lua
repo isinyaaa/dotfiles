@@ -31,6 +31,8 @@ vim.opt.path:append("**")
 
 vim.g.python3_host_prog = HOME .. ".pyenv/shims/python3"
 
+vim.opt.clipboard:append("unnamedplus")
+
 -- Run SpellSync automatically when Vim starts
 -- vim.g.spellsync_run_at_startup = 1
 
