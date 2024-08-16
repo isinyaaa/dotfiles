@@ -28,6 +28,7 @@ return {
             },
             servers = {
                 bashls = {},
+                mojo = {},
                 ltex = {
                     settings = {
                         ltex = {
