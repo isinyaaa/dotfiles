@@ -17,6 +17,7 @@ merge-editor = "nvim -f -c \"Gvdiffsplit!\""
 
 [aliases]
 b = ["branch"]
+chocolate = ["git", "init", "--colocate"]
 sb = ["branch", "set", "-r", "@-"]
 smb = ["branch", "set", "-r", "@-", "main"]
 d = ["describe"]
