@@ -78,3 +78,7 @@ command -q atuin
 and atuin init fish | source
 
 __set_aliases
+
+function fish_user_key_bindings
+    fish_vi_key_bindings
+end
