@@ -100,6 +100,7 @@
     ret = rebase --edit-todo
     ri = rebase -i
     ria = ri --autosquash
+    reauth = rebase --exec 'git commit --amend --no-edit --reset-author -s'
 
     ## reset
     rh = reset --hard
