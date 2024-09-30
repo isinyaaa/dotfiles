@@ -59,9 +59,9 @@ return {
             })
         end,
     },
-    {
-        "kaarmu/typst.vim",
-        ft = "typst",
-        lazy = false,
-    },
+    -- {
+    --     "kaarmu/typst.vim",
+    --     ft = "typst",
+    --     lazy = false,
+    -- },
 }
