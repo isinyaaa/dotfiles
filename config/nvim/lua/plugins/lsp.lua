@@ -10,6 +10,7 @@ return {
                 "clangd",
                 "ltex",
                 "lua_ls",
+                "pbls",
                 "ruff_lsp",
                 "rust_analyzer",
                 "texlab",
@@ -28,10 +29,15 @@ return {
             },
             servers = {
                 bashls = {},
+                clangd = {
+                    filetypes = { "c", "cpp", "objc", "objcpp", "h", "hpp" },
+                },
                 mojo = {},
+                pbls = {},
                 ltex = {
                     settings = {
                         ltex = {
+                            checkFrequency = "save",
                             language = "auto",
                         },
                     },

@@ -16,10 +16,10 @@ merge-editor = "nvim -f -c \"Gvdiffsplit!\""
 #     auto-local-branch = false
 
 [aliases]
-b = ["branch"]
+b = ["bookmark"]
 chocolate = ["git", "init", "--colocate"]
-sb = ["branch", "set", "-r", "@-"]
-smb = ["branch", "set", "-r", "@-", "main"]
+sb = ["bookmark", "set", "-r", "@-"]
+smb = ["bookmark", "set", "-r", "@-", "main"]
 d = ["describe"]
 da = ["describe", "@-"]
 e = ["edit"]
