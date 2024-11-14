@@ -21,8 +21,6 @@
       path: config/neomutt/
     ~/.config/nvim:
       path: config/nvim/
-    ~/.config/omf:
-      path: config/omf/
     ~/.config/pass-git-helper:
       path: config/pass-git-helper/
     ~/.local/share/nvim/site/autoload:

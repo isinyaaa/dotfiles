@@ -7,8 +7,6 @@
     chainReplyTo = false
 [include]
     path = ~/.gitconfig-common
-[includeIf "gitdir:~/repos/redhat/"]
-    path = ~/.gitconfig-work
 [color]
     diff = auto
     status = auto
