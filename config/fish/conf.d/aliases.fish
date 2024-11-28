@@ -33,6 +33,7 @@ function __set_aliases
     and abbr -a nns 'jj st'
     and abbr -a nnpm 'jj smb && jj pm'
     and abbr -a nnpb --set-cursor 'jj sb % && jj pm'
+    and abbr -a --position anywhere idk -- --ignore-immutable
 
     command -q topgrade
     and abbr -a tc topgrade -c
