@@ -29,11 +29,11 @@ function __show_virtualenv -d "Show active python virtual environments"
     set -q VIRTUAL_ENV
     or return
 
-    set -l venvname (basename "$VIRTUAL_ENV")
+    set -l venvname (basename (dirname "$VIRTUAL_ENV"))
     and __prompt_segment \
         normal \
         $__prompt_color_pre_bg \
-        " ($venvname) "
+        "($venvname) "
 end
 
 ## Show user if not in default users
@@ -79,13 +79,14 @@ function __set_venv_project --on-variable VIRTUAL_ENV
 end
 
 function __show_pwd
-    set -l pwd
+    set -l pp
     if [ (string match -r '^'"$VIRTUAL_ENV_PROJECT" $PWD) ]
-        set pwd (string replace -r '^'"$VIRTUAL_ENV_PROJECT"'($|/)' '≫ $1' $PWD)
+        set pp (string replace -r '^'"$VIRTUAL_ENV_PROJECT"'($|/)' '≫ $1' $PWD)
     else
-        set pwd (prompt_pwd)
+        set pp (prompt_pwd)
     end
-    __prompt_segment normal $__prompt_color_path "$pwd"
+
+    __prompt_segment normal $__prompt_color_path "$pp"
 end
 
 function __show_prompt

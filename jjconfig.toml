@@ -12,6 +12,9 @@ editor = "nvim"
 diff-editor = "nvimdiff"
 merge-editor = "nvim -f -c \"Gvdiffsplit!\""
 
+[revset-aliases]
+'immutable_heads()' = 'none()'
+
 # [git]
 #     auto-local-branch = false
 

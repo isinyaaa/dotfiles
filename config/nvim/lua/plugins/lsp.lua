@@ -11,7 +11,7 @@ return {
                 "ltex",
                 "lua_ls",
                 "pbls",
-                "ruff_lsp",
+                "ruff",
                 "rust_analyzer",
                 "tinymist",
                 "texlab",
