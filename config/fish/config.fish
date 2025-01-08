@@ -1,24 +1,3 @@
-set -gx IS_MAC false
-# find out if we're on mac
-if uname -s | grep -iq darwin
-    # we redefine the OSTYPE to be the same as any UNIX system
-    # because MacOS doesn't have it
-    set -gx OSTYPE (uname -s | tr -s '[:upper:]' '[:lower:]')(uname -r)
-    set -gx IS_MAC true
-    eval (/opt/homebrew/bin/brew shellenv)
-end
-
-# refresh sudo timeout
-alias sudo 'command sudo -v; command sudo '
-
-# set prompt variables
-set -g default_user isinyaaa wolfie
-set -g theme_date_timezone America/Sao_Paulo
-set -g theme_date_format "+%l:%M%p"
-
-# enable GPG agent
-set -gx GPG_TTY (tty)
-
 # update path
 set -gx PATH /opt/local/bin $PATH
 set -gx PATH $HOME/.local/bin $PATH
@@ -35,12 +14,29 @@ set -gx PATH $HOME/.codon/bin $PATH
 set --export BUN_INSTALL "$HOME/.bun"
 set --export PATH $BUN_INSTALL/bin $PATH
 
-# system specific setup
-if test $IS_MAC = true
+# find out if we're on mac
+if uname -s | grep -iq darwin
+    # we redefine the OSTYPE to be the same as any UNIX system
+    # because MacOS doesn't have it
+    set -gx OSTYPE (uname -s | tr -s '[:upper:]' '[:lower:]')(uname -r)
+    set -gx IS_MAC true
+    eval (/opt/homebrew/bin/brew shellenv)
     __setup_macos
 else
+    set -gx IS_MAC false
     __setup_linux
 end
+
+# refresh sudo timeout
+alias sudo 'command sudo -v; command sudo '
+
+# set prompt variables
+set -g default_user isinyaaa wolfie
+set -g theme_date_timezone America/Sao_Paulo
+set -g theme_date_format "+%l:%M%p"
+
+# enable GPG agent
+set -gx GPG_TTY (tty)
 
 command -q rye
 set -gx PATH $HOME/.rye/shims $PATH
@@ -55,21 +51,11 @@ and set -gx VISUAL (which nvim)
 # kitty ssh setup
 echo "$TERM" | grep -q kitty
 and test -z "$SSH_CLIENT"
-and alias ssh "kitty +kitten ssh"
 
 # override fish greeting
 function fish_greeting
     command -q colorscript
     and colorscript --exec spectrum
-end
-
-# setup commands
-if command -q rbenv
-    __setup_rbenv
-end
-
-if command -q pyenv
-    __setup_pyenv
 end
 
 command -q jj
