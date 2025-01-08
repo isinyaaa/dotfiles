@@ -1,4 +1,3 @@
-# update path
 set -gx PATH /opt/local/bin $PATH
 set -gx PATH $HOME/.local/bin $PATH
 set -gx PATH $HOME/bin $PATH
@@ -14,7 +13,6 @@ set -gx PATH $HOME/.codon/bin $PATH
 set --export BUN_INSTALL "$HOME/.bun"
 set --export PATH $BUN_INSTALL/bin $PATH
 
-# find out if we're on mac
 if uname -s | grep -iq darwin
     # we redefine the OSTYPE to be the same as any UNIX system
     # because MacOS doesn't have it
@@ -27,6 +25,9 @@ else
     __setup_linux
 end
 
+command -q rye
+set -gx PATH $HOME/.rye/shims $PATH
+
 # refresh sudo timeout
 alias sudo 'command sudo -v; command sudo '
 
@@ -38,8 +39,6 @@ set -g theme_date_format "+%l:%M%p"
 # enable GPG agent
 set -gx GPG_TTY (tty)
 
-command -q rye
-set -gx PATH $HOME/.rye/shims $PATH
 
 # set user preferences
 command -q bat
@@ -48,18 +47,11 @@ command -q nvim
 and set -gx EDITOR (which nvim)
 and set -gx VISUAL (which nvim)
 
-# kitty ssh setup
-echo "$TERM" | grep -q kitty
-and test -z "$SSH_CLIENT"
-
 # override fish greeting
 function fish_greeting
     command -q colorscript
     and colorscript --exec spectrum
 end
-
-command -q jj
-and jj util completion fish | source
 
 command -q zoxide
 and zoxide init fish | source

@@ -29,28 +29,21 @@ vim.opt.spelllang = { "en", "pt_br", "de" }
 
 vim.opt.path:append("**")
 
-vim.api.nvim_create_autocmd("BufRead", {
-    callback = function()
-        if not clipboard_set then
-            vim.opt.clipboard:append("unnamedplus")
-            clipboard_set = true
-        end
-    end
-})
+local osc52 = require('vim.ui.clipboard.osc52')
 
 vim.g.clipboard = {
     name = 'OSC 52',
     copy = {
-        ['+'] = require('vim.ui.clipboard.osc52').copy('+'),
-        ['*'] = require('vim.ui.clipboard.osc52').copy('*'),
+        ['+'] = osc52.copy('+'),
+        ['*'] = osc52.copy('*'),
     },
     paste = {
-        ['+'] = require('vim.ui.clipboard.osc52').paste('+'),
-        ['*'] = require('vim.ui.clipboard.osc52').paste('*'),
+        ['+'] = osc52.paste('+'),
+        ['*'] = osc52.paste('*'),
     },
 }
 
--- vim.opt.clipboard:append("unnamedplus")
+vim.opt.clipboard:append("unnamedplus")
 
 
 -- Run SpellSync automatically when Vim starts
