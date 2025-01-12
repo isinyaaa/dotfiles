@@ -29,23 +29,6 @@ vim.opt.spelllang = { "en", "pt_br", "de" }
 
 vim.opt.path:append("**")
 
-local osc52 = require('vim.ui.clipboard.osc52')
-
-vim.g.clipboard = {
-    name = 'OSC 52',
-    copy = {
-        ['+'] = osc52.copy('+'),
-        ['*'] = osc52.copy('*'),
-    },
-    paste = {
-        ['+'] = osc52.paste('+'),
-        ['*'] = osc52.paste('*'),
-    },
-}
-
-vim.opt.clipboard:append("unnamedplus")
-
-
 -- Run SpellSync automatically when Vim starts
 -- vim.g.spellsync_run_at_startup = 1
 
