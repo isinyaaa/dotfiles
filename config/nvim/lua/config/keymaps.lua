@@ -4,10 +4,3 @@
 
 -- get rid of trailing whitespace
 vim.keymap.set("n", "<leader>hw", [[:%s/\s\+$//e<CR>]])
-
--- fix text formatting on html files
--- vim.keymap.set(
---     "n",
---     "<leader>ml",
---     [[:set nowrapscan<CR>/[\.?!>]$<CR>jV/^\s*[A-Z<]<CR>kgq<Esc>:noh<CR>:set wrapscan<CR>]]
--- )

@@ -23,6 +23,7 @@ return {
                 "dockerfile",
                 "fish",
                 "git_config",
+                "help",
                 "html",
                 -- "javascript",
                 "json",
